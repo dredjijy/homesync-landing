@@ -1,0 +1,451 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>HomeSync — Une réponse à chaque question du quotidien</title>
+<meta name="description" content="Stock, budget, courses, agenda. HomeSync répond à toutes les questions de votre foyer, en temps réel.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,ital@9..144,300..900,0..1&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --ink:#08090E; --surface:#12141C; --surface-2:#191C27;
+  --line: rgba(245,243,238,0.09);
+  --ember:#FF7A45; --mint:#4BE3C4; --lilac:#B9A6F0;
+  --paper:#F5F3EE; --mist:#8B90A6;
+  --font-display:'Fraunces',serif; --font-body:'Plus Jakarta Sans',sans-serif; --font-mono:'IBM Plex Mono',monospace;
+}
+*,*::before,*::after{ box-sizing:border-box; margin:0; padding:0; }
+html{ background:var(--ink); }
+body{ background:var(--ink); color:var(--paper); font-family:var(--font-body); overflow-x:hidden; -webkit-font-smoothing:antialiased; }
+a{ color:inherit; text-decoration:none; } button{ font-family:inherit; border:none; background:none; }
+::selection{ background:var(--ember); color:var(--ink); }
+a:focus-visible, button:focus-visible{ outline:2px solid var(--mint); outline-offset:3px; }
+@media (prefers-reduced-motion: reduce){ *{ animation-duration:0.01ms !important; transition-duration:0.01ms !important; } }
+
+.btn{
+  display:inline-flex; align-items:center; gap:9px; font-weight:700; font-size:15px;
+  padding:16px 30px; border-radius:100px; cursor:pointer; white-space:nowrap;
+  transition:transform .35s cubic-bezier(.2,.9,.25,1), box-shadow .35s ease;
+}
+.btn-primary{ background:var(--ember); color:#160900; box-shadow:0 10px 30px -8px rgba(255,122,69,.55); }
+.btn-primary:hover{ transform:translateY(-2px); box-shadow:0 16px 38px -8px rgba(255,122,69,.7); }
+
+/* ── NAV — minimal, apparaît après l'intro ── */
+.nav{
+  position:fixed; top:0; left:0; right:0; z-index:200;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:20px clamp(20px,5vw,48px);
+  opacity:0; translate:0 -10px; transition:opacity .6s ease, translate .6s ease;
+  pointer-events:none;
+}
+.nav.show{ opacity:1; translate:0 0; pointer-events:auto; }
+.nav-logo{ font-family:var(--font-display); font-weight:700; font-size:19px; display:flex; align-items:center; gap:8px; }
+.nav-logo .dot{ width:8px; height:8px; border-radius:50%; background:var(--ember); box-shadow:0 0 12px 2px var(--ember); }
+.nav .btn{ padding:10px 20px; font-size:13px; }
+
+/* ══════════════════════════════════════════
+   INTRO — l'écran le plus important
+   ══════════════════════════════════════════ */
+.intro{
+  height:100svh; display:flex; align-items:center; justify-content:center; flex-direction:column;
+  position:relative; text-align:center; padding:0 24px; overflow:hidden;
+}
+.intro-glow{
+  position:absolute; width:900px; height:900px; border-radius:50%;
+  background:radial-gradient(circle, rgba(255,122,69,0.16), transparent 68%);
+  opacity:0; transition:opacity 1.4s ease; pointer-events:none;
+}
+.intro-glow.show{ opacity:1; }
+
+.q-stage{ position:absolute; top:50%; left:50%; translate:-50% -50%; height:clamp(120px,22vh,190px); width:min(820px, calc(100% - 48px)); }
+.q-line{
+  position:absolute; inset:0; margin:auto; height:max-content;
+  font-family:var(--font-display); font-weight:600; text-align:center;
+  font-size:clamp(26px,4.6vw,50px); line-height:1.2; color:var(--paper);
+  opacity:0;
+}
+/* état par défaut sans JS : la 1ère question reste visible (rien de caché en dur) */
+.q-line[data-q="0"]{ opacity:1; position:relative; inset:auto; margin:0 auto; }
+.q-line[data-q="1"],.q-line[data-q="2"]{ display:none; } /* évite chevauchement si JS absent ; JS les réactive proprement */
+
+.phone-wrap{ position:relative; margin-top:14px; }
+.phone{
+  width:min(220px,52vw); aspect-ratio:220/455; border-radius:38px;
+  background:linear-gradient(160deg,#1c202f,#0c0e16);
+  border:1px solid rgba(245,243,238,0.12);
+  box-shadow:0 50px 90px -30px rgba(0,0,0,.7);
+  padding:10px; position:relative;
+  opacity:0; scale:0.82; transition:opacity 1s cubic-bezier(.2,.8,.2,1), scale 1s cubic-bezier(.2,.8,.2,1);
+}
+.phone.show{ opacity:1; scale:1; }
+.phone::before{ content:""; position:absolute; top:10px; left:50%; translate:-50% 0; width:32%; height:16px; background:#0a0b10; border-radius:16px; z-index:5; }
+.phone-screen{ width:100%; height:100%; border-radius:28px; overflow:hidden; background:#F0EEE8; position:relative; }
+.sync-icons{ position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:12px; }
+.sync-ic{
+  width:42px; height:42px; border-radius:13px; background:#fff; display:flex; align-items:center; justify-content:center;
+  font-size:18px; box-shadow:0 4px 14px rgba(0,0,0,0.08); opacity:0; scale:0.6;
+  transition:opacity .5s ease, scale .5s cubic-bezier(.3,1.4,.4,1);
+}
+.sync-ic.show{ opacity:1; scale:1; }
+.sync-row{ display:flex; gap:10px; }
+
+.intro-answer{
+  margin-top:38px; font-family:var(--font-display); font-size:clamp(18px,2.6vw,26px); font-weight:500;
+  color:var(--paper); opacity:0; translate:0 12px; transition:opacity .8s ease, translate .8s ease;
+}
+.intro-answer.show{ opacity:1; translate:0 0; }
+.intro-cta{ margin-top:30px; opacity:0; translate:0 12px; transition:opacity .8s ease, translate .8s ease; }
+.intro-cta.show{ opacity:1; translate:0 0; }
+
+.scroll-hint{
+  position:absolute; bottom:34px; left:50%; translate:-50% 0; opacity:0; transition:opacity 1s ease;
+  font-family:var(--font-mono); font-size:11px; letter-spacing:0.12em; color:var(--mist);
+  display:flex; flex-direction:column; align-items:center; gap:8px;
+}
+.scroll-hint.show{ opacity:0.8; }
+.scroll-hint .chev{ width:14px; height:14px; border-right:1.5px solid var(--mist); border-bottom:1.5px solid var(--mist); transform:rotate(45deg); animation:bob 1.8s ease-in-out infinite; }
+@keyframes bob{ 0%,100%{ transform:rotate(45deg) translate(0,0);} 50%{ transform:rotate(45deg) translate(3px,3px);} }
+
+/* ══════════════════════════════════════════
+   MICRO-SECTIONS — une idée, une animation
+   ══════════════════════════════════════════ */
+.micro{
+  min-height:100svh; display:flex; flex-direction:column; align-items:center; justify-content:center;
+  gap:34px; padding:60px 24px; text-align:center;
+}
+.micro-cap{
+  font-family:var(--font-mono); font-size:12px; letter-spacing:0.14em; color:var(--mist);
+  text-transform:uppercase;
+}
+.micro .phone{ opacity:1; scale:1; } /* visibles par défaut (sécurité), JS peut ajouter un effet d'entrée */
+.micro.rv .phone, .micro.rv .micro-cap{ opacity:0; translate:0 24px; transition:opacity .9s ease, translate .9s ease; }
+.micro.rv.in .phone, .micro.rv.in .micro-cap{ opacity:1; translate:0 0; }
+
+.m-row{ display:flex; align-items:center; gap:10px; background:#fff; border-radius:14px; padding:11px 13px; font-size:13px; color:#33363f; box-shadow:0 1px 0 rgba(0,0,0,.03); }
+.m-row .ic{ width:28px; height:28px; border-radius:9px; display:flex; align-items:center; justify-content:center; font-size:14px; flex-shrink:0; }
+.m-row .name{ flex:1; font-weight:600; text-align:left; }
+.m-row .val{ font-family:var(--font-mono); font-size:11px; color:#9096AC; }
+.m-screen{ padding:26px 15px; display:flex; flex-direction:column; gap:8px; }
+
+/* ══════════════════════════════════════════
+   FINAL — prix
+   ══════════════════════════════════════════ */
+.final{
+  min-height:100svh; display:flex; flex-direction:column; align-items:center; justify-content:center;
+  gap:20px; text-align:center; padding:60px 24px; position:relative;
+}
+.final .price{ font-family:var(--font-display); font-weight:700; font-size:clamp(48px,8vw,80px); }
+.final .per{ font-family:var(--font-mono); font-size:15px; color:var(--mist); }
+.final .l1{ color:var(--paper); font-size:15px; }
+.final .l2{ color:var(--mist); font-size:13px; font-family:var(--font-mono); }
+.final .btn{ margin-top:14px; }
+.final.rv > *{ opacity:0; translate:0 20px; transition:opacity .8s ease, translate .8s ease; }
+.final.rv.in > *{ opacity:1; translate:0 0; }
+.final.rv.in > *:nth-child(2){ transition-delay:.15s; }
+.final.rv.in > *:nth-child(3){ transition-delay:.30s; }
+.final.rv.in > *:nth-child(4){ transition-delay:.45s; }
+.final.rv.in > *:nth-child(5){ transition-delay:.60s; }
+
+/* ══════════════════════════════════════════
+   MODALE — choix plateforme + étapes d'installation
+   ══════════════════════════════════════════ */
+.pm-overlay{
+  position:fixed; inset:0; z-index:500; background:rgba(8,9,14,0.75); backdrop-filter:blur(6px);
+  display:flex; align-items:center; justify-content:center; padding:20px;
+  opacity:0; pointer-events:none; transition:opacity .3s ease;
+}
+.pm-overlay.show{ opacity:1; pointer-events:auto; }
+.pm-card{
+  background:var(--surface); border:1px solid var(--line); border-radius:24px;
+  width:100%; max-width:420px; padding:28px 24px; text-align:center;
+  transform:translateY(16px) scale(0.97); transition:transform .35s cubic-bezier(.2,.8,.2,1);
+}
+.pm-overlay.show .pm-card{ transform:translateY(0) scale(1); }
+.pm-title{ font-family:var(--font-display); font-weight:700; font-size:20px; color:var(--paper); margin-bottom:6px; }
+.pm-sub{ font-family:var(--font-body); font-size:13px; color:var(--mist); margin-bottom:22px; }
+.pm-choices{ display:flex; gap:12px; margin-bottom:8px; }
+.pm-choice{
+  flex:1; padding:20px 12px; border-radius:16px; background:var(--surface-2); border:1.5px solid var(--line);
+  cursor:pointer; transition:border-color .25s ease, transform .25s ease; text-align:center;
+}
+.pm-choice:hover{ border-color:var(--mint); transform:translateY(-2px); }
+.pm-choice .ic{ font-size:32px; margin-bottom:8px; }
+.pm-choice .lbl{ font-family:var(--font-body); font-weight:700; font-size:13px; color:var(--paper); }
+.pm-skip{ margin-top:16px; font-size:12px; color:var(--mist); font-family:var(--font-mono); cursor:pointer; text-decoration:underline; }
+
+.pm-steps{ display:none; text-align:left; }
+.pm-steps.show{ display:block; }
+.pm-step{ display:flex; gap:12px; margin-bottom:16px; align-items:flex-start; }
+.pm-step .n{ width:26px; height:26px; border-radius:50%; background:var(--ember); color:#160900; font-weight:800; font-size:12px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.pm-step .t{ font-weight:700; font-size:14px; color:var(--paper); font-family:var(--font-body); }
+.pm-step .d{ font-size:12.5px; color:var(--mist); margin-top:2px; line-height:1.4; }
+.pm-back{ font-size:12px; color:var(--mist); font-family:var(--font-mono); cursor:pointer; margin-bottom:16px; display:inline-block; }
+</style>
+</head>
+<body>
+
+<nav class="nav" id="nav">
+  <div class="nav-logo"><span class="dot"></span>HomeSync</div>
+  <a href="#" class="btn btn-primary" id="ctaNav">Commencer gratuitement</a>
+</nav>
+
+<main>
+
+  <!-- ══════ INTRO ══════ -->
+  <section class="intro" id="intro">
+    <div class="intro-glow" id="introGlow"></div>
+
+    <div class="q-stage" id="qStage">
+      <p class="q-line" data-q="0">Qu'est-ce qu'il reste à la maison ?</p>
+      <p class="q-line" data-q="1">Avant de passer en caisse… combien vais-je payer ?</p>
+      <p class="q-line" data-q="2">Qui fait quoi cette semaine ?</p>
+    </div>
+
+    <div class="phone-wrap">
+      <div class="phone" id="introPhone">
+        <div class="phone-screen">
+          <div class="sync-icons" id="syncIcons">
+            <div class="sync-row">
+              <div class="sync-ic" data-i="0">📦</div>
+              <div class="sync-ic" data-i="1">💰</div>
+            </div>
+            <div class="sync-row">
+              <div class="sync-ic" data-i="2">🛒</div>
+              <div class="sync-ic" data-i="3">📅</div>
+              <div class="sync-ic" data-i="4">👨‍👩‍👧‍👦</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p class="intro-answer" id="introAnswer">HomeSync répond à toutes ces questions.</p>
+    <a href="#" class="btn btn-primary intro-cta" id="introCta">Commencer gratuitement</a>
+
+    <div class="scroll-hint" id="scrollHint"><span>CONTINUER</span><span class="chev"></span></div>
+  </section>
+
+  <!-- ══════ MICRO 1 — STOCK ══════ -->
+  <section class="micro rv" id="m1">
+    <div class="phone">
+      <div class="phone-screen m-screen">
+        <div class="m-row"><div class="ic" style="background:#EAF2FF;">🥛</div><div class="name">Lait</div><div class="val" id="stockVal">1 L</div></div>
+        <div class="m-row"><div class="ic" style="background:#FFF3D6;">🍞</div><div class="name">Pain</div><div class="val">½</div></div>
+        <div class="m-row"><div class="ic" style="background:#EAF9EE;">🥚</div><div class="name">Œufs</div><div class="val">4</div></div>
+      </div>
+    </div>
+    <div class="micro-cap">Toujours à jour</div>
+  </section>
+
+  <!-- ══════ MICRO 2 — BUDGET ══════ -->
+  <section class="micro rv" id="m2">
+    <div class="phone">
+      <div class="phone-screen m-screen">
+        <div class="m-row"><div class="ic" style="background:#EAF2FF;">🍅</div><div class="name">Tomates</div><div class="val">2,40€</div></div>
+        <div class="m-row"><div class="ic" style="background:#FFF3D6;">🧀</div><div class="name">Fromage</div><div class="val">4,90€</div></div>
+        <div style="margin-top:6px;padding-top:10px;border-top:1px dashed #D8D5CC;display:flex;justify-content:space-between;font-family:var(--font-mono);font-size:12px;color:#33363f;">
+          <span>Total</span><span id="budgetTotal" style="font-weight:700;color:#33363f;">7,30€</span>
+        </div>
+      </div>
+    </div>
+    <div class="micro-cap">Chaque euro, suivi</div>
+  </section>
+
+  <!-- ══════ MICRO 3 — FAMILLE ══════ -->
+  <section class="micro rv" id="m3">
+    <div style="display:flex;align-items:center;gap:min(8vw,60px);">
+      <div class="phone" style="width:min(160px,40vw);">
+        <div class="phone-screen m-screen">
+          <div class="m-row"><div class="ic" style="background:#EDE7FB;">📅</div><div class="name">Foot</div></div>
+        </div>
+      </div>
+      <div class="phone" style="width:min(160px,40vw);">
+        <div class="phone-screen m-screen" id="famScreen">
+          <div class="m-row" id="famRow"><div class="ic" style="background:#EDE7FB;">📅</div><div class="name">Foot</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="micro-cap">Toute la famille, au même instant</div>
+  </section>
+
+  <!-- ══════ FINAL — PRIX ══════ -->
+  <section class="final rv" id="finalSection">
+    <div class="price">3,99€ <span class="per">/ mois</span></div>
+    <p class="l1">Un seul abonnement pour toute la famille.</p>
+    <p class="l2">Sans engagement · Résiliable à tout moment</p>
+    <a href="#" class="btn btn-primary" id="ctaFinal">Commencer gratuitement</a>
+  </section>
+
+
+<!-- ══════ MODALE — choix plateforme + étapes d'installation ══════ -->
+<div class="pm-overlay" id="pmOverlay">
+  <div class="pm-card">
+
+    <div id="pmChoiceScreen">
+      <div class="pm-title">Quel est votre téléphone ?</div>
+      <div class="pm-sub">Pour vous montrer comment installer HomeSync</div>
+      <div class="pm-choices">
+        <div class="pm-choice" id="pmAndroid">
+          <div class="ic">🤖</div>
+          <div class="lbl">Android</div>
+        </div>
+        <div class="pm-choice" id="pmIphone">
+          <div class="ic">🍎</div>
+          <div class="lbl">iPhone</div>
+        </div>
+      </div>
+      <div class="pm-skip" id="pmSkip">Je suis sur ordinateur →</div>
+    </div>
+
+    <div class="pm-steps" id="pmStepsAndroid">
+      <span class="pm-back" id="pmBack1">← Retour</span>
+      <div class="pm-title" style="text-align:left;">Installer sur Android</div>
+      <div class="pm-sub" style="text-align:left;">3 étapes, moins de 10 secondes</div>
+      <div class="pm-step"><div class="n">1</div><div><div class="t">Appuyez sur "Continuer"</div><div class="d">Vous arrivez sur HomeSync</div></div></div>
+      <div class="pm-step"><div class="n">2</div><div><div class="t">Une bannière "Installer" apparaît</div><div class="d">En haut de l'écran de connexion</div></div></div>
+      <div class="pm-step"><div class="n">3</div><div><div class="t">Appuyez dessus, confirmez</div><div class="d">HomeSync s'ajoute à votre écran d'accueil</div></div></div>
+      <a href="#" class="btn btn-primary" id="pmGoAndroid" style="width:100%; justify-content:center; margin-top:6px;">Continuer vers HomeSync</a>
+    </div>
+
+    <div class="pm-steps" id="pmStepsIphone">
+      <span class="pm-back" id="pmBack2">← Retour</span>
+      <div class="pm-title" style="text-align:left;">Installer sur iPhone</div>
+      <div class="pm-sub" style="text-align:left;">Ouvrez bien le lien dans Safari</div>
+      <div class="pm-step"><div class="n">1</div><div><div class="t">Appuyez sur Partager</div><div class="d">Le carré avec une flèche vers le haut, en bas de Safari</div></div></div>
+      <div class="pm-step"><div class="n">2</div><div><div class="t">Choisissez "Sur l'écran d'accueil"</div><div class="d">Faites défiler la liste si besoin</div></div></div>
+      <div class="pm-step"><div class="n">3</div><div><div class="t">Appuyez sur "Ajouter"</div><div class="d">HomeSync apparaît comme une vraie app</div></div></div>
+      <a href="#" class="btn btn-primary" id="pmGoIphone" style="width:100%; justify-content:center; margin-top:6px;">Continuer vers HomeSync</a>
+    </div>
+
+  </div>
+</div>
+
+</main>
+
+<script src="./vendor/gsap.min.js"></script>
+<script src="./vendor/ScrollTrigger.min.js"></script>
+<script>
+const APP_URL = "https://home-sync-git-main-dredjis-projects.vercel.app";
+
+// ── Modale de choix plateforme — interceptée sur les 3 CTA "Commencer" ──
+const pmOverlay = document.getElementById('pmOverlay');
+const pmChoiceScreen = document.getElementById('pmChoiceScreen');
+const pmStepsAndroid = document.getElementById('pmStepsAndroid');
+const pmStepsIphone  = document.getElementById('pmStepsIphone');
+
+function pmShowChoice() {
+  pmChoiceScreen.style.display = 'block';
+  pmStepsAndroid.classList.remove('show');
+  pmStepsIphone.classList.remove('show');
+}
+function pmOpen() { pmOverlay.classList.add('show'); pmShowChoice(); }
+function pmClose() { pmOverlay.classList.remove('show'); }
+
+document.querySelectorAll('#ctaNav,#introCta,#ctaFinal').forEach(el => {
+  el.addEventListener('click', (e) => {
+    e.preventDefault();
+    pmOpen();
+  });
+});
+
+document.getElementById('pmAndroid').addEventListener('click', () => {
+  pmChoiceScreen.style.display = 'none';
+  pmStepsAndroid.classList.add('show');
+});
+document.getElementById('pmIphone').addEventListener('click', () => {
+  pmChoiceScreen.style.display = 'none';
+  pmStepsIphone.classList.add('show');
+});
+document.getElementById('pmBack1').addEventListener('click', pmShowChoice);
+document.getElementById('pmBack2').addEventListener('click', pmShowChoice);
+document.getElementById('pmSkip').addEventListener('click', () => { window.location.href = APP_URL; });
+document.getElementById('pmGoAndroid').addEventListener('click', (e) => { e.preventDefault(); window.location.href = APP_URL; });
+document.getElementById('pmGoIphone').addEventListener('click', (e) => { e.preventDefault(); window.location.href = APP_URL; });
+pmOverlay.addEventListener('click', (e) => { if (e.target === pmOverlay) pmClose(); });
+
+const gsapReady = (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined');
+const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+if (gsapReady && !reduced) {
+  gsap.registerPlugin(ScrollTrigger);
+
+  /* ── séquence d'ouverture (autoplay, indépendante du scroll) ── */
+  const qLines = document.querySelectorAll('.q-line');
+  qLines.forEach(el => { el.style.display='block'; }); // réactive les 3 questions (display:none par défaut pour q1/q2)
+
+  const tl = gsap.timeline({ delay:0.3 });
+  tl.set('#introGlow', { opacity:0 })
+    .to('#introGlow', { opacity:1, duration:1.2 }, 0)
+    .set(qLines[0], { opacity:1 })
+    .to(qLines[0], { opacity:0, y:-14, duration:0.35, ease:'power1.in' }, 1.5)
+    .fromTo(qLines[1], { opacity:0, y:14 }, { opacity:1, y:0, duration:0.45 }, 1.85)
+    .to(qLines[1], { opacity:0, y:-14, duration:0.35, ease:'power1.in' }, 3.35)
+    .fromTo(qLines[2], { opacity:0, y:14 }, { opacity:1, y:0, duration:0.45 }, 3.7)
+    .to(qLines[2], { opacity:0, y:-14, duration:0.35, ease:'power1.in' }, 4.9)
+    .add(()=> document.getElementById('introPhone').classList.add('show'), 5.15)
+    .add(()=>{
+      document.querySelectorAll('.sync-ic').forEach((el,i)=>{
+        gsap.delayedCall(i*0.16, ()=> el.classList.add('show'));
+      });
+    }, 5.75)
+    .add(()=> document.getElementById('introAnswer').classList.add('show'), 6.9)
+    .add(()=> document.getElementById('introCta').classList.add('show'), 7.5)
+    .add(()=>{
+      document.getElementById('scrollHint').classList.add('show');
+      document.getElementById('nav').classList.add('show');
+    }, 7.9);
+
+  /* ── reveal des micro-sections au scroll ── */
+  document.querySelectorAll('.rv').forEach(el=>{
+    ScrollTrigger.create({
+      trigger:el, start:'top 75%',
+      onEnter:()=>el.classList.add('in'),
+      once:true
+    });
+  });
+
+  /* ── micro 2 : compteur budget ── */
+  ScrollTrigger.create({
+    trigger:'#m2', start:'top 65%', once:true,
+    onEnter:()=>{
+      const el = document.getElementById('budgetTotal');
+      const obj = { v:0 };
+      gsap.to(obj, { v:7.30, duration:1.2, delay:0.3, ease:'power2.out',
+        onUpdate:()=> el.textContent = obj.v.toFixed(2).replace('.',',')+'€' });
+    }
+  });
+
+  /* ── micro 3 : sync entre 2 téléphones ── */
+  ScrollTrigger.create({
+    trigger:'#m3', start:'top 60%', once:true,
+    onEnter:()=>{
+      gsap.delayedCall(0.6, ()=>{
+        const row = document.getElementById('famRow');
+        row.style.transition='background .5s ease';
+        row.style.background='#EAF9EE';
+        gsap.delayedCall(0.9, ()=> row.style.background='#fff');
+      });
+    }
+  });
+
+  /* ── nav visible après l'intro, même sans scroll (déjà géré dans la timeline) ── */
+  window.addEventListener('load', ()=> ScrollTrigger.refresh());
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(()=> ScrollTrigger.refresh());
+
+} else {
+  /* GSAP indisponible ou reduced-motion : tout reste visible statiquement, rien de caché */
+  document.querySelectorAll('.q-line[data-q="1"],.q-line[data-q="2"]').forEach(el=> el.style.display='none');
+  document.getElementById('introPhone').classList.add('show');
+  document.querySelectorAll('.sync-ic').forEach(el=> el.classList.add('show'));
+  document.getElementById('introAnswer').classList.add('show');
+  document.getElementById('introCta').classList.add('show');
+  document.getElementById('nav').classList.add('show');
+  document.querySelectorAll('.rv').forEach(el=> el.classList.add('in'));
+}
+</script>
+</body>
+</html>
