@@ -14,9 +14,19 @@ const TRANSLATIONS = {
     modules_kicker: "Une seule application",
     modules_title: "Ce qui change vraiment, au quotidien.",
     mc_more: "En savoir plus",
-    final_hook: "Arrêtez de gérer votre foyer dans votre tête.",
-    final_l1: "Un seul abonnement pour toute la famille.",
-    final_l2: "Sans engagement · Résiliable à tout moment",
+    final_hook: "Arrêtez de gérer votre foyer sur des bouts de papier volants — ou dans votre tête.",
+    final_l1: "Un seul abonnement pour toute la famille — pas un prix par personne.",
+    final_l2: "Sans engagement, ni frais cachés · Résiliable en un clic, à tout moment",
+    ask_question: "Posez-nous vos questions →",
+    ask_question_short: "Une question ?",
+    ask_form_title: "Une question ?",
+    ask_form_sub: "On vous répond directement, sous quelques jours.",
+    ask_form_subject_label: "Sujet",
+    ask_form_subject_ph: "Ex : Combien de personnes par foyer ?",
+    ask_form_message_label: "Votre message",
+    ask_form_message_ph: "Écrivez votre question ici…",
+    ask_form_send: "Envoyer",
+    ask_form_hint: "Ouvre votre application email, avec tout déjà rempli.",
     pm_title: "Quel est votre téléphone ?",
     pm_sub: "Pour vous montrer comment installer HomeSync",
     pm_android_lbl: "Android", pm_iphone_lbl: "iPhone",
@@ -36,15 +46,15 @@ const TRANSLATIONS = {
     fb1_q: "Qu'est-ce qu'il reste à la maison ?", fb1_title: "Ne rachetez plus ce que vous avez déjà.", fb1_text: "Consultez votre stock en temps réel et sachez immédiatement ce qu'il reste chez vous.",
     fb2_q: "Combien vais-je payer à la caisse ?", fb2_title: "Connaissez le total avant d'arriver en caisse.", fb2_text: "Ajoutez les prix pendant vos courses et gardez votre budget sous contrôle.",
     fb3_q: "Qui fait quoi cette semaine ?", fb3_title: "Toute la famille sait quoi faire.", fb3_text: "Rendez-vous, tâches et événements sont synchronisés automatiquement.",
-    mc_stock_tag: "Stock", mc_stock_q: "Qu'est-ce qu'il me reste à la maison ?", mc_stock_a: "Chaque produit affiche sa date de péremption, pour ne jamais être pris de court. Cuisinez une recette et le stock se met à jour tout seul. Presque vide ? L'article part directement dans vos courses.",
-    mc_courses_tag: "Courses", mc_courses_q: "Qu'est-ce qu'il faut racheter ?", mc_courses_a: "Ajoutez un article en tapant, ou collez toute une liste d'un coup. Cochez au fur et à mesure — une fois validée, la liste rejoint automatiquement le stock. Vos listes types se sauvegardent pour la semaine suivante.",
-    mc_budget_tag: "Budget", mc_budget_q: "Combien vais-je dépenser ce mois-ci ?", mc_budget_a: "Le total se calcule pendant vos courses, avant même la caisse. Connecté directement aux courses et aux charges récurrentes comme le loyer. Un résumé s'exporte en PDF à tout moment.",
-    mc_recettes_tag: "Recettes", mc_recettes_q: "Qu'est-ce qu'on mange ce soir ?", mc_recettes_a: "Cuisinez un plat, et les ingrédients sont déduits automatiquement de votre stock. Il vous manque quelque chose ? Un bouton l'ajoute directement aux courses. Planifiez la semaine, la liste se génère toute seule.",
-    mc_agenda_tag: "Agenda", mc_agenda_q: "Qui fait quoi, et quand ?", mc_agenda_a: "Les dates de péremption du stock y apparaissent automatiquement, tout comme vos charges récurrentes. Toute la famille voit les mêmes rendez-vous, en temps réel, avec un rappel avant l'échéance.",
-    mc_membres_tag: "Membres", mc_membres_q: "Comment toute la famille reste connectée ?", mc_membres_a: "Chaque membre se connecte depuis son propre appareil. Ce que l'un ajoute, les autres le voient à l'instant. Invitez en un clic, avec un simple code ou un QR code.",
+    mc_stock_tag: "Stock", mc_stock_q: "Qu'est-ce qu'il me reste à la maison ?", mc_stock_a: ["Chaque produit affiche sa date de péremption, pour ne jamais être pris de court.", "Cuisinez une recette et le stock se met à jour tout seul.", "Presque vide ? L'article part directement dans vos courses."],
+    mc_courses_tag: "Courses", mc_courses_q: "Qu'est-ce qu'il faut racheter ?", mc_courses_a: ["Ajoutez un article en tapant, ou collez toute une liste d'un coup.", "Cochez au fur et à mesure — une fois validée, la liste rejoint automatiquement le stock.", "Vos listes types se sauvegardent pour la semaine suivante."],
+    mc_budget_tag: "Budget", mc_budget_q: "Combien vais-je dépenser ce mois-ci ?", mc_budget_a: ["Le total se calcule pendant vos courses, avant même la caisse.", "Connecté directement aux courses et aux charges récurrentes comme le loyer.", "Un résumé s'exporte en PDF à tout moment."],
+    mc_recettes_tag: "Recettes", mc_recettes_q: "Qu'est-ce qu'on mange ce soir… et si je planifie pour toute la semaine ?", mc_recettes_a: ["Cuisinez un plat, et les ingrédients sont déduits automatiquement de votre stock.", "Il vous manque quelque chose ? Un bouton l'ajoute directement aux courses.", "Planifiez la semaine, la liste se génère toute seule."],
+    mc_agenda_tag: "Agenda", mc_agenda_q: "Qui fait quoi, et quand ?", mc_agenda_a: ["Les dates de péremption du stock y apparaissent automatiquement, tout comme vos charges récurrentes.", "Toute la famille voit les mêmes rendez-vous, en temps réel.", "Un rappel arrive automatiquement avant l'échéance."],
+    mc_membres_tag: "Membres", mc_membres_q: "Comment toute la famille reste connectée ?", mc_membres_a: ["Chaque membre se connecte depuis son propre appareil.", "Ce que l'un ajoute, les autres le voient à l'instant.", "Invitez en un clic, avec un simple code ou un QR code."],
     page_title: "HomeSync by Minzri — L'application qui organise votre foyer, en famille",
     page_desc: "Fini les 'on n'a plus de lait', les additions de courses qui explosent le budget et les rendez-vous oubliés. HomeSync synchronise stock, budget, recettes et agenda pour toute la famille, en temps réel. 3,99€/mois, sans engagement.",
-    questions: ["Qu'est-ce qu'il reste à la maison ?", "Avant de passer en caisse… combien vais-je payer ?", "Qui fait quoi cette semaine ?"],
+    questions: ["Qu'est-ce qu'il reste à la maison… et quand ça périme ?", "Avant de passer en caisse… combien vais-je payer ?", "Qui fait quoi cette semaine ?"],
   },
   en: {
     cta: "Join HomeSync",
@@ -53,9 +63,19 @@ const TRANSLATIONS = {
     modules_kicker: "One single app",
     modules_title: "What really changes, every day.",
     mc_more: "Learn more",
-    final_hook: "Stop managing your household in your head.",
-    final_l1: "One subscription for the whole family.",
-    final_l2: "No commitment · Cancel anytime",
+    final_hook: "Stop managing your household on scattered pieces of paper — or in your head.",
+    final_l1: "One subscription for the whole family — not a price per person.",
+    final_l2: "No commitment, no hidden fees · Cancel anytime, in one click",
+    ask_question: "Ask us your questions →",
+    ask_question_short: "Got a question?",
+    ask_form_title: "Got a question?",
+    ask_form_sub: "We'll get back to you directly, within a few days.",
+    ask_form_subject_label: "Subject",
+    ask_form_subject_ph: "E.g. How many people per household?",
+    ask_form_message_label: "Your message",
+    ask_form_message_ph: "Write your question here…",
+    ask_form_send: "Send",
+    ask_form_hint: "Opens your email app, with everything pre-filled.",
     pm_title: "What's your phone?",
     pm_sub: "To show you how to install HomeSync",
     pm_android_lbl: "Android", pm_iphone_lbl: "iPhone",
@@ -75,15 +95,15 @@ const TRANSLATIONS = {
     fb1_q: "What's left at home?", fb1_title: "Stop buying what you already have.", fb1_text: "Check your stock in real time and know instantly what's left at home.",
     fb2_q: "How much will I pay at checkout?", fb2_title: "Know the total before you reach the register.", fb2_text: "Add prices as you shop and keep your budget under control.",
     fb3_q: "Who's doing what this week?", fb3_title: "The whole family knows what to do.", fb3_text: "Appointments, tasks and events sync automatically.",
-    mc_stock_tag: "Stock", mc_stock_q: "What's left at home?", mc_stock_a: "Every product shows its expiry date, so you're never caught off guard. Cook a recipe and the stock updates itself. Almost empty? The item goes straight to your shopping list.",
-    mc_courses_tag: "Shopping", mc_courses_q: "What do I need to buy?", mc_courses_a: "Add an item by typing, or paste a whole list at once. Check items off as you go — once validated, the list automatically joins the stock. Save your usual lists for next week.",
-    mc_budget_tag: "Budget", mc_budget_q: "How much will I spend this month?", mc_budget_a: "The total is calculated as you shop, before you even reach the register. Directly connected to shopping and recurring charges like rent. Export a summary as PDF anytime.",
-    mc_recettes_tag: "Recipes", mc_recettes_q: "What's for dinner tonight?", mc_recettes_a: "Cook a dish, and ingredients are automatically deducted from your stock. Missing something? A button adds it straight to your shopping list. Plan the week, the list builds itself.",
-    mc_agenda_tag: "Calendar", mc_agenda_q: "Who's doing what, and when?", mc_agenda_a: "Stock expiry dates appear here automatically, along with your recurring charges. The whole family sees the same events, in real time, with a reminder before the deadline.",
-    mc_membres_tag: "Members", mc_membres_q: "How does the whole family stay connected?", mc_membres_a: "Each member logs in from their own device. What one adds, the others see instantly. Invite in one click, with a simple code or QR code.",
+    mc_stock_tag: "Stock", mc_stock_q: "What's left at home?", mc_stock_a: ["Every product shows its expiry date, so you're never caught off guard.", "Cook a recipe and the stock updates itself.", "Almost empty? The item goes straight to your shopping list."],
+    mc_courses_tag: "Shopping", mc_courses_q: "What do I need to buy?", mc_courses_a: ["Add an item by typing, or paste a whole list at once.", "Check items off as you go — once validated, the list automatically joins the stock.", "Save your usual lists for next week."],
+    mc_budget_tag: "Budget", mc_budget_q: "How much will I spend this month?", mc_budget_a: ["The total is calculated as you shop, before you even reach the register.", "Directly connected to shopping and recurring charges like rent.", "Export a summary as PDF anytime."],
+    mc_recettes_tag: "Recipes", mc_recettes_q: "What's for dinner tonight… and what about planning the whole week?", mc_recettes_a: ["Cook a dish, and ingredients are automatically deducted from your stock.", "Missing something? A button adds it straight to your shopping list.", "Plan the week, the list builds itself."],
+    mc_agenda_tag: "Calendar", mc_agenda_q: "Who's doing what, and when?", mc_agenda_a: ["Stock expiry dates appear here automatically, along with your recurring charges.", "The whole family sees the same events, in real time.", "A reminder arrives automatically before the deadline."],
+    mc_membres_tag: "Members", mc_membres_q: "How does the whole family stay connected?", mc_membres_a: ["Each member logs in from their own device.", "What one adds, the others see instantly.", "Invite in one click, with a simple code or QR code."],
     page_title: "HomeSync by Minzri — The app that organizes your household, as a family",
     page_desc: "No more 'we're out of milk', grocery totals that blow the budget, or forgotten appointments. HomeSync syncs stock, budget, recipes and calendar for the whole family, in real time. $3.99/month, no commitment.",
-    questions: ["What's left at home?", "Before I check out… how much will I pay?", "Who's doing what this week?"],
+    questions: ["What's left at home… and when does it expire?", "Before I check out… how much will I pay?", "Who's doing what this week?"],
   }
 };
 
@@ -104,6 +124,18 @@ function applyLang(lang) {
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const key = el.getAttribute('data-i18n');
     if (dict[key] !== undefined) el.textContent = dict[key];
+  });
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+    const key = el.getAttribute('data-i18n-placeholder');
+    if (dict[key] !== undefined) el.setAttribute('placeholder', dict[key]);
+  });
+  // Panneaux de modules — chaque phrase de la réponse sur sa propre ligne, aérée
+  document.querySelectorAll('.mc-panel-inner[data-mc]').forEach(el => {
+    const mod = el.getAttribute('data-mc');
+    const sentences = dict[`mc_${mod}_a`];
+    if (Array.isArray(sentences)) {
+      el.innerHTML = sentences.map(s => `<p>${s}</p>`).join('');
+    }
   });
   document.title = dict.page_title;
   const metaDesc = document.querySelector('meta[name="description"]');
@@ -166,6 +198,31 @@ function pmShowChoice() {
 }
 function pmOpen() { pmOverlay.classList.add('show'); pmShowChoice(); }
 function pmClose() { pmOverlay.classList.remove('show'); }
+
+// ── Formulaire "Posez-nous vos questions" ──
+const askOverlay = document.getElementById('askOverlay');
+const askForm = document.getElementById('askForm');
+const CONTACT_EMAIL = 'part.kobbaz@outlook.fr';
+
+function askOpen() { askOverlay.classList.add('show'); document.getElementById('askSubject').focus(); }
+function askClose() { askOverlay.classList.remove('show'); }
+
+document.getElementById('askBtnNav').addEventListener('click', askOpen);
+document.getElementById('askBtnFinal').addEventListener('click', askOpen);
+document.getElementById('askClose').addEventListener('click', askClose);
+askOverlay.addEventListener('click', (e) => { if (e.target === askOverlay) askClose(); });
+
+askForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const subject = document.getElementById('askSubject').value.trim();
+  const message = document.getElementById('askMessage').value.trim();
+  if (!subject || !message) return;
+  const mailSubject = encodeURIComponent(`HomeSync — ${subject}`);
+  const mailBody = encodeURIComponent(message);
+  window.location.href = `mailto:${CONTACT_EMAIL}?subject=${mailSubject}&body=${mailBody}`;
+  askClose();
+  askForm.reset();
+});
 
 document.querySelectorAll('#ctaNav,#introCta,#ctaFinal').forEach(el => {
   el.addEventListener('click', (e) => {
