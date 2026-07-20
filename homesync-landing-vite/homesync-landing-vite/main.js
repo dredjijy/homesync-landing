@@ -31,7 +31,8 @@ const TRANSLATIONS = {
     pm_title: "Quel est votre téléphone ?",
     pm_sub: "Pour vous montrer comment installer HomeSync",
     pm_android_lbl: "Android", pm_iphone_lbl: "iPhone",
-    pm_skip: "Je suis sur ordinateur →",
+    pm_skip: "Se connecter directement →",
+    pm_skip_direct: "Se connecter sans installer →",
     pm_back: "← Retour",
     pm_android_title: "Installer sur Android",
     pm_android_sub: "3 étapes, moins de 10 secondes",
@@ -81,7 +82,8 @@ const TRANSLATIONS = {
     pm_title: "What's your phone?",
     pm_sub: "To show you how to install HomeSync",
     pm_android_lbl: "Android", pm_iphone_lbl: "iPhone",
-    pm_skip: "I'm on a computer →",
+    pm_skip: "Log in directly →",
+    pm_skip_direct: "Log in without installing →",
     pm_back: "← Back",
     pm_android_title: "Install on Android",
     pm_android_sub: "3 steps, less than 10 seconds",
@@ -255,6 +257,8 @@ document.getElementById('pmBack2').addEventListener('click', pmShowChoice);
 document.getElementById('pmSkip').addEventListener('click', () => { window.location.href = APP_URL; });
 document.getElementById('pmGoAndroid').addEventListener('click', (e) => { e.preventDefault(); window.location.href = APP_URL; });
 document.getElementById('pmGoIphone').addEventListener('click', (e) => { e.preventDefault(); window.location.href = APP_URL; });
+document.getElementById('pmSkipAndroid').addEventListener('click', () => { window.location.href = APP_URL; });
+document.getElementById('pmSkipIphone').addEventListener('click', () => { window.location.href = APP_URL; });
 pmOverlay.addEventListener('click', (e) => { if (e.target === pmOverlay) pmClose(); });
 
 const gsapReady = (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined');
