@@ -15,6 +15,7 @@ const TRANSLATIONS = {
     modules_title: "Ce qui change vraiment, au quotidien.",
     mc_more: "En savoir plus",
     final_hook: "Arrêtez de gérer votre foyer sur des bouts de papier volants — ou dans votre tête.",
+    trial_badge: "🎁 3 jours d'essai gratuit",
     final_l1: "Un seul abonnement pour toute la famille — pas un prix par personne.",
     final_l2: "Sans engagement, ni frais cachés · Résiliable en un clic, à tout moment",
     ask_question: "Posez-nous vos questions →",
@@ -30,7 +31,8 @@ const TRANSLATIONS = {
     pm_title: "Quel est votre téléphone ?",
     pm_sub: "Pour vous montrer comment installer HomeSync",
     pm_android_lbl: "Android", pm_iphone_lbl: "iPhone",
-    pm_skip: "Je suis sur ordinateur →",
+    pm_skip: "Se connecter directement →",
+    pm_skip_direct: "Se connecter sans installer →",
     pm_back: "← Retour",
     pm_android_title: "Installer sur Android",
     pm_android_sub: "3 étapes, moins de 10 secondes",
@@ -64,6 +66,7 @@ const TRANSLATIONS = {
     modules_title: "What really changes, every day.",
     mc_more: "Learn more",
     final_hook: "Stop managing your household on scattered pieces of paper — or in your head.",
+    trial_badge: "🎁 3-day free trial",
     final_l1: "One subscription for the whole family — not a price per person.",
     final_l2: "No commitment, no hidden fees · Cancel anytime, in one click",
     ask_question: "Ask us your questions →",
@@ -79,7 +82,8 @@ const TRANSLATIONS = {
     pm_title: "What's your phone?",
     pm_sub: "To show you how to install HomeSync",
     pm_android_lbl: "Android", pm_iphone_lbl: "iPhone",
-    pm_skip: "I'm on a computer →",
+    pm_skip: "Log in directly →",
+    pm_skip_direct: "Log in without installing →",
     pm_back: "← Back",
     pm_android_title: "Install on Android",
     pm_android_sub: "3 steps, less than 10 seconds",
@@ -253,6 +257,8 @@ document.getElementById('pmBack2').addEventListener('click', pmShowChoice);
 document.getElementById('pmSkip').addEventListener('click', () => { window.location.href = APP_URL; });
 document.getElementById('pmGoAndroid').addEventListener('click', (e) => { e.preventDefault(); window.location.href = APP_URL; });
 document.getElementById('pmGoIphone').addEventListener('click', (e) => { e.preventDefault(); window.location.href = APP_URL; });
+document.getElementById('pmSkipAndroid').addEventListener('click', () => { window.location.href = APP_URL; });
+document.getElementById('pmSkipIphone').addEventListener('click', () => { window.location.href = APP_URL; });
 pmOverlay.addEventListener('click', (e) => { if (e.target === pmOverlay) pmClose(); });
 
 const gsapReady = (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined');
