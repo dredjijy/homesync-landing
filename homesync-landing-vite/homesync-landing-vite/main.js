@@ -19,6 +19,14 @@ const TRANSLATIONS = {
     final_l2: "Sans engagement, ni frais cachés · Résiliable en un clic, à tout moment",
     ask_question: "Posez-nous vos questions →",
     ask_question_short: "Une question ?",
+    ask_form_title: "Une question ?",
+    ask_form_sub: "On vous répond directement, sous quelques jours.",
+    ask_form_subject_label: "Sujet",
+    ask_form_subject_ph: "Ex : Combien de personnes par foyer ?",
+    ask_form_message_label: "Votre message",
+    ask_form_message_ph: "Écrivez votre question ici…",
+    ask_form_send: "Envoyer",
+    ask_form_hint: "Ouvre votre application email, avec tout déjà rempli.",
     pm_title: "Quel est votre téléphone ?",
     pm_sub: "Pour vous montrer comment installer HomeSync",
     pm_android_lbl: "Android", pm_iphone_lbl: "iPhone",
@@ -60,6 +68,14 @@ const TRANSLATIONS = {
     final_l2: "No commitment, no hidden fees · Cancel anytime, in one click",
     ask_question: "Ask us your questions →",
     ask_question_short: "Got a question?",
+    ask_form_title: "Got a question?",
+    ask_form_sub: "We'll get back to you directly, within a few days.",
+    ask_form_subject_label: "Subject",
+    ask_form_subject_ph: "E.g. How many people per household?",
+    ask_form_message_label: "Your message",
+    ask_form_message_ph: "Write your question here…",
+    ask_form_send: "Send",
+    ask_form_hint: "Opens your email app, with everything pre-filled.",
     pm_title: "What's your phone?",
     pm_sub: "To show you how to install HomeSync",
     pm_android_lbl: "Android", pm_iphone_lbl: "iPhone",
@@ -108,6 +124,10 @@ function applyLang(lang) {
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const key = el.getAttribute('data-i18n');
     if (dict[key] !== undefined) el.textContent = dict[key];
+  });
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+    const key = el.getAttribute('data-i18n-placeholder');
+    if (dict[key] !== undefined) el.setAttribute('placeholder', dict[key]);
   });
   // Panneaux de modules — chaque phrase de la réponse sur sa propre ligne, aérée
   document.querySelectorAll('.mc-panel-inner[data-mc]').forEach(el => {
@@ -178,6 +198,31 @@ function pmShowChoice() {
 }
 function pmOpen() { pmOverlay.classList.add('show'); pmShowChoice(); }
 function pmClose() { pmOverlay.classList.remove('show'); }
+
+// ── Formulaire "Posez-nous vos questions" ──
+const askOverlay = document.getElementById('askOverlay');
+const askForm = document.getElementById('askForm');
+const CONTACT_EMAIL = 'part.kobbaz@outlook.fr';
+
+function askOpen() { askOverlay.classList.add('show'); document.getElementById('askSubject').focus(); }
+function askClose() { askOverlay.classList.remove('show'); }
+
+document.getElementById('askBtnNav').addEventListener('click', askOpen);
+document.getElementById('askBtnFinal').addEventListener('click', askOpen);
+document.getElementById('askClose').addEventListener('click', askClose);
+askOverlay.addEventListener('click', (e) => { if (e.target === askOverlay) askClose(); });
+
+askForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const subject = document.getElementById('askSubject').value.trim();
+  const message = document.getElementById('askMessage').value.trim();
+  if (!subject || !message) return;
+  const mailSubject = encodeURIComponent(`HomeSync — ${subject}`);
+  const mailBody = encodeURIComponent(message);
+  window.location.href = `mailto:${CONTACT_EMAIL}?subject=${mailSubject}&body=${mailBody}`;
+  askClose();
+  askForm.reset();
+});
 
 document.querySelectorAll('#ctaNav,#introCta,#ctaFinal').forEach(el => {
   el.addEventListener('click', (e) => {
