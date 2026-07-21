@@ -259,6 +259,8 @@ document.querySelectorAll('[role="button"]').forEach(el => {
 document.getElementById('pmBack1').addEventListener('click', pmShowChoice);
 document.getElementById('pmBack2').addEventListener('click', pmShowChoice);
 document.getElementById('pmSkip').addEventListener('click', () => { window.location.href = APP_URL; });
+document.getElementById('pmSkipAndroid').addEventListener('click', () => { window.location.href = APP_URL; });
+document.getElementById('pmSkipIphone').addEventListener('click', () => { window.location.href = APP_URL; });
 document.getElementById('pmGoAndroid').addEventListener('click', (e) => { e.preventDefault(); window.location.href = APP_URL; });
 document.getElementById('pmGoIphone').addEventListener('click', (e) => { e.preventDefault(); window.location.href = APP_URL; });
 pmOverlay.addEventListener('click', (e) => { if (e.target === pmOverlay) pmClose(); });
