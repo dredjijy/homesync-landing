@@ -18,10 +18,12 @@ const TRANSLATIONS = {
     trial_badge: "🎁 3 jours d'essai gratuit",
     final_l1: "Un seul abonnement pour toute la famille — pas un prix par personne.",
     final_l2: "Sans engagement, ni frais cachés · Résiliable en un clic, à tout moment",
+    final_trust: "🔒 Paiement sécurisé par Stripe · Vos données restent privées, exportables et supprimables à tout moment",
+    cta_final: "Essayer gratuitement 3 jours",
     ask_question: "Posez-nous vos questions →",
     ask_question_short: "Une question ?",
     ask_form_title: "Une question ?",
-    ask_form_sub: "On vous répond directement, sous quelques jours.",
+    ask_form_sub: "On vous répond rapidement, directement par email.",
     ask_form_subject_label: "Sujet",
     ask_form_subject_ph: "Ex : Combien de personnes par foyer ?",
     ask_form_message_label: "Votre message",
@@ -31,7 +33,7 @@ const TRANSLATIONS = {
     pm_title: "Quel est votre téléphone ?",
     pm_sub: "Pour vous montrer comment installer HomeSync",
     pm_android_lbl: "Android", pm_iphone_lbl: "iPhone",
-    pm_skip: "Se connecter directement →",
+    pm_skip: "Je suis sur ordinateur →",
     pm_skip_direct: "Se connecter sans installer →",
     pm_back: "← Retour",
     pm_android_title: "Installer sur Android",
@@ -69,10 +71,12 @@ const TRANSLATIONS = {
     trial_badge: "🎁 3-day free trial",
     final_l1: "One subscription for the whole family — not a price per person.",
     final_l2: "No commitment, no hidden fees · Cancel anytime, in one click",
+    final_trust: "🔒 Secure payment via Stripe · Your data stays private, exportable and deletable anytime",
+    cta_final: "Try free for 3 days",
     ask_question: "Ask us your questions →",
     ask_question_short: "Got a question?",
     ask_form_title: "Got a question?",
-    ask_form_sub: "We'll get back to you directly, within a few days.",
+    ask_form_sub: "We'll get back to you quickly, directly by email.",
     ask_form_subject_label: "Subject",
     ask_form_subject_ph: "E.g. How many people per household?",
     ask_form_message_label: "Your message",
@@ -82,7 +86,7 @@ const TRANSLATIONS = {
     pm_title: "What's your phone?",
     pm_sub: "To show you how to install HomeSync",
     pm_android_lbl: "Android", pm_iphone_lbl: "iPhone",
-    pm_skip: "Log in directly →",
+    pm_skip: "I'm on a computer →",
     pm_skip_direct: "Log in without installing →",
     pm_back: "← Back",
     pm_android_title: "Install on Android",
@@ -257,8 +261,6 @@ document.getElementById('pmBack2').addEventListener('click', pmShowChoice);
 document.getElementById('pmSkip').addEventListener('click', () => { window.location.href = APP_URL; });
 document.getElementById('pmGoAndroid').addEventListener('click', (e) => { e.preventDefault(); window.location.href = APP_URL; });
 document.getElementById('pmGoIphone').addEventListener('click', (e) => { e.preventDefault(); window.location.href = APP_URL; });
-document.getElementById('pmSkipAndroid').addEventListener('click', () => { window.location.href = APP_URL; });
-document.getElementById('pmSkipIphone').addEventListener('click', () => { window.location.href = APP_URL; });
 pmOverlay.addEventListener('click', (e) => { if (e.target === pmOverlay) pmClose(); });
 
 const gsapReady = (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined');
