@@ -58,6 +58,22 @@ const TRANSLATIONS = {
     mc_recettes_tag: "Recettes", mc_recettes_q: "Qu'est-ce qu'on mange ce soir… et si je planifie pour toute la semaine ?", mc_recettes_a: ["Cuisinez un plat, et les ingrédients sont déduits automatiquement de votre stock.", "Il vous manque quelque chose ? Un bouton l'ajoute directement aux courses.", "Planifiez la semaine, la liste se génère toute seule."],
     mc_agenda_tag: "Agenda", mc_agenda_q: "Qui fait quoi, et quand ?", mc_agenda_a: ["Les dates de péremption du stock y apparaissent automatiquement, tout comme vos charges récurrentes.", "Toute la famille voit les mêmes rendez-vous, en temps réel.", "Un rappel arrive automatiquement avant l'échéance."],
     mc_membres_tag: "Membres", mc_membres_q: "Comment toute la famille reste connectée ?", mc_membres_a: ["Chaque membre se connecte depuis son propre appareil.", "Ce que l'un ajoute, les autres le voient à l'instant.", "Invitez en un clic, avec un simple code ou un QR code.", "Un seul abonnement suffit pour jusqu'à 6 membres — personne ne paie de son côté."],
+
+    gallery_title: "HomeSync, en vrai",
+    gallery_sub: "Un aperçu réel de l'application, telle qu'elle est aujourd'hui.",
+    gallery_disclaimer: "Les captures d'écran peuvent différer de la version actuelle de l'application, qui évolue régulièrement.",
+    gallery_home_title: "Un coup d'œil, toute la situation",
+    gallery_home_text: "Budget du mois, courses en attente, produits qui périment bientôt — tout est là dès l'ouverture.",
+    gallery_stock_title: "Le stock, jamais de surprise",
+    gallery_stock_text: "Fini le lait qui manque au petit-déjeuner — chaque produit est suivi, avec alerte avant la rupture.",
+    gallery_shopping_title: "Les courses, partagées en temps réel",
+    gallery_shopping_text: "Chacun coche ce qu'il a acheté, le prix se calcule automatiquement, tout le monde voit la même liste.",
+    gallery_budget_title: "Le budget, sans tableur",
+    gallery_budget_text: "Qui a dépensé quoi, combien il reste, les charges fixes du mois — clair en un coup d'œil.",
+    gallery_recipes_title: "Les repas de la semaine, planifiés",
+    gallery_recipes_text: "Un menu par jour, et la liste de courses se remplit automatiquement avec ce qui manque.",
+    gallery_tasks_title: "Les tâches, réparties équitablement",
+    gallery_tasks_text: "Qui sort les poubelles cette semaine ? Attribuez une tâche, et faites-la tourner automatiquement si besoin.",
     page_title: "HomeSync by Minzri — L'application qui organise votre foyer, en famille",
     page_desc: "Fini les 'on n'a plus de lait', les additions de courses qui explosent le budget et les rendez-vous oubliés. HomeSync synchronise stock, budget, recettes et agenda pour toute la famille, en temps réel. 3,99€/mois, sans engagement.",
     questions: ["Qu'est-ce qu'il reste à la maison… et quand ça périme ?", "Avant de passer en caisse… combien vais-je payer ?", "Qui fait quoi cette semaine ?"],
@@ -113,6 +129,22 @@ const TRANSLATIONS = {
     mc_recettes_tag: "Recipes", mc_recettes_q: "What's for dinner tonight… and what about planning the whole week?", mc_recettes_a: ["Cook a dish, and ingredients are automatically deducted from your stock.", "Missing something? A button adds it straight to your shopping list.", "Plan the week, the list builds itself."],
     mc_agenda_tag: "Calendar", mc_agenda_q: "Who's doing what, and when?", mc_agenda_a: ["Stock expiry dates appear here automatically, along with your recurring charges.", "The whole family sees the same events, in real time.", "A reminder arrives automatically before the deadline."],
     mc_membres_tag: "Members", mc_membres_q: "How does the whole family stay connected?", mc_membres_a: ["Each member logs in from their own device.", "What one adds, the others see instantly.", "Invite in one click, with a simple code or QR code.", "One subscription covers up to 6 members — no one pays individually."],
+
+    gallery_title: "HomeSync, for real",
+    gallery_sub: "A real look at the app, as it stands today.",
+    gallery_disclaimer: "Screenshots may differ from the current version of the app, which is updated regularly.",
+    gallery_home_title: "One glance, the whole picture",
+    gallery_home_text: "This month's budget, pending shopping, products expiring soon — all there as soon as you open it.",
+    gallery_stock_title: "Stock, never a surprise",
+    gallery_stock_text: "No more running out of milk at breakfast — every product is tracked, with an alert before it runs out.",
+    gallery_shopping_title: "Shopping, shared in real time",
+    gallery_shopping_text: "Everyone checks off what they bought, the price adds up automatically, everyone sees the same list.",
+    gallery_budget_title: "Budget, without a spreadsheet",
+    gallery_budget_text: "Who spent what, how much is left, this month's fixed charges — clear at a glance.",
+    gallery_recipes_title: "This week's meals, planned",
+    gallery_recipes_text: "One meal per day, and the shopping list fills up automatically with what's missing.",
+    gallery_tasks_title: "Chores, shared fairly",
+    gallery_tasks_text: "Whose turn is it to take out the trash this week? Assign a task, and let it rotate automatically if needed.",
     page_title: "HomeSync by Minzri — The app that organizes your household, as a family",
     page_desc: "No more 'we're out of milk', grocery totals that blow the budget, or forgotten appointments. HomeSync syncs stock, budget, recipes and calendar for the whole family, in real time. $3.99/month, no commitment.",
     questions: ["What's left at home… and when does it expire?", "Before I check out… how much will I pay?", "Who's doing what this week?"],
@@ -406,3 +438,35 @@ const navEl = document.getElementById('nav');
 const updateNavBg = () => { navEl.classList.toggle('scrolled', window.scrollY > 40); };
 window.addEventListener('scroll', updateNavBg, { passive:true });
 updateNavBg();
+
+// ── Galerie de captures d'écran — carrousel simple, sans dépendance ──
+(function initGallery() {
+  const slides = Array.from(document.querySelectorAll('.gallery-slide'));
+  const dotsWrap = document.getElementById('galleryDots');
+  const prevBtn = document.getElementById('galleryPrev');
+  const nextBtn = document.getElementById('galleryNext');
+  if (!slides.length || !dotsWrap || !prevBtn || !nextBtn) return;
+
+  let current = 0;
+  slides.forEach((_, i) => {
+    const dot = document.createElement('button');
+    dot.className = 'gallery-dot' + (i === 0 ? ' active' : '');
+    dot.setAttribute('aria-label', `Slide ${i + 1}`);
+    dot.addEventListener('click', () => goTo(i));
+    dotsWrap.appendChild(dot);
+  });
+  const dots = Array.from(dotsWrap.children);
+
+  function goTo(i) {
+    current = (i + slides.length) % slides.length;
+    slides.forEach((s, idx) => s.classList.toggle('active', idx === current));
+    dots.forEach((d, idx) => d.classList.toggle('active', idx === current));
+  }
+  prevBtn.addEventListener('click', () => goTo(current - 1));
+  nextBtn.addEventListener('click', () => goTo(current + 1));
+
+  // Défilement automatique discret, en pause si l'utilisateur interagit
+  let autoTimer = setInterval(() => goTo(current + 1), 5000);
+  const pauseAuto = () => { clearInterval(autoTimer); autoTimer = null; };
+  [prevBtn, nextBtn, ...dots].forEach(el => el.addEventListener('click', pauseAuto));
+})();
