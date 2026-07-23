@@ -32,16 +32,20 @@ const TRANSLATIONS = {
     ask_form_send: "Envoyer",
     ask_form_hint: "Ouvre votre application email, avec tout déjà rempli.",
     pm_title: "Sur quel appareil ?",
-    pm_sub: "Pour démarrer votre essai gratuit du bon côté",
+    pm_sub: "Choisissez votre appareil pour l'installer en quelques secondes",
     pm_pc_lbl: "Ordinateur",
+    pm_direct_login: "Connexion / Inscription",
+    pm_direct_hint: "Déjà décidé ? Passez directement à l'app, sans les étapes d'installation.",
+    pm_download_lbl: "Télécharger l'application",
+    pm_or: "ou",
     pm_android_lbl: "Android", pm_iphone_lbl: "iPhone",
     pm_skip: "Je suis sur ordinateur →",
     pm_skip_direct: "Se connecter sans installer →",
     pm_back: "← Retour",
     pm_android_title: "Installer sur Android",
     pm_android_sub: "3 étapes, moins de 10 secondes",
-    pm_a_step1_t: "Appuyez sur \"Continuer\"", pm_a_step1_d: "Vous arrivez sur HomeSync",
-    pm_a_step2_t: "Une bannière \"Installer\" apparaît", pm_a_step2_d: "En haut de l'écran de connexion",
+    pm_a_step1_t: "Appuyez sur \"Continuer\" ci-dessous", pm_a_step1_d: "Vous arrivez directement sur HomeSync",
+    pm_a_step2_t: "Une bannière \"Installer\" apparaît toute seule", pm_a_step2_d: "En haut de l'écran, dès votre arrivée",
     pm_a_step3_t: "Appuyez dessus, confirmez", pm_a_step3_d: "HomeSync s'ajoute à votre écran d'accueil",
     pm_continue: "Commencer mon essai gratuit →",
     pm_iphone_title: "Installer sur iPhone",
@@ -103,16 +107,20 @@ const TRANSLATIONS = {
     ask_form_send: "Send",
     ask_form_hint: "Opens your email app, with everything pre-filled.",
     pm_title: "Which device?",
-    pm_sub: "To start your free trial the right way",
+    pm_sub: "Pick your device to install it in a few seconds",
     pm_pc_lbl: "Computer",
+    pm_direct_login: "Log in / Sign up",
+    pm_direct_hint: "Already decided? Skip straight to the app, no install steps.",
+    pm_download_lbl: "Download the app",
+    pm_or: "or",
     pm_android_lbl: "Android", pm_iphone_lbl: "iPhone",
     pm_skip: "I'm on a computer →",
     pm_skip_direct: "Log in without installing →",
     pm_back: "← Back",
     pm_android_title: "Install on Android",
     pm_android_sub: "3 steps, less than 10 seconds",
-    pm_a_step1_t: "Tap \"Continue\"", pm_a_step1_d: "You'll land on HomeSync",
-    pm_a_step2_t: "An \"Install\" banner appears", pm_a_step2_d: "At the top of the login screen",
+    pm_a_step1_t: "Tap \"Continue\" below", pm_a_step1_d: "You'll land directly on HomeSync",
+    pm_a_step2_t: "An \"Install\" banner appears on its own", pm_a_step2_d: "At the top of the screen, right as you arrive",
     pm_a_step3_t: "Tap it, confirm", pm_a_step3_d: "HomeSync is added to your home screen",
     pm_continue: "Start my free trial →",
     pm_iphone_title: "Install on iPhone",
@@ -294,11 +302,12 @@ document.querySelectorAll('[role="button"]').forEach(el => {
 });
 document.getElementById('pmBack1').addEventListener('click', pmShowChoice);
 document.getElementById('pmBack2').addEventListener('click', pmShowChoice);
-document.getElementById('pmSkip').addEventListener('click', () => { window.location.href = APP_URL; });
-document.getElementById('pmSkipAndroid').addEventListener('click', () => { window.location.href = APP_URL; });
-document.getElementById('pmSkipIphone').addEventListener('click', () => { window.location.href = APP_URL; });
-document.getElementById('pmGoAndroid').addEventListener('click', (e) => { e.preventDefault(); window.location.href = APP_URL; });
-document.getElementById('pmGoIphone').addEventListener('click', (e) => { e.preventDefault(); window.location.href = APP_URL; });
+document.getElementById('pmSkip').addEventListener('click', () => { window.location.href = APP_URL + '?start=login'; });
+document.getElementById('pmDirectLogin').addEventListener('click', (e) => { e.preventDefault(); window.location.href = APP_URL + '?start=login'; });
+document.getElementById('pmSkipAndroid').addEventListener('click', () => { window.location.href = APP_URL + '?start=login'; });
+document.getElementById('pmSkipIphone').addEventListener('click', () => { window.location.href = APP_URL + '?start=login'; });
+document.getElementById('pmGoAndroid').addEventListener('click', (e) => { e.preventDefault(); window.location.href = APP_URL + '?start=login'; });
+document.getElementById('pmGoIphone').addEventListener('click', (e) => { e.preventDefault(); window.location.href = APP_URL + '?start=login'; });
 pmOverlay.addEventListener('click', (e) => { if (e.target === pmOverlay) pmClose(); });
 
 const gsapReady = (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined');
