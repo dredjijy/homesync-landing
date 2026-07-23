@@ -469,4 +469,21 @@ updateNavBg();
   let autoTimer = setInterval(() => goTo(current + 1), 5000);
   const pauseAuto = () => { clearInterval(autoTimer); autoTimer = null; };
   [prevBtn, nextBtn, ...dots].forEach(el => el.addEventListener('click', pauseAuto));
+
+  // Zoom au clic sur une image — lightbox plein écran
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightboxImg');
+  const lightboxClose = document.getElementById('lightboxClose');
+  const openLightbox = (src, alt) => {
+    lightboxImg.src = src; lightboxImg.alt = alt;
+    lightbox.classList.add('show');
+  };
+  const closeLightbox = () => lightbox.classList.remove('show');
+  slides.forEach(slide => {
+    const img = slide.querySelector('img');
+    if (img) img.addEventListener('click', () => { pauseAuto(); openLightbox(img.src, img.alt); });
+  });
+  lightboxClose.addEventListener('click', closeLightbox);
+  lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
 })();
