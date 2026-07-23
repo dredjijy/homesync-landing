@@ -18,8 +18,10 @@ const TRANSLATIONS = {
     intro_trust: "🎁 7 jours d'essai gratuit · Sans engagement · Résiliable à tout moment",
     trial_badge: "🎁 7 jours d'essai gratuit",
     final_l1: "Un seul abonnement pour toute la famille, jusqu'à 6 membres — pas un prix par personne.",
-    final_l2: "Sans engagement, ni frais cachés · Résiliable en un clic, à tout moment",
-    final_trust: "🔒 Paiement sécurisé par Stripe · Vos données restent privées, exportables et supprimables à tout moment",
+    final_l2a: "Sans engagement, ni frais cachés",
+    final_l2b: "Résiliable en un clic, à tout moment",
+    final_trust_a: "🔒 Paiement sécurisé par Stripe",
+    final_trust_b: "Vos données restent privées, exportables et supprimables à tout moment",
     cta_final: "Essayer gratuitement 7 jours",
     ask_question: "Posez-nous vos questions →",
     ask_question_short: "Une question ?",
@@ -38,6 +40,12 @@ const TRANSLATIONS = {
     pm_direct_hint: "Déjà décidé ? Passez directement à l'app, sans les étapes d'installation.",
     pm_download_lbl: "Télécharger l'application",
     pm_or: "ou",
+    pm_desktop_title: "Installer sur ordinateur",
+    pm_desktop_sub: "Chrome, Edge, Opera, Brave...",
+    pm_d_step1_t: "Appuyez sur \"Continuer\" ci-dessous", pm_d_step1_d: "Vous arrivez directement sur HomeSync",
+    pm_d_step2_t: "Repérez l'icône d'installation", pm_d_step2_d: "Dans la barre d'adresse, à droite — une icône ⊕ ou un écran avec une flèche",
+    pm_d_step3_t: "Cliquez dessus, confirmez", pm_d_step3_d: "HomeSync s'installe comme une vraie application",
+    pm_desktop_note: "Sur Firefox ou Safari (Mac), l'installation n'est pas proposée — vous pouvez utiliser HomeSync directement dans le navigateur, sans rien installer.",
     pm_android_lbl: "Android", pm_iphone_lbl: "iPhone",
     pm_skip: "Je suis sur ordinateur →",
     pm_skip_direct: "Se connecter sans installer →",
@@ -93,8 +101,10 @@ const TRANSLATIONS = {
     intro_trust: "🎁 7-day free trial · No commitment · Cancel anytime",
     trial_badge: "🎁 7-day free trial",
     final_l1: "One subscription for the whole family, up to 6 members — not a price per person.",
-    final_l2: "No commitment, no hidden fees · Cancel anytime, in one click",
-    final_trust: "🔒 Secure payment via Stripe · Your data stays private, exportable and deletable anytime",
+    final_l2a: "No commitment, no hidden fees",
+    final_l2b: "Cancel anytime, in one click",
+    final_trust_a: "🔒 Secure payment via Stripe",
+    final_trust_b: "Your data stays private, exportable and deletable anytime",
     cta_final: "Try free for 7 days",
     ask_question: "Ask us your questions →",
     ask_question_short: "Got a question?",
@@ -113,6 +123,12 @@ const TRANSLATIONS = {
     pm_direct_hint: "Already decided? Skip straight to the app, no install steps.",
     pm_download_lbl: "Download the app",
     pm_or: "or",
+    pm_desktop_title: "Install on computer",
+    pm_desktop_sub: "Chrome, Edge, Opera, Brave...",
+    pm_d_step1_t: "Tap \"Continue\" below", pm_d_step1_d: "You'll land directly on HomeSync",
+    pm_d_step2_t: "Look for the install icon", pm_d_step2_d: "In the address bar, on the right — an ⊕ icon or a screen with an arrow",
+    pm_d_step3_t: "Click it, confirm", pm_d_step3_d: "HomeSync installs as a real application",
+    pm_desktop_note: "On Firefox or Safari (Mac), installation isn't available — you can use HomeSync directly in the browser, no install needed.",
     pm_android_lbl: "Android", pm_iphone_lbl: "iPhone",
     pm_skip: "I'm on a computer →",
     pm_skip_direct: "Log in without installing →",
@@ -242,11 +258,13 @@ const pmOverlay = document.getElementById('pmOverlay');
 const pmChoiceScreen = document.getElementById('pmChoiceScreen');
 const pmStepsAndroid = document.getElementById('pmStepsAndroid');
 const pmStepsIphone  = document.getElementById('pmStepsIphone');
+const pmStepsDesktop = document.getElementById('pmStepsDesktop');
 
 function pmShowChoice() {
   pmChoiceScreen.style.display = 'block';
   pmStepsAndroid.classList.remove('show');
   pmStepsIphone.classList.remove('show');
+  pmStepsDesktop.classList.remove('show');
 }
 function pmOpen() { pmOverlay.classList.add('show'); pmShowChoice(); }
 function pmClose() { pmOverlay.classList.remove('show'); }
@@ -291,6 +309,10 @@ document.getElementById('pmIphone').addEventListener('click', () => {
   pmChoiceScreen.style.display = 'none';
   pmStepsIphone.classList.add('show');
 });
+document.getElementById('pmSkip').addEventListener('click', () => {
+  pmChoiceScreen.style.display = 'none';
+  pmStepsDesktop.classList.add('show');
+});
 // Accessibilité clavier pour tous les éléments agissant comme des boutons (role="button")
 document.querySelectorAll('[role="button"]').forEach(el => {
   el.addEventListener('keydown', e => {
@@ -302,12 +324,11 @@ document.querySelectorAll('[role="button"]').forEach(el => {
 });
 document.getElementById('pmBack1').addEventListener('click', pmShowChoice);
 document.getElementById('pmBack2').addEventListener('click', pmShowChoice);
-document.getElementById('pmSkip').addEventListener('click', () => { window.location.href = APP_URL + '?start=login'; });
+document.getElementById('pmBack3').addEventListener('click', pmShowChoice);
 document.getElementById('pmDirectLogin').addEventListener('click', (e) => { e.preventDefault(); window.location.href = APP_URL + '?start=login'; });
-document.getElementById('pmSkipAndroid').addEventListener('click', () => { window.location.href = APP_URL + '?start=login'; });
-document.getElementById('pmSkipIphone').addEventListener('click', () => { window.location.href = APP_URL + '?start=login'; });
 document.getElementById('pmGoAndroid').addEventListener('click', (e) => { e.preventDefault(); window.location.href = APP_URL + '?start=login'; });
 document.getElementById('pmGoIphone').addEventListener('click', (e) => { e.preventDefault(); window.location.href = APP_URL + '?start=login'; });
+document.getElementById('pmGoDesktop').addEventListener('click', (e) => { e.preventDefault(); window.location.href = APP_URL + '?start=login'; });
 pmOverlay.addEventListener('click', (e) => { if (e.target === pmOverlay) pmClose(); });
 
 const gsapReady = (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined');
