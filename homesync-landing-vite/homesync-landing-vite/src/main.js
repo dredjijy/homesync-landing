@@ -26,6 +26,7 @@ const TRANSLATIONS = {
     ask_question: "Posez-nous vos questions →",
     ask_question_short: "Une question ?",
     nav_ambassador: "🤝 Devenir ambassadeur",
+    ambassador_soon: "🚧 Bientôt disponible !",
     ask_form_title: "Une question ?",
     ask_form_sub: "On vous répond rapidement, directement par email.",
     ask_form_subject_label: "Sujet",
@@ -131,6 +132,7 @@ const TRANSLATIONS = {
     ask_question: "Ask us your questions →",
     ask_question_short: "Got a question?",
     nav_ambassador: "🤝 Become an ambassador",
+    ambassador_soon: "🚧 Coming soon!",
     ask_form_title: "Got a question?",
     ask_form_sub: "We'll get back to you quickly, directly by email.",
     ask_form_subject_label: "Subject",
@@ -601,5 +603,18 @@ updateNavBg();
       items.forEach(i => { i.classList.remove('open'); i.querySelector('.faq-q').setAttribute('aria-expanded', 'false'); });
       if (!wasOpen) { item.classList.add('open'); btn.setAttribute('aria-expanded', 'true'); }
     });
+  });
+})();
+
+// ── Bouton "Devenir ambassadeur" — en construction, affiche un message le temps que le site soit prêt ──
+(function initAmbassadorSoon() {
+  const btn = document.getElementById('ctaAmbassador');
+  const toast = document.getElementById('soonToast');
+  if (!btn || !toast) return;
+  let hideTimer = null;
+  btn.addEventListener('click', () => {
+    toast.classList.add('show');
+    clearTimeout(hideTimer);
+    hideTimer = setTimeout(() => toast.classList.remove('show'), 2600);
   });
 })();
