@@ -25,6 +25,7 @@ const TRANSLATIONS = {
     cta_final: "Essayer gratuitement 7 jours",
     ask_question: "Posez-nous vos questions →",
     ask_question_short: "Une question ?",
+    nav_ambassador: "🤝 Devenir ambassadeur",
     ask_form_title: "Une question ?",
     ask_form_sub: "On vous répond rapidement, directement par email.",
     ask_form_subject_label: "Sujet",
@@ -64,6 +65,27 @@ const TRANSLATIONS = {
     fb1_q: "Qu'est-ce qu'il reste à la maison ?", fb1_title: "Ne rachetez plus ce que vous avez déjà.", fb1_text: "Consultez votre stock en temps réel et sachez immédiatement ce qu'il reste chez vous.",
     fb2_q: "Combien vais-je payer à la caisse ?", fb2_title: "Connaissez le total avant d'arriver en caisse.", fb2_text: "Ajoutez les prix pendant vos courses et gardez votre budget sous contrôle.",
     fb3_q: "Qui fait quoi cette semaine ?", fb3_title: "Toute la famille sait quoi faire.", fb3_text: "Rendez-vous, tâches et événements sont synchronisés automatiquement.",
+
+    forwho_title: "Ça, c'est peut-être vous",
+    forwho1_title: "Parents qui jonglent",
+    forwho1_text: "Entre le travail, les enfants et les courses de dernière minute — plus besoin de tout garder en tête.",
+    forwho2_title: "Colocataires",
+    forwho2_text: "Qui a payé quoi, qui doit acheter le sopalin — les charges partagées sans prise de tête.",
+    forwho3_title: "Familles recomposées",
+    forwho3_text: "Plusieurs foyers à coordonner, plusieurs plannings — un seul endroit pour tout suivre.",
+
+    founder_quote: "On l'a créé parce qu'on en avait besoin nous-mêmes. On était mal organisés entre le travail de chacun, on faisait les courses en vitesse en oubliant la moitié, on rachetait en double des trucs qu'on avait déjà — et le budget était toujours serré à la fin du mois. HomeSync, c'est ce qu'on aurait voulu avoir depuis le début.",
+    founder_sign: "— Minzri",
+
+    faq_title: "Encore une question ?",
+    faq1_q: "Mes données sont-elles vraiment privées ?",
+    faq1_a: "Oui. Vos données ne sont jamais vendues ni partagées. Vous pouvez les exporter ou supprimer votre compte à tout moment, directement depuis l'application.",
+    faq2_q: "C'est facile d'annuler ?",
+    faq2_a: "En un clic, depuis l'application, à tout moment. Aucun engagement, aucun frais caché, aucun appel à passer.",
+    faq3_q: "Combien de personnes peuvent rejoindre le foyer ?",
+    faq3_a: "Jusqu'à 6 membres, avec un seul abonnement — pas de prix par personne.",
+    faq4_q: "Un enfant peut avoir son propre accès ?",
+    faq4_a: "Oui, chaque membre du foyer a son propre compte et se connecte depuis son propre appareil.",
     mc_stock_tag: "Stock", mc_stock_q: "Qu'est-ce qu'il me reste à la maison ?", mc_stock_a: ["Chaque produit affiche sa date de péremption, pour ne jamais être pris de court.", "Cuisinez une recette et le stock se met à jour tout seul.", "Presque vide ? L'article part directement dans vos courses."],
     mc_courses_tag: "Courses", mc_courses_q: "Qu'est-ce qu'il faut racheter ?", mc_courses_a: ["Ajoutez un article en tapant, ou collez toute une liste d'un coup.", "Cochez au fur et à mesure — une fois validée, la liste rejoint automatiquement le stock.", "Vos listes types se sauvegardent pour la semaine suivante."],
     mc_budget_tag: "Budget", mc_budget_q: "Combien vais-je dépenser ce mois-ci ?", mc_budget_a: ["Le total se calcule pendant vos courses, avant même la caisse.", "Connecté directement aux courses et aux charges récurrentes comme le loyer.", "Un résumé s'exporte en PDF à tout moment."],
@@ -108,6 +130,7 @@ const TRANSLATIONS = {
     cta_final: "Try free for 7 days",
     ask_question: "Ask us your questions →",
     ask_question_short: "Got a question?",
+    nav_ambassador: "🤝 Become an ambassador",
     ask_form_title: "Got a question?",
     ask_form_sub: "We'll get back to you quickly, directly by email.",
     ask_form_subject_label: "Subject",
@@ -147,6 +170,27 @@ const TRANSLATIONS = {
     fb1_q: "What's left at home?", fb1_title: "Stop buying what you already have.", fb1_text: "Check your stock in real time and know instantly what's left at home.",
     fb2_q: "How much will I pay at checkout?", fb2_title: "Know the total before you reach the register.", fb2_text: "Add prices as you shop and keep your budget under control.",
     fb3_q: "Who's doing what this week?", fb3_title: "The whole family knows what to do.", fb3_text: "Appointments, tasks and events sync automatically.",
+
+    forwho_title: "This might be you",
+    forwho1_title: "Parents juggling it all",
+    forwho1_text: "Between work, the kids, and last-minute grocery runs — no need to keep it all in your head anymore.",
+    forwho2_title: "Roommates",
+    forwho2_text: "Who paid for what, who's buying paper towels — shared expenses without the headache.",
+    forwho3_title: "Blended families",
+    forwho3_text: "Several households to coordinate, several schedules — one single place to track it all.",
+
+    founder_quote: "We built this because we needed it ourselves. We were poorly organized between everyone's work schedules, we'd rush through grocery shopping and forget half of it, we'd buy duplicates of things we already had — and the budget was always tight by the end of the month. HomeSync is what we wish we'd had from the start.",
+    founder_sign: "— Minzri",
+
+    faq_title: "Still have a question?",
+    faq1_q: "Is my data really private?",
+    faq1_a: "Yes. Your data is never sold or shared. You can export it or delete your account at any time, directly from the app.",
+    faq2_q: "Is it easy to cancel?",
+    faq2_a: "One click, from the app, anytime. No commitment, no hidden fees, no call to make.",
+    faq3_q: "How many people can join the household?",
+    faq3_a: "Up to 6 members, with a single subscription — no per-person pricing.",
+    faq4_q: "Can a child have their own access?",
+    faq4_a: "Yes, each household member has their own account and logs in from their own device.",
     mc_stock_tag: "Stock", mc_stock_q: "What's left at home?", mc_stock_a: ["Every product shows its expiry date, so you're never caught off guard.", "Cook a recipe and the stock updates itself.", "Almost empty? The item goes straight to your shopping list."],
     mc_courses_tag: "Shopping", mc_courses_q: "What do I need to buy?", mc_courses_a: ["Add an item by typing, or paste a whole list at once.", "Check items off as you go — once validated, the list automatically joins the stock.", "Save your usual lists for next week."],
     mc_budget_tag: "Budget", mc_budget_q: "How much will I spend this month?", mc_budget_a: ["The total is calculated as you shop, before you even reach the register.", "Directly connected to shopping and recurring charges like rent.", "Export a summary as PDF anytime."],
@@ -253,6 +297,35 @@ document.querySelectorAll('.module-card').forEach(card => {
 
 const APP_URL = "https://home-sync-beta.vercel.app";
 
+// ── Programme ambassadeurs — capture du code de parrainage ──
+// Si quelqu'un arrive via un lien du type homesync.app/?ref=JEAN123, on
+// conserve ce code en localStorage (30 jours) pour qu'il survive une visite
+// ultérieure, puis on l'ajoute à chaque lien vers l'app — c'est ce qui permet
+// à create-checkout-session de le transmettre à Stripe au moment de l'abonnement.
+(function captureReferralCode() {
+  try {
+    const params = new URLSearchParams(location.search);
+    const ref = params.get('ref');
+    if (ref) {
+      localStorage.setItem('homesync_ref_code', ref.trim().toUpperCase());
+      localStorage.setItem('homesync_ref_captured_at', String(Date.now()));
+    }
+  } catch {}
+})();
+function getAppUrlWithRef(baseParams = '') {
+  let ref = '';
+  try {
+    const stored = localStorage.getItem('homesync_ref_code');
+    const capturedAt = Number(localStorage.getItem('homesync_ref_captured_at') || 0);
+    const THIRTY_DAYS = 30 * 24 * 60 * 60 * 1000;
+    if (stored && (Date.now() - capturedAt) < THIRTY_DAYS) ref = stored;
+  } catch {}
+  const params = new URLSearchParams(baseParams);
+  if (ref) params.set('ref', ref);
+  const qs = params.toString();
+  return APP_URL + (qs ? '?' + qs : '');
+}
+
 // ── Modale de choix plateforme — interceptée sur les 3 CTA "Commencer" ──
 const pmOverlay = document.getElementById('pmOverlay');
 const pmChoiceScreen = document.getElementById('pmChoiceScreen');
@@ -325,10 +398,10 @@ document.querySelectorAll('[role="button"]').forEach(el => {
 document.getElementById('pmBack1').addEventListener('click', pmShowChoice);
 document.getElementById('pmBack2').addEventListener('click', pmShowChoice);
 document.getElementById('pmBack3').addEventListener('click', pmShowChoice);
-document.getElementById('pmDirectLogin').addEventListener('click', (e) => { e.preventDefault(); window.location.href = APP_URL + '?start=login'; });
-document.getElementById('pmGoAndroid').addEventListener('click', (e) => { e.preventDefault(); window.location.href = APP_URL + '?start=login'; });
-document.getElementById('pmGoIphone').addEventListener('click', (e) => { e.preventDefault(); window.location.href = APP_URL + '?start=login'; });
-document.getElementById('pmGoDesktop').addEventListener('click', (e) => { e.preventDefault(); window.location.href = APP_URL + '?start=login'; });
+document.getElementById('pmDirectLogin').addEventListener('click', (e) => { e.preventDefault(); window.location.href = getAppUrlWithRef('start=login'); });
+document.getElementById('pmGoAndroid').addEventListener('click', (e) => { e.preventDefault(); window.location.href = getAppUrlWithRef('start=login'); });
+document.getElementById('pmGoIphone').addEventListener('click', (e) => { e.preventDefault(); window.location.href = getAppUrlWithRef('start=login'); });
+document.getElementById('pmGoDesktop').addEventListener('click', (e) => { e.preventDefault(); window.location.href = getAppUrlWithRef('start=login'); });
 pmOverlay.addEventListener('click', (e) => { if (e.target === pmOverlay) pmClose(); });
 
 const gsapReady = (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined');
@@ -516,4 +589,17 @@ updateNavBg();
   lightboxClose.addEventListener('click', closeLightbox);
   lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+})();
+
+// ── FAQ — accordéon simple, un seul item ouvert à la fois ──
+(function initFaq() {
+  const items = Array.from(document.querySelectorAll('.faq-item'));
+  items.forEach(item => {
+    const btn = item.querySelector('.faq-q');
+    btn.addEventListener('click', () => {
+      const wasOpen = item.classList.contains('open');
+      items.forEach(i => { i.classList.remove('open'); i.querySelector('.faq-q').setAttribute('aria-expanded', 'false'); });
+      if (!wasOpen) { item.classList.add('open'); btn.setAttribute('aria-expanded', 'true'); }
+    });
+  });
 })();
