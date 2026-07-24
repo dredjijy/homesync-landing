@@ -982,7 +982,7 @@ updateNavBg();
   }
 
   // ── Panneau admin — visible seulement pour l'email admin, sécurité réelle côté serveur ──
-  const ADMIN_EMAILS = ["ton-email@exemple.com"]; // ⚠️ doit correspondre à l'Edge Function
+  const ADMIN_EMAILS = ["part.kobbaz@outlook.fr"]; // ⚠️ doit correspondre à l'Edge Function
   const adminSection = document.getElementById('ambAdminSection');
   const adminTabPending = document.getElementById('ambAdminTabPending');
   const adminTabAll = document.getElementById('ambAdminTabAll');
