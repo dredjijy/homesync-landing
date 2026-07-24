@@ -27,6 +27,29 @@ const TRANSLATIONS = {
     ask_question_short: "Une question ?",
     nav_ambassador: "🤝 Devenir ambassadeur",
     amb_login_title: "Espace ambassadeur",
+    amb_welcome_title: "Bienvenue, futur ambassadeur !",
+    amb_welcome_sub: "Partagez votre lien HomeSync, et gagnez un revenu récurrent — simplement.",
+    amb_explain_commission: "à chaque paiement Stripe réussi d'une personne que vous avez parrainée — tant qu'elle reste abonnée.",
+    amb_explain_payout_when: "Versé chaque mois (le 5)",
+    amb_explain_payout: "dès que votre solde atteint 15 €. En dessous, il s'accumule simplement au mois suivant.",
+    amb_faq_title: "❓ Comment ça marche",
+    amb_explain_pending: "Un compte \"en attente\" est en cours de vérification — votre lien fonctionne déjà, les commissions s'activent dès la validation.",
+    amb_community_title: "🏆 Communauté",
+    amb_leaderboard_lbl: "Classement — clients actifs apportés",
+    amb_leaderboard_empty: "Pas encore de classement disponible.",
+    amb_lb_customers_suffix: "clients",
+    amb_contact_btn: "📨 Nous contacter",
+    amb_admin_tab_pending: "En attente",
+    amb_admin_tab_all: "Tous",
+    amb_admin_tab_post: "Publier",
+    amb_admin_post_title_lbl: "Titre",
+    amb_admin_post_body_lbl: "Message",
+    amb_admin_post_submit: "Publier l'actualité",
+    amb_admin_approve: "✅ Accepter",
+    amb_admin_reject: "✕ Refuser",
+    amb_admin_no_pending: "Aucun candidat pour l'instant.",
+    amb_admin_reactivate: "Réactiver",
+    amb_admin_suspend: "Suspendre",
     amb_login_sub: "Connectez-vous pour accéder à votre tableau de bord.",
     amb_app_user_hint: "Déjà un compte HomeSync ? Connectez-vous directement avec — votre profil ambassadeur se crée automatiquement.",
     amb_login_submit: "Se connecter",
@@ -166,6 +189,29 @@ const TRANSLATIONS = {
     ask_question_short: "Got a question?",
     nav_ambassador: "🤝 Become an ambassador",
     amb_login_title: "Ambassador space",
+    amb_welcome_title: "Welcome, future ambassador!",
+    amb_welcome_sub: "Share your HomeSync link, and earn a recurring income — simply.",
+    amb_explain_commission: "for every successful Stripe payment from someone you referred — for as long as they stay subscribed.",
+    amb_explain_payout_when: "Paid out every month (on the 5th)",
+    amb_explain_payout: "as soon as your balance reaches 15 €. Below that, it simply carries over to the next month.",
+    amb_faq_title: "❓ How it works",
+    amb_explain_pending: "A \"pending\" account is being reviewed — your link already works, commissions activate once approved.",
+    amb_community_title: "🏆 Community",
+    amb_leaderboard_lbl: "Leaderboard — active customers brought in",
+    amb_leaderboard_empty: "No leaderboard available yet.",
+    amb_lb_customers_suffix: "customers",
+    amb_contact_btn: "📨 Contact us",
+    amb_admin_tab_pending: "Pending",
+    amb_admin_tab_all: "All",
+    amb_admin_tab_post: "Post",
+    amb_admin_post_title_lbl: "Title",
+    amb_admin_post_body_lbl: "Message",
+    amb_admin_post_submit: "Publish news",
+    amb_admin_approve: "✅ Approve",
+    amb_admin_reject: "✕ Reject",
+    amb_admin_no_pending: "No candidates yet.",
+    amb_admin_reactivate: "Reactivate",
+    amb_admin_suspend: "Suspend",
     amb_login_sub: "Log in to access your dashboard.",
     amb_app_user_hint: "Already have a HomeSync account? Log in directly with it — your ambassador profile is created automatically.",
     amb_login_submit: "Log in",
@@ -853,6 +899,8 @@ updateNavBg();
     }
 
     dashOverlay.classList.add('show');
+    loadCommunity();
+    checkAdmin(user);
   }
 
   copyLinkBtn.addEventListener('click', () => {
@@ -885,5 +933,152 @@ updateNavBg();
     await supabase.auth.signOut();
     dashOverlay.classList.remove('show');
     currentAmbassador = null;
+  });
+
+  // ── Nous contacter ──
+  const contactBtn = document.getElementById('ambContactBtn');
+  const CONTACT_EMAIL = "contact@homesync-app.com"; // ⚠️ remplace par ta vraie adresse
+  contactBtn.addEventListener('click', () => {
+    const name = currentAmbassador?.name || '';
+    const email = currentAmbassador?.email || '';
+    const subject = encodeURIComponent('HomeSync Ambassadeurs — Question');
+    const body = encodeURIComponent(`Nom : ${name}\nEmail : ${email}\n\n`);
+    window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
+  });
+
+  // ── Communauté — actualités + classement ──
+  const newsList = document.getElementById('ambNewsList');
+  const leaderboardList = document.getElementById('ambLeaderboard');
+
+  async function loadCommunity() {
+    const { data: posts } = await supabase.from('ambassador_posts').select('*').order('created_at', { ascending: false }).limit(10);
+    if (posts && posts.length) {
+      newsList.innerHTML = posts.map(p => {
+        const d = new Date(p.created_at).toLocaleDateString(currentLang === 'en' ? 'en-US' : 'fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
+        return `<div class="amb-news-card"><div class="amb-news-title">${escapeHtml(p.title)}</div><div class="amb-news-body">${escapeHtml(p.body)}</div><div class="amb-news-date">${d}</div></div>`;
+      }).join('');
+    } else {
+      newsList.innerHTML = '';
+    }
+
+    const { data: board } = await supabase.from('ambassador_leaderboard').select('*').order('rank', { ascending: true });
+    if (board && board.length) {
+      leaderboardList.innerHTML = board.map(b => `
+        <div class="amb-leaderboard-row">
+          <span class="amb-lb-rank">#${b.rank}</span>
+          <span class="amb-lb-name">${escapeHtml(b.name)}</span>
+          <span class="amb-lb-count">${b.active_customers} ${translate('amb_lb_customers_suffix')}</span>
+        </div>
+      `).join('');
+    } else {
+      leaderboardList.innerHTML = `<p class="amb-empty">${translate('amb_leaderboard_empty')}</p>`;
+    }
+  }
+
+  function escapeHtml(str) {
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+
+  // ── Panneau admin — visible seulement pour l'email admin, sécurité réelle côté serveur ──
+  const ADMIN_EMAILS = ["ton-email@exemple.com"]; // ⚠️ doit correspondre à l'Edge Function
+  const adminSection = document.getElementById('ambAdminSection');
+  const adminTabPending = document.getElementById('ambAdminTabPending');
+  const adminTabAll = document.getElementById('ambAdminTabAll');
+  const adminTabPost = document.getElementById('ambAdminTabPost');
+  const adminPendingList = document.getElementById('ambAdminPendingList');
+  const adminAllList = document.getElementById('ambAdminAllList');
+  const adminPostForm = document.getElementById('ambAdminPostForm');
+
+  async function callAdminAction(payload) {
+    const { data: { session } } = await supabase.auth.getSession();
+    const res = await fetch(`${SUPA_URL}/functions/v1/admin-ambassador-actions`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${session.access_token}` },
+      body: JSON.stringify(payload),
+    });
+    return res.json();
+  }
+
+  async function checkAdmin(user) {
+    if (!ADMIN_EMAILS.includes((user.email || '').toLowerCase())) { adminSection.style.display = 'none'; return; }
+    adminSection.style.display = '';
+    await loadPendingList();
+  }
+
+  async function loadPendingList() {
+    const result = await callAdminAction({ action: 'list_pending' });
+    const items = result.ambassadors || [];
+    adminPendingList.innerHTML = items.length ? items.map(a => `
+      <div class="amb-admin-card">
+        <div class="amb-admin-card-row">
+          <div><div class="amb-admin-card-name">${escapeHtml(a.name)}</div><div class="amb-admin-card-email">${escapeHtml(a.email)}</div></div>
+        </div>
+        <div class="amb-admin-actions">
+          <button class="amb-btn-approve" data-id="${a.id}" data-action="approve">${translate('amb_admin_approve')}</button>
+          <button class="amb-btn-reject" data-id="${a.id}" data-action="reject">${translate('amb_admin_reject')}</button>
+        </div>
+      </div>
+    `).join('') : `<p class="amb-empty">${translate('amb_admin_no_pending')}</p>`;
+
+    adminPendingList.querySelectorAll('button[data-action]').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        btn.disabled = true;
+        await callAdminAction({ action: btn.dataset.action, ambassador_id: btn.dataset.id });
+        await loadPendingList();
+      });
+    });
+  }
+
+  async function loadAllList() {
+    const result = await callAdminAction({ action: 'list_all' });
+    const items = result.ambassadors || [];
+    adminAllList.innerHTML = items.length ? items.map(a => `
+      <div class="amb-admin-card">
+        <div class="amb-admin-card-row">
+          <div><div class="amb-admin-card-name">${escapeHtml(a.name)} — ${a.status}</div><div class="amb-admin-card-email">${escapeHtml(a.code)}</div></div>
+        </div>
+        <div class="amb-admin-actions">
+          ${a.status === 'suspended'
+            ? `<button class="amb-btn-approve" data-id="${a.ambassador_id}" data-action="reactivate">${translate('amb_admin_reactivate')}</button>`
+            : `<button class="amb-btn-reject" data-id="${a.ambassador_id}" data-action="suspend">${translate('amb_admin_suspend')}</button>`}
+        </div>
+      </div>
+    `).join('') : `<p class="amb-empty">${translate('amb_admin_no_pending')}</p>`;
+
+    adminAllList.querySelectorAll('button[data-action]').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        btn.disabled = true;
+        await callAdminAction({ action: btn.dataset.action, ambassador_id: btn.dataset.id });
+        await loadAllList();
+      });
+    });
+  }
+
+  function switchAdminTab(tab) {
+    [adminTabPending, adminTabAll, adminTabPost].forEach(t => t.classList.remove('active'));
+    adminPendingList.style.display = 'none';
+    adminAllList.style.display = 'none';
+    adminPostForm.style.display = 'none';
+    if (tab === 'pending') { adminTabPending.classList.add('active'); adminPendingList.style.display = ''; loadPendingList(); }
+    if (tab === 'all') { adminTabAll.classList.add('active'); adminAllList.style.display = ''; loadAllList(); }
+    if (tab === 'post') { adminTabPost.classList.add('active'); adminPostForm.style.display = ''; }
+  }
+  adminTabPending.addEventListener('click', () => switchAdminTab('pending'));
+  adminTabAll.addEventListener('click', () => switchAdminTab('all'));
+  adminTabPost.addEventListener('click', () => switchAdminTab('post'));
+
+  document.getElementById('ambAdminPostSubmit').addEventListener('click', async () => {
+    const title = document.getElementById('ambAdminPostTitle').value.trim();
+    const postBody = document.getElementById('ambAdminPostBody').value.trim();
+    if (!title || !postBody) return;
+    const btn = document.getElementById('ambAdminPostSubmit');
+    btn.disabled = true; const original = btn.textContent; btn.textContent = '…';
+    await callAdminAction({ action: 'post_news', title, post_body: postBody });
+    document.getElementById('ambAdminPostTitle').value = '';
+    document.getElementById('ambAdminPostBody').value = '';
+    btn.textContent = original; btn.disabled = false;
+    loadCommunity();
   });
 })();
