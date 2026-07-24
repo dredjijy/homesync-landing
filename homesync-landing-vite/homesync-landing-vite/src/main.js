@@ -800,8 +800,23 @@ updateNavBg();
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) return openAuthModal();
 
-    const { data: ambassador } = await supabase.from('ambassadors').select('*').eq('user_id', user.id).maybeSingle();
-    if (!ambassador) { openAuthModal(); return; }
+    let { data: ambassador } = await supabase.from('ambassadors').select('*').eq('user_id', user.id).maybeSingle();
+
+    if (!ambassador) {
+      // Compte déjà existant (ex: même email que l'app HomeSync) mais sans
+      // profil ambassadeur — on le crée automatiquement à la connexion,
+      // plutôt que de bloquer avec un écran de connexion qui boucle sans rien expliquer.
+      const fallbackName = (user.user_metadata?.name || user.email.split('@')[0]);
+      const code = genCode(fallbackName);
+      const { data: created, error: createErr } = await supabase.from('ambassadors')
+        .insert({ user_id: user.id, name: fallbackName, email: user.email, code, status: 'pending' })
+        .select().single();
+      if (createErr) {
+        errorEl.textContent = translate('amb_err_generic');
+        return openAuthModal();
+      }
+      ambassador = created;
+    }
     currentAmbassador = ambassador;
 
     dashName.textContent = ambassador.name.split(' ')[0];
