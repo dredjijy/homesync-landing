@@ -26,7 +26,39 @@ const TRANSLATIONS = {
     ask_question: "Posez-nous vos questions →",
     ask_question_short: "Une question ?",
     nav_ambassador: "🤝 Devenir ambassadeur",
-    ambassador_soon: "🚧 Bientôt disponible !",
+    amb_login_title: "Espace ambassadeur",
+    amb_login_sub: "Connectez-vous pour accéder à votre tableau de bord.",
+    amb_login_submit: "Se connecter",
+    amb_register_title: "Devenir ambassadeur",
+    amb_register_sub: "Créez votre compte pour recevoir votre lien de parrainage.",
+    amb_register_submit: "Créer mon compte",
+    amb_switch_to_register: "Pas encore ambassadeur ? S'inscrire",
+    amb_switch_to_login: "Déjà inscrit ? Se connecter",
+    amb_name_lbl: "Nom",
+    amb_email_lbl: "Email",
+    amb_pass_lbl: "Mot de passe",
+    amb_err_name: "Merci de renseigner votre nom.",
+    amb_err_email: "Merci de renseigner un email valide.",
+    amb_err_pass: "Le mot de passe doit faire au moins 6 caractères.",
+    amb_err_generic: "Un souci est survenu — réessayez dans un instant.",
+    amb_signout: "Déconnexion",
+    amb_link_lbl: "Votre lien de parrainage",
+    amb_share_btn: "Partager",
+    amb_share_text: "J'utilise HomeSync pour organiser mon foyer — je te le recommande :",
+    amb_stat_pending: "Commissions en attente",
+    amb_stat_active: "Abonnés actifs",
+    amb_stat_total: "Clients apportés",
+    amb_stat_earned: "Gagné au total",
+    amb_bank_title: "💳 Coordonnées bancaires",
+    amb_iban_lbl: "IBAN",
+    amb_iban_holder_lbl: "Nom du titulaire",
+    amb_bank_save: "Enregistrer",
+    amb_history_title: "🧾 Historique des commissions",
+    amb_history_empty: "Aucune commission pour l'instant.",
+    amb_status_active: "Actif",
+    amb_status_pending: "En attente de validation",
+    amb_status_suspended: "Suspendu",
+    amb_voided: "Annulée",
     ask_form_title: "Une question ?",
     ask_form_sub: "On vous répond rapidement, directement par email.",
     ask_form_subject_label: "Sujet",
@@ -132,7 +164,39 @@ const TRANSLATIONS = {
     ask_question: "Ask us your questions →",
     ask_question_short: "Got a question?",
     nav_ambassador: "🤝 Become an ambassador",
-    ambassador_soon: "🚧 Coming soon!",
+    amb_login_title: "Ambassador space",
+    amb_login_sub: "Log in to access your dashboard.",
+    amb_login_submit: "Log in",
+    amb_register_title: "Become an ambassador",
+    amb_register_sub: "Create your account to get your referral link.",
+    amb_register_submit: "Create my account",
+    amb_switch_to_register: "Not an ambassador yet? Sign up",
+    amb_switch_to_login: "Already signed up? Log in",
+    amb_name_lbl: "Name",
+    amb_email_lbl: "Email",
+    amb_pass_lbl: "Password",
+    amb_err_name: "Please enter your name.",
+    amb_err_email: "Please enter a valid email.",
+    amb_err_pass: "Password must be at least 6 characters.",
+    amb_err_generic: "Something went wrong — try again in a moment.",
+    amb_signout: "Log out",
+    amb_link_lbl: "Your referral link",
+    amb_share_btn: "Share",
+    amb_share_text: "I use HomeSync to organize my household — I recommend it:",
+    amb_stat_pending: "Pending commissions",
+    amb_stat_active: "Active subscribers",
+    amb_stat_total: "Customers brought in",
+    amb_stat_earned: "Total earned",
+    amb_bank_title: "💳 Banking details",
+    amb_iban_lbl: "IBAN",
+    amb_iban_holder_lbl: "Account holder name",
+    amb_bank_save: "Save",
+    amb_history_title: "🧾 Commission history",
+    amb_history_empty: "No commission yet.",
+    amb_status_active: "Active",
+    amb_status_pending: "Pending validation",
+    amb_status_suspended: "Suspended",
+    amb_voided: "Voided",
     ask_form_title: "Got a question?",
     ask_form_sub: "We'll get back to you quickly, directly by email.",
     ask_form_subject_label: "Subject",
@@ -606,15 +670,201 @@ updateNavBg();
   });
 })();
 
-// ── Bouton "Devenir ambassadeur" — en construction, affiche un message le temps que le site soit prêt ──
-(function initAmbassadorSoon() {
-  const btn = document.getElementById('ctaAmbassador');
-  const toast = document.getElementById('soonToast');
-  if (!btn || !toast) return;
-  let hideTimer = null;
-  btn.addEventListener('click', () => {
-    toast.classList.add('show');
-    clearTimeout(hideTimer);
-    hideTimer = setTimeout(() => toast.classList.remove('show'), 2600);
+// ── Espace ambassadeur — connexion/inscription réelle + tableau de bord ──
+(function initAmbassadorSpace() {
+  const openBtn = document.getElementById('ctaAmbassador');
+  const overlay = document.getElementById('ambOverlay');
+  const closeBtn = document.getElementById('ambClose');
+  const dashOverlay = document.getElementById('ambDashOverlay');
+  if (!openBtn || !overlay || !dashOverlay) return;
+
+  const SUPA_URL = "https://jkiofmoqwvcgbabmqosn.supabase.co";
+  const SUPA_KEY = "sb_publishable_wB-lYIAitkLuo6ARwX6tKw_ZY3ZmLRT";
+  const supabase = window.supabase.createClient(SUPA_URL, SUPA_KEY);
+  const APP_ORIGIN = "https://homesync-landing-seven.vercel.app";
+
+  function translate(key) {
+    try { return TRANSLATIONS[currentLang]?.[key] || TRANSLATIONS.fr[key] || key; }
+    catch { return key; }
+  }
+
+  // ── Éléments du formulaire de connexion/inscription ──
+  const nameField = document.getElementById('ambNameField');
+  const nameInput = document.getElementById('ambName');
+  const emailInput = document.getElementById('ambEmail');
+  const passInput = document.getElementById('ambPass');
+  const errorEl = document.getElementById('ambError');
+  const submitBtn = document.getElementById('ambSubmit');
+  const authTitle = document.getElementById('ambAuthTitle');
+  const authSub = document.getElementById('ambAuthSub');
+  const switchToRegister = document.getElementById('ambSwitchToRegister');
+  const switchToLogin = document.getElementById('ambSwitchToLogin');
+
+  let mode = 'login'; // 'login' | 'register'
+
+  function setMode(m) {
+    mode = m;
+    const isRegister = m === 'register';
+    nameField.style.display = isRegister ? '' : 'none';
+    authTitle.setAttribute('data-i18n', isRegister ? 'amb_register_title' : 'amb_login_title');
+    authTitle.textContent = translate(isRegister ? 'amb_register_title' : 'amb_login_title');
+    authSub.setAttribute('data-i18n', isRegister ? 'amb_register_sub' : 'amb_login_sub');
+    authSub.textContent = translate(isRegister ? 'amb_register_sub' : 'amb_login_sub');
+    submitBtn.setAttribute('data-i18n', isRegister ? 'amb_register_submit' : 'amb_login_submit');
+    submitBtn.textContent = translate(isRegister ? 'amb_register_submit' : 'amb_login_submit');
+    switchToRegister.style.display = isRegister ? 'none' : '';
+    switchToLogin.style.display = isRegister ? '' : 'none';
+    errorEl.textContent = '';
+  }
+  switchToRegister.addEventListener('click', () => setMode('register'));
+  switchToLogin.addEventListener('click', () => setMode('login'));
+
+  function openAuthModal() {
+    setMode('login');
+    nameInput.value = ''; emailInput.value = ''; passInput.value = '';
+    overlay.classList.add('show');
+  }
+  function closeAuthModal() { overlay.classList.remove('show'); }
+  closeBtn.addEventListener('click', closeAuthModal);
+  overlay.addEventListener('click', (e) => { if (e.target === overlay) closeAuthModal(); });
+
+  const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  function genCode(name) {
+    const base = (name.trim().split(' ')[0] || 'AMBASS').toUpperCase().replace(/[^A-Z]/g, '').slice(0, 8) || 'AMBASS';
+    const suffix = Math.random().toString(36).slice(2, 6).toUpperCase();
+    return base + suffix;
+  }
+
+  submitBtn.addEventListener('click', async () => {
+    const name = nameInput.value.trim();
+    const email = emailInput.value.trim();
+    const pass = passInput.value;
+    errorEl.textContent = '';
+    if (mode === 'register' && !name) return errorEl.textContent = translate('amb_err_name');
+    if (!email || !emailRe.test(email)) return errorEl.textContent = translate('amb_err_email');
+    if (!pass || pass.length < 6) return errorEl.textContent = translate('amb_err_pass');
+
+    submitBtn.disabled = true;
+    const original = submitBtn.textContent;
+    submitBtn.textContent = '…';
+    try {
+      if (mode === 'register') {
+        const { data, error } = await supabase.auth.signUp({ email, password: pass });
+        if (error) throw error;
+        if (data.user) {
+          const code = genCode(name);
+          await supabase.from('ambassadors').insert({
+            user_id: data.user.id, name, email, code, status: 'pending',
+          });
+        }
+      } else {
+        const { error } = await supabase.auth.signInWithPassword({ email, password: pass });
+        if (error) throw error;
+      }
+      closeAuthModal();
+      await loadDashboard();
+    } catch (err) {
+      errorEl.textContent = err?.message || translate('amb_err_generic');
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = original;
+    }
+  });
+
+  openBtn.addEventListener('click', async () => {
+    const { data } = await supabase.auth.getSession();
+    if (data.session) { await loadDashboard(); }
+    else { openAuthModal(); }
+  });
+
+  // ── Tableau de bord ──
+  const dashName = document.getElementById('ambDashName');
+  const statusBadge = document.getElementById('ambStatusBadge');
+  const linkBox = document.getElementById('ambLinkBox');
+  const copyLinkBtn = document.getElementById('ambCopyLink');
+  const shareLinkBtn = document.getElementById('ambShareLink');
+  const statPending = document.getElementById('ambStatPending');
+  const statActive = document.getElementById('ambStatActive');
+  const statTotal = document.getElementById('ambStatTotal');
+  const statEarned = document.getElementById('ambStatEarned');
+  const ibanInput = document.getElementById('ambIban');
+  const ibanHolderInput = document.getElementById('ambIbanHolder');
+  const saveBankBtn = document.getElementById('ambSaveBank');
+  const historyList = document.getElementById('ambHistoryList');
+  const signOutBtn = document.getElementById('ambSignOut');
+
+  let currentAmbassador = null;
+  let referralLink = '';
+
+  async function loadDashboard() {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return openAuthModal();
+
+    const { data: ambassador } = await supabase.from('ambassadors').select('*').eq('user_id', user.id).maybeSingle();
+    if (!ambassador) { openAuthModal(); return; }
+    currentAmbassador = ambassador;
+
+    dashName.textContent = ambassador.name.split(' ')[0];
+    const statusLabels = { active: translate('amb_status_active'), pending: translate('amb_status_pending'), suspended: translate('amb_status_suspended') };
+    statusBadge.textContent = (ambassador.status === 'active' ? '🟢 ' : ambassador.status === 'pending' ? '🟡 ' : '🔴 ') + (statusLabels[ambassador.status] || ambassador.status);
+    statusBadge.className = 'amb-status ' + ambassador.status;
+
+    referralLink = `${APP_ORIGIN}/?ref=${ambassador.code}`;
+    linkBox.textContent = referralLink;
+
+    ibanInput.value = ambassador.iban || '';
+    ibanHolderInput.value = ambassador.iban_holder_name || '';
+
+    const { data: stats } = await supabase.from('ambassador_stats').select('*').eq('ambassador_id', ambassador.id).maybeSingle();
+    statPending.textContent = (stats?.pending_commission ?? 0).toFixed(2) + ' €';
+    statActive.textContent = stats?.active_subscribers ?? 0;
+    statTotal.textContent = stats?.total_customers ?? 0;
+    statEarned.textContent = (stats?.total_earned ?? 0).toFixed(2) + ' €';
+
+    const { data: commissions } = await supabase.from('commissions').select('*').eq('ambassador_id', ambassador.id).order('created_at', { ascending: false }).limit(20);
+    if (commissions && commissions.length) {
+      historyList.innerHTML = commissions.map(c => {
+        const d = new Date(c.created_at).toLocaleDateString(currentLang === 'en' ? 'en-US' : 'fr-FR', { day: 'numeric', month: 'short', year: 'numeric' });
+        const amtColor = c.status === 'paid' ? 'var(--mint)' : c.status === 'voided' ? 'var(--mist)' : '#C8971E';
+        const amtText = c.status === 'voided' ? translate('amb_voided') : `+${Number(c.amount).toFixed(2)} €`;
+        return `<div class="amb-history-row"><span>${d}</span><span style="color:${amtColor}; font-weight:700;">${amtText}</span></div>`;
+      }).join('');
+    } else {
+      historyList.innerHTML = `<p class="amb-empty">${translate('amb_history_empty')}</p>`;
+    }
+
+    dashOverlay.classList.add('show');
+  }
+
+  copyLinkBtn.addEventListener('click', () => {
+    navigator.clipboard?.writeText(referralLink).then(() => {
+      copyLinkBtn.textContent = '✓';
+      setTimeout(() => copyLinkBtn.textContent = '📋', 2000);
+    });
+  });
+  shareLinkBtn.addEventListener('click', async () => {
+    const shareData = { title: 'HomeSync', text: translate('amb_share_text'), url: referralLink };
+    if (navigator.share && navigator.canShare?.(shareData)) {
+      try { await navigator.share(shareData); } catch {}
+    } else {
+      navigator.clipboard?.writeText(referralLink);
+    }
+  });
+
+  saveBankBtn.addEventListener('click', async () => {
+    if (!currentAmbassador) return;
+    saveBankBtn.disabled = true;
+    const original = saveBankBtn.textContent;
+    saveBankBtn.textContent = '…';
+    await supabase.from('ambassadors').update({ iban: ibanInput.value.trim(), iban_holder_name: ibanHolderInput.value.trim() }).eq('id', currentAmbassador.id);
+    saveBankBtn.textContent = '✓';
+    setTimeout(() => saveBankBtn.textContent = original, 2000);
+    saveBankBtn.disabled = false;
+  });
+
+  signOutBtn.addEventListener('click', async () => {
+    await supabase.auth.signOut();
+    dashOverlay.classList.remove('show');
+    currentAmbassador = null;
   });
 })();
