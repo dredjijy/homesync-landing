@@ -28,6 +28,7 @@ const TRANSLATIONS = {
     nav_ambassador: "🤝 Devenir ambassadeur",
     amb_login_title: "Espace ambassadeur",
     amb_login_sub: "Connectez-vous pour accéder à votre tableau de bord.",
+    amb_app_user_hint: "Déjà un compte HomeSync ? Connectez-vous directement avec — votre profil ambassadeur se crée automatiquement.",
     amb_login_submit: "Se connecter",
     amb_register_title: "Devenir ambassadeur",
     amb_register_sub: "Créez votre compte pour recevoir votre lien de parrainage.",
@@ -166,6 +167,7 @@ const TRANSLATIONS = {
     nav_ambassador: "🤝 Become an ambassador",
     amb_login_title: "Ambassador space",
     amb_login_sub: "Log in to access your dashboard.",
+    amb_app_user_hint: "Already have a HomeSync account? Log in directly with it — your ambassador profile is created automatically.",
     amb_login_submit: "Log in",
     amb_register_title: "Become an ambassador",
     amb_register_sub: "Create your account to get your referral link.",
@@ -697,6 +699,7 @@ updateNavBg();
   const submitBtn = document.getElementById('ambSubmit');
   const authTitle = document.getElementById('ambAuthTitle');
   const authSub = document.getElementById('ambAuthSub');
+  const appUserHint = document.getElementById('ambAppUserHint');
   const switchToRegister = document.getElementById('ambSwitchToRegister');
   const switchToLogin = document.getElementById('ambSwitchToLogin');
 
@@ -714,6 +717,7 @@ updateNavBg();
     submitBtn.textContent = translate(isRegister ? 'amb_register_submit' : 'amb_login_submit');
     switchToRegister.style.display = isRegister ? 'none' : '';
     switchToLogin.style.display = isRegister ? '' : 'none';
+    appUserHint.style.display = isRegister ? 'none' : '';
     errorEl.textContent = '';
   }
   switchToRegister.addEventListener('click', () => setMode('register'));
