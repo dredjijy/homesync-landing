@@ -64,6 +64,10 @@ const TRANSLATIONS = {
     amb_admin_delete_confirm: "Supprimer cette actualité ?",
     amb_forgot_pass: "Mot de passe oublié ?",
     amb_reset_sent: "Email envoyé — vérifiez votre boîte de réception.",
+    amb_newpass_title: "Nouveau mot de passe",
+    amb_newpass_sub: "Choisissez un nouveau mot de passe pour votre compte.",
+    amb_newpass_submit: "Enregistrer le nouveau mot de passe",
+    amb_newpass_done: "Mot de passe mis à jour ! Vous pouvez maintenant vous connecter avec.",
     amb_stat_clicks: "Clics sur votre lien",
     amb_accepted_banner: "Bonne nouvelle — votre candidature a été acceptée ! Votre lien est actif, les commissions commencent à s'enregistrer.",
     amb_privacy_title: "🔒 Mes données",
@@ -253,6 +257,10 @@ const TRANSLATIONS = {
     amb_admin_delete_confirm: "Delete this news post?",
     amb_forgot_pass: "Forgot password?",
     amb_reset_sent: "Email sent — check your inbox.",
+    amb_newpass_title: "New password",
+    amb_newpass_sub: "Choose a new password for your account.",
+    amb_newpass_submit: "Save new password",
+    amb_newpass_done: "Password updated! You can now log in with it.",
     amb_stat_clicks: "Clicks on your link",
     amb_accepted_banner: "Good news — your application has been accepted! Your link is active, commissions are starting to record.",
     amb_privacy_title: "🔒 My data",
@@ -804,6 +812,36 @@ updateNavBg();
     try { return TRANSLATIONS[currentLang]?.[key] || TRANSLATIONS.fr[key] || key; }
     catch { return key; }
   }
+
+  // ── Complète le circuit "mot de passe oublié" — sans ça, cliquer le lien
+  // reçu par email ne menait nulle part : Supabase renvoie ici avec un état
+  // spécial "PASSWORD_RECOVERY", qu'il faut détecter pour proposer de définir
+  // un nouveau mot de passe.
+  const newPassOverlay = document.getElementById('ambNewPassOverlay');
+  const newPassInput = document.getElementById('ambNewPass');
+  const newPassError = document.getElementById('ambNewPassError');
+  const newPassSubmit = document.getElementById('ambNewPassSubmit');
+
+  supabase.auth.onAuthStateChange((event) => {
+    if (event === 'PASSWORD_RECOVERY') {
+      newPassOverlay.classList.add('show');
+    }
+  });
+
+  newPassSubmit.addEventListener('click', async () => {
+    const newPass = newPassInput.value;
+    if (!newPass || newPass.length < 6) { newPassError.textContent = translate('amb_err_pass'); return; }
+    newPassError.textContent = '';
+    newPassSubmit.disabled = true;
+    const original = newPassSubmit.textContent;
+    newPassSubmit.textContent = '…';
+    const { error } = await supabase.auth.updateUser({ password: newPass });
+    newPassSubmit.textContent = original;
+    newPassSubmit.disabled = false;
+    if (error) { newPassError.textContent = translate('amb_err_generic'); return; }
+    newPassOverlay.classList.remove('show');
+    alert(translate('amb_newpass_done'));
+  });
 
   // ── Éléments du formulaire de connexion/inscription ──
   const nameField = document.getElementById('ambNameField');
