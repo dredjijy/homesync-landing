@@ -34,9 +34,13 @@ const TRANSLATIONS = {
     amb_explain_payout: "dès que votre solde atteint 15 €. En dessous, il s'accumule simplement au mois suivant.",
     amb_faq_title: "❓ Comment ça marche",
     amb_explain_pending: "Un compte \"en attente\" est en cours de vérification — votre lien fonctionne déjà, les commissions s'activent dès la validation.",
-    amb_community_title: "🏆 Communauté",
-    amb_leaderboard_lbl: "Classement — clients actifs apportés",
+    amb_community_title: "📢 Actualités",
+    amb_leaderboard_lbl: "Votre position",
     amb_leaderboard_empty: "Pas encore de classement disponible.",
+    amb_admin_no_iban: "Pas encore d'IBAN renseigné",
+    amb_admin_tab_rank: "Classement",
+    amb_news_empty: "Aucune actualité pour l'instant.",
+    amb_my_rank_label: "Votre position",
     amb_lb_customers_suffix: "clients",
     amb_contact_btn: "📨 Nous contacter",
     amb_admin_tab_pending: "En attente",
@@ -44,12 +48,35 @@ const TRANSLATIONS = {
     amb_admin_tab_post: "Publier",
     amb_admin_post_title_lbl: "Titre",
     amb_admin_post_body_lbl: "Message",
+    amb_admin_post_image_lbl: "Photo (optionnelle)",
     amb_admin_post_submit: "Publier l'actualité",
     amb_admin_approve: "✅ Accepter",
     amb_admin_reject: "✕ Refuser",
     amb_admin_no_pending: "Aucun candidat pour l'instant.",
     amb_admin_reactivate: "Réactiver",
     amb_admin_suspend: "Suspendre",
+    amb_admin_tab_payouts: "Versements",
+    amb_admin_no_payouts: "Aucun versement pour l'instant.",
+    amb_admin_mark_paid: "Marquer comme payé",
+    amb_admin_existing_posts_lbl: "Actualités publiées",
+    amb_admin_new_post_lbl: "Nouvelle actualité",
+    amb_admin_delete_post: "🗑️ Supprimer",
+    amb_admin_delete_confirm: "Supprimer cette actualité ?",
+    amb_forgot_pass: "Mot de passe oublié ?",
+    amb_reset_sent: "Email envoyé — vérifiez votre boîte de réception.",
+    amb_stat_clicks: "Clics sur votre lien",
+    amb_accepted_banner: "Bonne nouvelle — votre candidature a été acceptée ! Votre lien est actif, les commissions commencent à s'enregistrer.",
+    amb_privacy_title: "🔒 Mes données",
+    amb_export_btn: "📤 Exporter mes données",
+    amb_delete_btn: "🗑️ Supprimer mon compte",
+    amb_delete_confirm1: "Voulez-vous vraiment supprimer votre compte ambassadeur ? Cette action est irréversible.",
+    amb_delete_confirm2: "Pour confirmer, tapez SUPPRIMER ci-dessous :",
+    amb_delete_keyword: "SUPPRIMER",
+    amb_delete_blocked_pending: "Impossible de supprimer votre compte tant que des commissions sont en attente de versement. Contactez-nous.",
+    amb_delete_done: "Votre compte a été supprimé.",
+    amb_iban_already_saved: "IBAN déjà enregistré — retapez-le pour le modifier",
+    amb_terms_label: "J'accepte les conditions du programme ambassadeurs.",
+    amb_err_terms: "Merci d'accepter les conditions pour continuer.",
     amb_login_sub: "Connectez-vous pour accéder à votre tableau de bord.",
     amb_app_user_hint: "Déjà un compte HomeSync ? Connectez-vous directement avec — votre profil ambassadeur se crée automatiquement.",
     amb_login_submit: "Se connecter",
@@ -196,9 +223,13 @@ const TRANSLATIONS = {
     amb_explain_payout: "as soon as your balance reaches 15 €. Below that, it simply carries over to the next month.",
     amb_faq_title: "❓ How it works",
     amb_explain_pending: "A \"pending\" account is being reviewed — your link already works, commissions activate once approved.",
-    amb_community_title: "🏆 Community",
-    amb_leaderboard_lbl: "Leaderboard — active customers brought in",
+    amb_community_title: "📢 News",
+    amb_leaderboard_lbl: "Your position",
     amb_leaderboard_empty: "No leaderboard available yet.",
+    amb_admin_no_iban: "No IBAN provided yet",
+    amb_admin_tab_rank: "Leaderboard",
+    amb_news_empty: "No news yet.",
+    amb_my_rank_label: "Your position",
     amb_lb_customers_suffix: "customers",
     amb_contact_btn: "📨 Contact us",
     amb_admin_tab_pending: "Pending",
@@ -207,11 +238,34 @@ const TRANSLATIONS = {
     amb_admin_post_title_lbl: "Title",
     amb_admin_post_body_lbl: "Message",
     amb_admin_post_submit: "Publish news",
+    amb_admin_post_image_lbl: "Photo (optional)",
     amb_admin_approve: "✅ Approve",
     amb_admin_reject: "✕ Reject",
     amb_admin_no_pending: "No candidates yet.",
     amb_admin_reactivate: "Reactivate",
     amb_admin_suspend: "Suspend",
+    amb_admin_tab_payouts: "Payouts",
+    amb_admin_no_payouts: "No payouts yet.",
+    amb_admin_mark_paid: "Mark as paid",
+    amb_admin_existing_posts_lbl: "Published news",
+    amb_admin_new_post_lbl: "New post",
+    amb_admin_delete_post: "🗑️ Delete",
+    amb_admin_delete_confirm: "Delete this news post?",
+    amb_forgot_pass: "Forgot password?",
+    amb_reset_sent: "Email sent — check your inbox.",
+    amb_stat_clicks: "Clicks on your link",
+    amb_accepted_banner: "Good news — your application has been accepted! Your link is active, commissions are starting to record.",
+    amb_privacy_title: "🔒 My data",
+    amb_export_btn: "📤 Export my data",
+    amb_delete_btn: "🗑️ Delete my account",
+    amb_delete_confirm1: "Do you really want to delete your ambassador account? This action is irreversible.",
+    amb_delete_confirm2: "To confirm, type DELETE below:",
+    amb_delete_keyword: "DELETE",
+    amb_delete_blocked_pending: "Your account can't be deleted while commissions are still pending payout. Please contact us.",
+    amb_delete_done: "Your account has been deleted.",
+    amb_iban_already_saved: "IBAN already saved — retype it to change it",
+    amb_terms_label: "I accept the ambassador program's terms.",
+    amb_err_terms: "Please accept the terms to continue.",
     amb_login_sub: "Log in to access your dashboard.",
     amb_app_user_hint: "Already have a HomeSync account? Log in directly with it — your ambassador profile is created automatically.",
     amb_login_submit: "Log in",
@@ -421,8 +475,23 @@ const APP_URL = "https://home-sync-beta.vercel.app";
     const params = new URLSearchParams(location.search);
     const ref = params.get('ref');
     if (ref) {
-      localStorage.setItem('homesync_ref_code', ref.trim().toUpperCase());
+      const code = ref.trim().toUpperCase();
+      localStorage.setItem('homesync_ref_code', code);
       localStorage.setItem('homesync_ref_captured_at', String(Date.now()));
+      // Un seul clic compté par code, par visiteur (pas à chaque page vue)
+      const alreadyLogged = sessionStorage.getItem('homesync_ref_click_logged_' + code);
+      if (!alreadyLogged) {
+        fetch('https://jkiofmoqwvcgbabmqosn.supabase.co/rest/v1/rpc/log_referral_click', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'apikey': 'sb_publishable_wB-lYIAitkLuo6ARwX6tKw_ZY3ZmLRT',
+            'Authorization': 'Bearer sb_publishable_wB-lYIAitkLuo6ARwX6tKw_ZY3ZmLRT',
+          },
+          body: JSON.stringify({ p_code: code }),
+        }).catch(() => {});
+        sessionStorage.setItem('homesync_ref_click_logged_' + code, '1');
+      }
     }
   } catch {}
 })();
@@ -764,10 +833,22 @@ updateNavBg();
     switchToRegister.style.display = isRegister ? 'none' : '';
     switchToLogin.style.display = isRegister ? '' : 'none';
     appUserHint.style.display = isRegister ? 'none' : '';
+    document.getElementById('ambTermsField').style.display = isRegister ? '' : 'none';
     errorEl.textContent = '';
   }
   switchToRegister.addEventListener('click', () => setMode('register'));
   switchToLogin.addEventListener('click', () => setMode('login'));
+
+  document.getElementById('ambForgotPass').addEventListener('click', async () => {
+    const email = emailInput.value.trim();
+    if (!email || !emailRe.test(email)) { errorEl.textContent = translate('amb_err_email'); return; }
+    errorEl.textContent = '';
+    const { error } = await supabase.auth.resetPasswordForEmail(email);
+    if (error) { errorEl.textContent = translate('amb_err_generic'); return; }
+    errorEl.style.color = 'var(--mint)';
+    errorEl.textContent = translate('amb_reset_sent');
+    setTimeout(() => { errorEl.style.color = ''; }, 4000);
+  });
 
   function openAuthModal() {
     setMode('login');
@@ -791,6 +872,7 @@ updateNavBg();
     const pass = passInput.value;
     errorEl.textContent = '';
     if (mode === 'register' && !name) return errorEl.textContent = translate('amb_err_name');
+    if (mode === 'register' && !document.getElementById('ambTerms').checked) return errorEl.textContent = translate('amb_err_terms');
     if (!email || !emailRe.test(email)) return errorEl.textContent = translate('amb_err_email');
     if (!pass || pass.length < 6) return errorEl.textContent = translate('amb_err_pass');
 
@@ -874,10 +956,25 @@ updateNavBg();
     statusBadge.textContent = (ambassador.status === 'active' ? '🟢 ' : ambassador.status === 'pending' ? '🟡 ' : '🔴 ') + (statusLabels[ambassador.status] || ambassador.status);
     statusBadge.className = 'amb-status ' + ambassador.status;
 
+    // Pas de service d'email configuré — on détecte localement le passage
+    // "en attente" → "actif" depuis la dernière visite, et on l'affiche une
+    // seule fois avec une bannière, plutôt que de laisser passer inaperçu.
+    const acceptedBanner = document.getElementById('ambAcceptedBanner');
+    try {
+      const lastSeenStatus = localStorage.getItem('homesync_amb_last_status_' + ambassador.id);
+      if (lastSeenStatus === 'pending' && ambassador.status === 'active') {
+        acceptedBanner.style.display = '';
+      } else {
+        acceptedBanner.style.display = 'none';
+      }
+      localStorage.setItem('homesync_amb_last_status_' + ambassador.id, ambassador.status);
+    } catch { acceptedBanner.style.display = 'none'; }
+
     referralLink = `${APP_ORIGIN}/?ref=${ambassador.code}`;
     linkBox.textContent = referralLink;
 
-    ibanInput.value = ambassador.iban || '';
+    ibanInput.value = '';
+    ibanInput.placeholder = ambassador.iban ? translate('amb_iban_already_saved') : 'FR76 XXXX XXXX XXXX XXXX XXXX XXX';
     ibanHolderInput.value = ambassador.iban_holder_name || '';
 
     const { data: stats } = await supabase.from('ambassador_stats').select('*').eq('ambassador_id', ambassador.id).maybeSingle();
@@ -885,6 +982,8 @@ updateNavBg();
     statActive.textContent = stats?.active_subscribers ?? 0;
     statTotal.textContent = stats?.total_customers ?? 0;
     statEarned.textContent = (stats?.total_earned ?? 0).toFixed(2) + ' €';
+    const { count: clickCount } = await supabase.from('referral_clicks').select('*', { count: 'exact', head: true }).eq('ambassador_id', ambassador.id);
+    document.getElementById('ambStatClicks').textContent = clickCount ?? 0;
 
     const { data: commissions } = await supabase.from('commissions').select('*').eq('ambassador_id', ambassador.id).order('created_at', { ascending: false }).limit(20);
     if (commissions && commissions.length) {
@@ -923,10 +1022,14 @@ updateNavBg();
     saveBankBtn.disabled = true;
     const original = saveBankBtn.textContent;
     saveBankBtn.textContent = '…';
-    await supabase.from('ambassadors').update({ iban: ibanInput.value.trim(), iban_holder_name: ibanHolderInput.value.trim() }).eq('id', currentAmbassador.id);
+    await callSelfServiceAction({ action: 'save_bank_info', iban: ibanInput.value.trim(), iban_holder_name: ibanHolderInput.value.trim() });
     saveBankBtn.textContent = '✓';
     setTimeout(() => saveBankBtn.textContent = original, 2000);
     saveBankBtn.disabled = false;
+  });
+
+  document.getElementById('ambDashClose').addEventListener('click', () => {
+    dashOverlay.classList.remove('show');
   });
 
   signOutBtn.addEventListener('click', async () => {
@@ -946,6 +1049,52 @@ updateNavBg();
     window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
   });
 
+  async function callSelfServiceAction(payload) {
+    const { data: { session } } = await supabase.auth.getSession();
+    const res = await fetch(`${SUPA_URL}/functions/v1/ambassador-self-service`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${session.access_token}` },
+      body: JSON.stringify(payload),
+    });
+    return res.json();
+  }
+
+  document.getElementById('ambExportData').addEventListener('click', async (e) => {
+    const btn = e.currentTarget;
+    btn.disabled = true; const original = btn.textContent; btn.textContent = '…';
+    const result = await callSelfServiceAction({ action: 'export_data' });
+    btn.textContent = original; btn.disabled = false;
+    if (result.error) return alert(translate('amb_err_generic'));
+    const blob = new Blob([JSON.stringify(result, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = 'homesync-ambassadeur-donnees.json';
+    a.click();
+    URL.revokeObjectURL(url);
+  });
+
+  document.getElementById('ambDeleteAccount').addEventListener('click', async () => {
+    if (!confirm(translate('amb_delete_confirm1'))) return;
+    const typed = prompt(translate('amb_delete_confirm2'));
+    if ((typed || '').trim().toLowerCase() !== translate('amb_delete_keyword').toLowerCase()) return;
+    const btn = document.getElementById('ambDeleteAccount');
+    btn.disabled = true; const original = btn.textContent; btn.textContent = '…';
+    const result = await callSelfServiceAction({ action: 'delete_account' });
+    if (result.error === 'pending_commissions') {
+      alert(translate('amb_delete_blocked_pending'));
+      btn.textContent = original; btn.disabled = false;
+      return;
+    }
+    if (result.error) {
+      alert(translate('amb_err_generic'));
+      btn.textContent = original; btn.disabled = false;
+      return;
+    }
+    await supabase.auth.signOut();
+    dashOverlay.classList.remove('show');
+    alert(translate('amb_delete_done'));
+  });
+
   // ── Communauté — actualités + classement ──
   const newsList = document.getElementById('ambNewsList');
   const leaderboardList = document.getElementById('ambLeaderboard');
@@ -955,21 +1104,19 @@ updateNavBg();
     if (posts && posts.length) {
       newsList.innerHTML = posts.map(p => {
         const d = new Date(p.created_at).toLocaleDateString(currentLang === 'en' ? 'en-US' : 'fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
-        return `<div class="amb-news-card"><div class="amb-news-title">${escapeHtml(p.title)}</div><div class="amb-news-body">${escapeHtml(p.body)}</div><div class="amb-news-date">${d}</div></div>`;
+        const imgHtml = p.image_url ? `<img src="${p.image_url}" style="width:100%; border-radius:10px; margin-bottom:10px; display:block;"/>` : '';
+        return `<div class="amb-news-card">${imgHtml}<div class="amb-news-title">${escapeHtml(p.title)}</div><div class="amb-news-body">${escapeHtml(p.body)}</div><div class="amb-news-date">${d}</div></div>`;
       }).join('');
     } else {
-      newsList.innerHTML = '';
+      newsList.innerHTML = `<p class="amb-empty">${translate('amb_news_empty')}</p>`;
     }
 
-    const { data: board } = await supabase.from('ambassador_leaderboard').select('*').order('rank', { ascending: true });
-    if (board && board.length) {
-      leaderboardList.innerHTML = board.map(b => `
-        <div class="amb-leaderboard-row">
-          <span class="amb-lb-rank">#${b.rank}</span>
-          <span class="amb-lb-name">${escapeHtml(b.name)}</span>
-          <span class="amb-lb-count">${b.active_customers} ${translate('amb_lb_customers_suffix')}</span>
-        </div>
-      `).join('');
+    // Seule SA PROPRE position est demandée — jamais la liste des autres,
+    // ni même techniquement envoyée au navigateur (calculée côté serveur).
+    const { data: myRank, error: rankErr } = await supabase.rpc('get_my_ambassador_rank');
+    if (!rankErr && myRank && myRank.length) {
+      const r = myRank[0];
+      leaderboardList.innerHTML = `<div class="amb-leaderboard-row"><span class="amb-lb-rank">#${r.rank}</span><span class="amb-lb-name">${translate('amb_my_rank_label')}</span><span class="amb-lb-count">${r.active_customers} ${translate('amb_lb_customers_suffix')}</span></div>`;
     } else {
       leaderboardList.innerHTML = `<p class="amb-empty">${translate('amb_leaderboard_empty')}</p>`;
     }
@@ -986,6 +1133,8 @@ updateNavBg();
   const adminSection = document.getElementById('ambAdminSection');
   const adminTabPending = document.getElementById('ambAdminTabPending');
   const adminTabAll = document.getElementById('ambAdminTabAll');
+  const adminTabRank = document.getElementById('ambAdminTabRank');
+  const adminTabPayouts = document.getElementById('ambAdminTabPayouts');
   const adminTabPost = document.getElementById('ambAdminTabPost');
   const adminPendingList = document.getElementById('ambAdminPendingList');
   const adminAllList = document.getElementById('ambAdminAllList');
@@ -1037,12 +1186,16 @@ updateNavBg();
     adminAllList.innerHTML = items.length ? items.map(a => `
       <div class="amb-admin-card">
         <div class="amb-admin-card-row">
-          <div><div class="amb-admin-card-name">${escapeHtml(a.name)} — ${a.status}</div><div class="amb-admin-card-email">${escapeHtml(a.code)}</div></div>
+          <div>
+            <div class="amb-admin-card-name">${escapeHtml(a.name)} — ${a.status}</div>
+            <div class="amb-admin-card-email">${escapeHtml(a.email)} · ${escapeHtml(a.code)}</div>
+            <div class="amb-admin-card-email">${a.iban ? `💳 ${escapeHtml(a.iban)} — ${escapeHtml(a.iban_holder_name||'')}` : translate('amb_admin_no_iban')}</div>
+          </div>
         </div>
         <div class="amb-admin-actions">
           ${a.status === 'suspended'
-            ? `<button class="amb-btn-approve" data-id="${a.ambassador_id}" data-action="reactivate">${translate('amb_admin_reactivate')}</button>`
-            : `<button class="amb-btn-reject" data-id="${a.ambassador_id}" data-action="suspend">${translate('amb_admin_suspend')}</button>`}
+            ? `<button class="amb-btn-approve" data-id="${a.id}" data-action="reactivate">${translate('amb_admin_reactivate')}</button>`
+            : `<button class="amb-btn-reject" data-id="${a.id}" data-action="suspend">${translate('amb_admin_suspend')}</button>`}
         </div>
       </div>
     `).join('') : `<p class="amb-empty">${translate('amb_admin_no_pending')}</p>`;
@@ -1056,18 +1209,100 @@ updateNavBg();
     });
   }
 
+  async function loadAdminLeaderboard() {
+    const result = await callAdminAction({ action: 'list_leaderboard' });
+    const items = result.leaderboard || [];
+    const rankList = document.getElementById('ambAdminRankList');
+    rankList.innerHTML = items.length ? items.map(l => `
+      <div class="amb-leaderboard-row">
+        <span class="amb-lb-rank">#${l.rank}</span>
+        <span class="amb-lb-name">${escapeHtml(l.name)}</span>
+        <span class="amb-lb-count">${l.active_customers} ${translate('amb_lb_customers_suffix')}</span>
+      </div>
+    `).join('') : `<p class="amb-empty">${translate('amb_leaderboard_empty')}</p>`;
+  }
+
+  async function loadPayouts() {
+    const result = await callAdminAction({ action: 'list_payouts' });
+    const items = result.payouts || [];
+    const list = document.getElementById('ambAdminPayoutsList');
+    list.innerHTML = items.length ? items.map(p => {
+      const amb = p.ambassadors || {};
+      const d = new Date(p.created_at).toLocaleDateString(currentLang === 'en' ? 'en-US' : 'fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
+      return `
+        <div class="amb-admin-card">
+          <div class="amb-admin-card-row">
+            <div>
+              <div class="amb-admin-card-name">${escapeHtml(amb.name || '—')} — ${p.amount} € (${p.period})</div>
+              <div class="amb-admin-card-email">${amb.iban ? `💳 ${escapeHtml(amb.iban)} — ${escapeHtml(amb.iban_holder_name||'')}` : translate('amb_admin_no_iban')}</div>
+              <div class="amb-admin-card-email">${d} — ${p.status}</div>
+            </div>
+          </div>
+          ${p.status !== 'paid' ? `<div class="amb-admin-actions"><button class="amb-btn-approve" data-id="${p.id}" data-action="mark_payout_paid">${translate('amb_admin_mark_paid')}</button></div>` : ''}
+        </div>
+      `;
+    }).join('') : `<p class="amb-empty">${translate('amb_admin_no_payouts')}</p>`;
+
+    list.querySelectorAll('button[data-action]').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        btn.disabled = true;
+        await callAdminAction({ action: btn.dataset.action, payout_id: btn.dataset.id });
+        await loadPayouts();
+      });
+    });
+  }
+
+  async function loadExistingPosts() {
+    const { data: posts } = await supabase.from('ambassador_posts').select('*').order('created_at', { ascending: false }).limit(20);
+    const list = document.getElementById('ambAdminExistingPosts');
+    const items = posts || [];
+    list.innerHTML = items.length ? items.map(p => `
+      <div class="amb-admin-card">
+        <div class="amb-admin-card-row">
+          <div><div class="amb-admin-card-name">${escapeHtml(p.title)}</div></div>
+          <button class="amb-btn-reject" data-id="${p.id}" style="flex:none; padding:6px 12px;">${translate('amb_admin_delete_post')}</button>
+        </div>
+      </div>
+    `).join('') : `<p class="amb-empty">${translate('amb_news_empty')}</p>`;
+
+    list.querySelectorAll('button[data-id]').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        if (!confirm(translate('amb_admin_delete_confirm'))) return;
+        btn.disabled = true;
+        await callAdminAction({ action: 'delete_news', post_id: btn.dataset.id });
+        await loadExistingPosts();
+        loadCommunity();
+      });
+    });
+  }
+
   function switchAdminTab(tab) {
-    [adminTabPending, adminTabAll, adminTabPost].forEach(t => t.classList.remove('active'));
+    [adminTabPending, adminTabAll, adminTabRank, adminTabPayouts, adminTabPost].forEach(t => t.classList.remove('active'));
     adminPendingList.style.display = 'none';
     adminAllList.style.display = 'none';
+    document.getElementById('ambAdminRankList').style.display = 'none';
+    document.getElementById('ambAdminPayoutsList').style.display = 'none';
     adminPostForm.style.display = 'none';
     if (tab === 'pending') { adminTabPending.classList.add('active'); adminPendingList.style.display = ''; loadPendingList(); }
     if (tab === 'all') { adminTabAll.classList.add('active'); adminAllList.style.display = ''; loadAllList(); }
-    if (tab === 'post') { adminTabPost.classList.add('active'); adminPostForm.style.display = ''; }
+    if (tab === 'rank') { adminTabRank.classList.add('active'); document.getElementById('ambAdminRankList').style.display = ''; loadAdminLeaderboard(); }
+    if (tab === 'payouts') { adminTabPayouts.classList.add('active'); document.getElementById('ambAdminPayoutsList').style.display = ''; loadPayouts(); }
+    if (tab === 'post') { adminTabPost.classList.add('active'); adminPostForm.style.display = ''; loadExistingPosts(); }
   }
   adminTabPending.addEventListener('click', () => switchAdminTab('pending'));
   adminTabAll.addEventListener('click', () => switchAdminTab('all'));
+  adminTabRank.addEventListener('click', () => switchAdminTab('rank'));
+  adminTabPayouts.addEventListener('click', () => switchAdminTab('payouts'));
   adminTabPost.addEventListener('click', () => switchAdminTab('post'));
+
+  document.getElementById('ambAdminPostImage').addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    const preview = document.getElementById('ambAdminPostImagePreview');
+    if (!file) { preview.style.display = 'none'; return; }
+    const reader = new FileReader();
+    reader.onload = (ev) => { preview.src = ev.target.result; preview.style.display = ''; };
+    reader.readAsDataURL(file);
+  });
 
   document.getElementById('ambAdminPostSubmit').addEventListener('click', async () => {
     const title = document.getElementById('ambAdminPostTitle').value.trim();
@@ -1075,10 +1310,27 @@ updateNavBg();
     if (!title || !postBody) return;
     const btn = document.getElementById('ambAdminPostSubmit');
     btn.disabled = true; const original = btn.textContent; btn.textContent = '…';
-    await callAdminAction({ action: 'post_news', title, post_body: postBody });
+
+    const payload = { action: 'post_news', title, post_body: postBody };
+    const imageFile = document.getElementById('ambAdminPostImage').files[0];
+    if (imageFile) {
+      const base64 = await new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result.split(',')[1]);
+        reader.onerror = reject;
+        reader.readAsDataURL(imageFile);
+      });
+      payload.image_base64 = base64;
+      payload.image_ext = imageFile.type.includes('png') ? 'png' : 'jpg';
+    }
+
+    await callAdminAction(payload);
     document.getElementById('ambAdminPostTitle').value = '';
     document.getElementById('ambAdminPostBody').value = '';
+    document.getElementById('ambAdminPostImage').value = '';
+    document.getElementById('ambAdminPostImagePreview').style.display = 'none';
     btn.textContent = original; btn.disabled = false;
     loadCommunity();
+    loadExistingPosts();
   });
 })();
