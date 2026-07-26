@@ -35,6 +35,10 @@ const TRANSLATIONS = {
     amb_faq_title: "❓ Comment ça marche",
     amb_explain_pending: "Un compte \"en attente\" est en cours de vérification — votre lien fonctionne déjà, les commissions s'activent dès la validation.",
     amb_explain_iban: "Pour recevoir vos commissions, renseignez votre IBAN dans l'onglet \"Gestion\" — sans lui, impossible de vous verser l'argent.",
+    amb_explain_link_qr: "Vous avez 2 façons de partager : le lien (à coller dans un message ou une story), ou le QR code (à montrer directement à quelqu'un pour qu'il scanne avec son téléphone). Les deux mènent au même endroit.",
+    amb_copy_btn: "Copier",
+    amb_qr_btn: "QR code",
+    amb_copied: "Copié !",
     amb_community_title: "📢 Actualités",
     amb_leaderboard_lbl: "Votre position",
     amb_leaderboard_empty: "Pas encore de classement disponible.",
@@ -238,6 +242,10 @@ const TRANSLATIONS = {
     amb_faq_title: "❓ How it works",
     amb_explain_pending: "A \"pending\" account is being reviewed — your link already works, commissions activate once approved.",
     amb_explain_iban: "To receive your commissions, add your IBAN in the \"Manage\" tab — without it, we can't pay you.",
+    amb_explain_link_qr: "You have 2 ways to share: the link (paste it in a message or a story), or the QR code (show it directly to someone so they can scan it with their phone). Both lead to the same place.",
+    amb_copy_btn: "Copy",
+    amb_qr_btn: "QR code",
+    amb_copied: "Copied!",
     amb_community_title: "📢 News",
     amb_leaderboard_lbl: "Your position",
     amb_leaderboard_empty: "No leaderboard available yet.",
@@ -1069,8 +1077,8 @@ updateNavBg();
 
   copyLinkBtn.addEventListener('click', () => {
     navigator.clipboard?.writeText(referralLink).then(() => {
-      copyLinkBtn.textContent = '✓';
-      setTimeout(() => copyLinkBtn.textContent = '📋', 2000);
+      copyLinkBtn.innerHTML = '✓ ' + translate('amb_copied');
+      setTimeout(() => copyLinkBtn.innerHTML = '📋 <span>' + translate('amb_copy_btn') + '</span>', 2000);
     });
   });
   shareLinkBtn.addEventListener('click', async () => {
