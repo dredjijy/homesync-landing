@@ -32,7 +32,16 @@ const TRANSLATIONS = {
     amb_explain_commission: "à chaque paiement Stripe réussi d'une personne que vous avez parrainée — tant qu'elle reste abonnée.",
     amb_explain_payout_when: "Versé chaque mois (le 5)",
     amb_explain_payout: "dès que votre solde atteint 15 €. En dessous, il s'accumule simplement au mois suivant.",
+    amb_explain_transfer: "Le virement est fait à la main par notre équipe une fois le calcul effectué — comptez quelques jours après le 5 pour recevoir l'argent sur votre compte.",
     amb_faq_title: "❓ Comment ça marche",
+    amb_faq_q1: "Combien je gagne ?",
+    amb_faq_q2: "Quand je suis payé ?",
+    amb_faq_q3: "C'est automatique ?",
+    amb_faq_q4: "Pourquoi \"en attente\" ?",
+    amb_faq_q5: "Comment je suis payé ?",
+    amb_faq_q6: "Lien ou QR code ?",
+    amb_faq_q7: "Et s'il annule et se réabonne ?",
+    amb_explain_onetime: "Un client ne peut être crédité qu'une seule fois, à sa toute première souscription — s'il annule puis se réabonne avec un autre lien, ça ne change jamais l'ambassadeur d'origine.",
     amb_explain_pending: "Un compte \"en attente\" est en cours de vérification — votre lien fonctionne déjà, les commissions s'activent dès la validation.",
     amb_explain_iban: "Pour recevoir vos commissions, renseignez votre IBAN dans l'onglet \"Gestion\" — sans lui, impossible de vous verser l'argent.",
     amb_explain_link_qr: "Vous avez 2 façons de partager : le lien (à coller dans un message ou une story), ou le QR code (à montrer directement à quelqu'un pour qu'il scanne avec son téléphone). Les deux mènent au même endroit.",
@@ -86,7 +95,29 @@ const TRANSLATIONS = {
     amb_delete_blocked_pending: "Impossible de supprimer votre compte tant que des commissions sont en attente de versement. Contactez-nous.",
     amb_delete_done: "Votre compte a été supprimé.",
     amb_iban_already_saved: "IBAN déjà enregistré — retapez-le pour le modifier",
-    amb_terms_label: "J'accepte les conditions du programme ambassadeurs.",
+    amb_terms_label_1: "Je certifie avoir 18 ans ou plus et j'accepte les",
+    amb_terms_label_link: "conditions du programme Ambassadeur",
+    amb_age_lbl: "Votre âge",
+    amb_err_age: "Le programme est réservé aux personnes de 18 ans ou plus.",
+    amb_complete_title: "Encore une étape",
+    amb_complete_sub: "Avant de créer votre profil ambassadeur, confirmez ces 2 points.",
+    amb_complete_submit: "Continuer",
+    amb_terms_page_title: "Conditions du programme Ambassadeur",
+    amb_terms_1_title: "Âge minimum",
+    amb_terms_1_body: "Le programme Ambassadeur Minzri est réservé aux personnes âgées de 18 ans ou plus. En vous inscrivant, vous certifiez avoir au moins 18 ans à la date de votre inscription.",
+    amb_terms_2_title: "Commission",
+    amb_terms_2_body: "Vous recevez 0,50 € pour chaque paiement Stripe réussi d'une personne que vous avez parrainée, tant qu'elle reste abonnée à HomeSync.",
+    amb_terms_3_title: "Versement",
+    amb_terms_3_body: "Les commissions en attente sont calculées le 5 de chaque mois. Un versement est déclenché dès que votre solde atteint 15 € ; en dessous, il est reporté au mois suivant. Le virement bancaire est effectué manuellement par notre équipe, sous quelques jours.",
+    amb_terms_4_title: "Un client, un ambassadeur",
+    amb_terms_4_body: "Chaque client ne peut être rattaché qu'à un seul ambassadeur, définitivement fixé à sa toute première souscription — un désabonnement puis réabonnement ne change jamais l'ambassadeur d'origine.",
+    amb_terms_5_title: "Validation du compte",
+    amb_terms_5_body: "Votre candidature est examinée manuellement avant validation. Minzri se réserve le droit d'accepter, de refuser, ou de suspendre un compte ambassadeur à tout moment, notamment en cas de fraude ou d'abus constaté.",
+    amb_terms_6_title: "Auto-parrainage interdit",
+    amb_terms_6_body: "Un ambassadeur ne peut pas utiliser son propre lien pour s'abonner lui-même — ces cas sont automatiquement détectés et bloqués.",
+    amb_admin_age_lbl: "Âge déclaré",
+    amb_admin_certified: "Certifié 18+",
+    amb_admin_not_certified: "Non certifié",
     amb_err_terms: "Merci d'accepter les conditions pour continuer.",
     amb_login_sub: "Connectez-vous pour accéder à votre tableau de bord.",
     amb_app_user_hint: "Déjà un compte HomeSync ? Connectez-vous directement avec — votre profil ambassadeur se crée automatiquement.",
@@ -239,7 +270,16 @@ const TRANSLATIONS = {
     amb_explain_commission: "for every successful Stripe payment from someone you referred — for as long as they stay subscribed.",
     amb_explain_payout_when: "Paid out every month (on the 5th)",
     amb_explain_payout: "as soon as your balance reaches 15 €. Below that, it simply carries over to the next month.",
+    amb_explain_transfer: "The transfer is made by hand by our team once the calculation is done — allow a few days after the 5th to receive the money in your account.",
     amb_faq_title: "❓ How it works",
+    amb_faq_q1: "How much do I earn?",
+    amb_faq_q2: "When do I get paid?",
+    amb_faq_q3: "Is it automatic?",
+    amb_faq_q4: "Why \"pending\"?",
+    amb_faq_q5: "How do I get paid?",
+    amb_faq_q6: "Link or QR code?",
+    amb_faq_q7: "What if they cancel and resubscribe?",
+    amb_explain_onetime: "A customer can only ever be credited once, at their very first subscription — if they cancel and resubscribe with a different link, it never changes the original ambassador.",
     amb_explain_pending: "A \"pending\" account is being reviewed — your link already works, commissions activate once approved.",
     amb_explain_iban: "To receive your commissions, add your IBAN in the \"Manage\" tab — without it, we can't pay you.",
     amb_explain_link_qr: "You have 2 ways to share: the link (paste it in a message or a story), or the QR code (show it directly to someone so they can scan it with their phone). Both lead to the same place.",
@@ -293,7 +333,29 @@ const TRANSLATIONS = {
     amb_delete_blocked_pending: "Your account can't be deleted while commissions are still pending payout. Please contact us.",
     amb_delete_done: "Your account has been deleted.",
     amb_iban_already_saved: "IBAN already saved — retype it to change it",
-    amb_terms_label: "I accept the ambassador program's terms.",
+    amb_terms_label_1: "I certify that I am 18 or older and I accept the",
+    amb_terms_label_link: "Ambassador program terms",
+    amb_age_lbl: "Your age",
+    amb_err_age: "The program is reserved for people aged 18 or older.",
+    amb_complete_title: "One more step",
+    amb_complete_sub: "Before creating your ambassador profile, confirm these 2 points.",
+    amb_complete_submit: "Continue",
+    amb_terms_page_title: "Ambassador Program Terms",
+    amb_terms_1_title: "Minimum age",
+    amb_terms_1_body: "The Minzri Ambassador program is reserved for people aged 18 or older. By signing up, you certify that you are at least 18 years old on the date of your registration.",
+    amb_terms_2_title: "Commission",
+    amb_terms_2_body: "You receive 0.50 € for each successful Stripe payment from someone you referred, for as long as they remain subscribed to HomeSync.",
+    amb_terms_3_title: "Payout",
+    amb_terms_3_body: "Pending commissions are calculated on the 5th of each month. A payout is triggered once your balance reaches 15 €; below that, it carries over to the next month. The bank transfer is done manually by our team, within a few days.",
+    amb_terms_4_title: "One customer, one ambassador",
+    amb_terms_4_body: "Each customer can only ever be linked to one ambassador, permanently fixed at their very first subscription — canceling and resubscribing never changes the original ambassador.",
+    amb_terms_5_title: "Account approval",
+    amb_terms_5_body: "Your application is reviewed manually before approval. Minzri reserves the right to accept, reject, or suspend an ambassador account at any time, particularly in case of fraud or detected abuse.",
+    amb_terms_6_title: "Self-referral not allowed",
+    amb_terms_6_body: "An ambassador cannot use their own link to subscribe themselves — these cases are automatically detected and blocked.",
+    amb_admin_age_lbl: "Declared age",
+    amb_admin_certified: "18+ certified",
+    amb_admin_not_certified: "Not certified",
     amb_err_terms: "Please accept the terms to continue.",
     amb_login_sub: "Log in to access your dashboard.",
     amb_app_user_hint: "Already have a HomeSync account? Log in directly with it — your ambassador profile is created automatically.",
@@ -906,6 +968,7 @@ updateNavBg();
     switchToLogin.style.display = isRegister ? '' : 'none';
     appUserHint.style.display = isRegister ? 'none' : '';
     document.getElementById('ambTermsField').style.display = isRegister ? '' : 'none';
+    document.getElementById('ambAgeField').style.display = isRegister ? '' : 'none';
     errorEl.textContent = '';
   }
   switchToRegister.addEventListener('click', () => setMode('register'));
@@ -945,6 +1008,8 @@ updateNavBg();
     errorEl.textContent = '';
     if (mode === 'register' && !name) return errorEl.textContent = translate('amb_err_name');
     if (mode === 'register' && !document.getElementById('ambTerms').checked) return errorEl.textContent = translate('amb_err_terms');
+    const ageValue = parseInt(document.getElementById('ambAge').value, 10);
+    if (mode === 'register' && (!ageValue || ageValue < 18)) return errorEl.textContent = translate('amb_err_age');
     if (!email || !emailRe.test(email)) return errorEl.textContent = translate('amb_err_email');
     if (!pass || pass.length < 6) return errorEl.textContent = translate('amb_err_pass');
 
@@ -959,6 +1024,7 @@ updateNavBg();
           const code = genCode(name);
           await supabase.from('ambassadors').insert({
             user_id: data.user.id, name, email, code, status: 'pending',
+            age_at_signup: ageValue, terms_accepted_at: new Date().toISOString(),
           });
         }
       } else {
@@ -999,6 +1065,43 @@ updateNavBg();
 
   let currentAmbassador = null;
   let referralLink = '';
+  let pendingCompleteUser = null;
+
+  // ── Modale Conditions Générales du programme ──
+  const termsOverlay = document.getElementById('ambTermsOverlay');
+  const openTermsModal = (e) => { e.preventDefault(); e.stopPropagation(); termsOverlay.classList.add('show'); };
+  document.getElementById('ambTermsLink').addEventListener('click', openTermsModal);
+  document.getElementById('ambTermsLink2').addEventListener('click', openTermsModal);
+  document.getElementById('ambTermsClose').addEventListener('click', () => termsOverlay.classList.remove('show'));
+  termsOverlay.addEventListener('click', (e) => { if (e.target === termsOverlay) termsOverlay.classList.remove('show'); });
+
+  document.getElementById('ambCompleteSubmit').addEventListener('click', async () => {
+    const errEl = document.getElementById('ambCompleteError');
+    const age = parseInt(document.getElementById('ambCompleteAge').value, 10);
+    const termsChecked = document.getElementById('ambCompleteTerms').checked;
+    errEl.textContent = '';
+    if (!age || age < 18) { errEl.textContent = translate('amb_err_age'); return; }
+    if (!termsChecked) { errEl.textContent = translate('amb_err_terms'); return; }
+    if (!pendingCompleteUser) return;
+
+    const btn = document.getElementById('ambCompleteSubmit');
+    btn.disabled = true; const original = btn.textContent; btn.textContent = '…';
+    const user = pendingCompleteUser;
+    const fallbackName = (user.user_metadata?.name || user.email.split('@')[0]);
+    const code = genCode(fallbackName);
+    const { data: created, error: createErr } = await supabase.from('ambassadors')
+      .insert({
+        user_id: user.id, name: fallbackName, email: user.email, code, status: 'pending',
+        age_at_signup: age, terms_accepted_at: new Date().toISOString(),
+      })
+      .select().single();
+    btn.textContent = original; btn.disabled = false;
+    if (createErr) { errEl.textContent = translate('amb_err_generic'); return; }
+
+    document.getElementById('ambCompleteOverlay').classList.remove('show');
+    currentAmbassador = created;
+    await loadDashboard();
+  });
 
   async function loadDashboard() {
     const { data: { user } } = await supabase.auth.getUser();
@@ -1008,18 +1111,14 @@ updateNavBg();
 
     if (!ambassador) {
       // Compte déjà existant (ex: même email que l'app HomeSync) mais sans
-      // profil ambassadeur — on le crée automatiquement à la connexion,
-      // plutôt que de bloquer avec un écran de connexion qui boucle sans rien expliquer.
-      const fallbackName = (user.user_metadata?.name || user.email.split('@')[0]);
-      const code = genCode(fallbackName);
-      const { data: created, error: createErr } = await supabase.from('ambassadors')
-        .insert({ user_id: user.id, name: fallbackName, email: user.email, code, status: 'pending' })
-        .select().single();
-      if (createErr) {
-        errorEl.textContent = translate('amb_err_generic');
-        return openAuthModal();
-      }
-      ambassador = created;
+      // profil ambassadeur — avant de le créer, on demande son âge et sa
+      // certification des conditions (obligatoire, même pour ce chemin).
+      pendingCompleteUser = user;
+      document.getElementById('ambCompleteAge').value = '';
+      document.getElementById('ambCompleteTerms').checked = false;
+      document.getElementById('ambCompleteError').textContent = '';
+      document.getElementById('ambCompleteOverlay').classList.add('show');
+      return;
     }
     currentAmbassador = ambassador;
 
@@ -1212,6 +1311,16 @@ updateNavBg();
   const newsList = document.getElementById('ambNewsList');
   const leaderboardList = document.getElementById('ambLeaderboard');
 
+  // ── FAQ accordéon — un seul item ouvert à la fois, replié par défaut ──
+  document.querySelectorAll('.amb-faq-q').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const item = btn.closest('.amb-faq-item');
+      const wasOpen = item.classList.contains('open');
+      document.querySelectorAll('.amb-faq-item.open').forEach(o => o.classList.remove('open'));
+      if (!wasOpen) item.classList.add('open');
+    });
+  });
+
   async function loadCommunity() {
     const { data: posts } = await supabase.from('ambassador_posts').select('*').order('created_at', { ascending: false }).limit(10);
     if (posts && posts.length) {
@@ -1275,7 +1384,11 @@ updateNavBg();
     adminPendingList.innerHTML = items.length ? items.map(a => `
       <div class="amb-admin-card">
         <div class="amb-admin-card-row">
-          <div><div class="amb-admin-card-name">${escapeHtml(a.name)}</div><div class="amb-admin-card-email">${escapeHtml(a.email)}</div></div>
+          <div>
+            <div class="amb-admin-card-name">${escapeHtml(a.name)}</div>
+            <div class="amb-admin-card-email">${escapeHtml(a.email)}</div>
+            <div class="amb-admin-card-email">🎂 ${translate('amb_admin_age_lbl')} : <b>${a.age_at_signup ?? '—'}</b> · ${a.terms_accepted_at ? `✅ ${translate('amb_admin_certified')}` : `⚠️ ${translate('amb_admin_not_certified')}`}</div>
+          </div>
         </div>
         <div class="amb-admin-actions">
           <button class="amb-btn-approve" data-id="${a.id}" data-action="approve">${translate('amb_admin_approve')}</button>
@@ -1307,6 +1420,8 @@ updateNavBg();
         <div id="ambDetail-${a.id}" style="display:none; margin-top:10px; padding-top:10px; border-top:1px dashed var(--line);">
           <div class="amb-admin-card-email" style="margin-bottom:5px;">💰 ${translate('amb_admin_to_pay')} : <b style="color:var(--mint);">${Number(a.pending_commission||0).toFixed(2)} €</b></div>
           <div class="amb-admin-card-email" style="margin-bottom:5px;">👥 ${translate('amb_admin_active_subs')} : <b>${a.active_subscribers||0}</b></div>
+          <div class="amb-admin-card-email" style="margin-bottom:5px;">🎂 ${translate('amb_admin_age_lbl')} : <b>${a.age_at_signup ?? '—'}</b></div>
+          <div class="amb-admin-card-email" style="margin-bottom:5px;">${a.terms_accepted_at ? `✅ ${translate('amb_admin_certified')}` : `⚠️ ${translate('amb_admin_not_certified')}`}</div>
           <div class="amb-admin-card-email">${a.iban ? `💳 ${escapeHtml(a.iban)} — ${escapeHtml(a.iban_holder_name||'')}` : translate('amb_admin_no_iban')}</div>
         </div>
         <div class="amb-admin-actions" style="margin-top:10px;">
