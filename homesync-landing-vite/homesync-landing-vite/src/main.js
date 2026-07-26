@@ -634,6 +634,13 @@ if (gsapReady && !reduced) {
   }
 
   async function runIntroSequence() {
+    // La barre de navigation (avec le bouton ambassadeur) n'a aucune raison
+    // d'attendre la fin de toute l'animation — elle apparaît tout de suite,
+    // indépendamment du reste, pour que la navigation soit toujours possible
+    // sans devoir patienter (utile pour les visiteurs qui reviennent ou
+    // connaissent déjà le site).
+    document.getElementById('nav').classList.add('show');
+
     gsap.to('#introGlow', { opacity:1, duration:1.2 });
     await wait(300);
     for (const q of QUESTIONS) await typeQuestion(q);
@@ -655,7 +662,6 @@ if (gsapReady && !reduced) {
     document.getElementById('introCta').classList.add('show');
     await wait(400);
     document.getElementById('scrollHint').classList.add('show');
-    document.getElementById('nav').classList.add('show');
   }
   runIntroSequence();
 
