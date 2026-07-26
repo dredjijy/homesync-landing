@@ -9,6 +9,7 @@ const ScrollTrigger = window.ScrollTrigger;
 const TRANSLATIONS = {
   fr: {
     cta: "Rejoindre HomeSync",
+    cta_nav: "Rejoindre",
     intro_answer: "HomeSync répond à toutes ces questions.",
     scroll_hint: "CONTINUER",
     modules_kicker: "Une seule application",
@@ -137,6 +138,7 @@ const TRANSLATIONS = {
     amb_err_generic: "Un souci est survenu — réessayez dans un instant.",
     amb_signout: "Déconnexion",
     amb_link_lbl: "Votre lien de parrainage",
+    amb_code_lbl: "Ou juste votre code (à donner de vive voix)",
     amb_tab_dashboard: "📊 Tableau de bord",
     amb_tab_news: "📢 Actualités",
     amb_tab_manage: "⚙️ Gestion",
@@ -167,11 +169,38 @@ const TRANSLATIONS = {
     ask_form_message_ph: "Écrivez votre question ici…",
     ask_form_send: "Envoyer",
     ask_form_hint: "Ouvre votre application email, avec tout déjà rempli.",
+    footer_cgu: "Conditions générales",
+    footer_contact: "Contact",
+    footer_privacy: "Politique de confidentialité",
+    footer_ambassador: "Devenir ambassadeur",
+    landing_amb_code_link: "🤝 Vous avez un code ambassadeur ?",
+    landing_amb_code_ph: "JEANYVESSNAL",
+    landing_amb_code_saved: "✓ Code enregistré — il sera utilisé lors de votre abonnement.",
+    cgu_1_title: "Le service",
+    cgu_1_body: "HomeSync est une application de gestion du foyer (courses, stock, budget, recettes, agenda) éditée par Minzri, accessible par abonnement.",
+    cgu_2_title: "Abonnement et essai gratuit",
+    cgu_2_body: "L'abonnement inclut 7 jours d'essai gratuit (14 jours via un lien d'ambassadeur), puis 3,99€/mois, résiliable à tout moment en un clic depuis l'application, sans engagement ni frais cachés.",
+    cgu_3_title: "Un abonnement, plusieurs membres",
+    cgu_3_body: "Un seul abonnement couvre jusqu'à 6 membres d'un même foyer, sans coût additionnel par personne.",
+    cgu_4_title: "Paiement",
+    cgu_4_body: "Les paiements sont traités de façon sécurisée par Stripe. Minzri ne stocke jamais vos coordonnées bancaires complètes.",
+    cgu_5_title: "Résiliation",
+    cgu_5_body: "Vous pouvez résilier votre abonnement à tout moment depuis l'application. L'accès reste actif jusqu'à la fin de la période déjà payée.",
+    privacy_1_title: "Données collectées",
+    privacy_1_body: "Nom, email, et les données que vous saisissez dans l'application (courses, stock, budget, recettes, agenda) — uniquement pour faire fonctionner le service.",
+    privacy_2_title: "Vos droits",
+    privacy_2_body: "Vous pouvez exporter ou supprimer l'ensemble de vos données à tout moment, directement depuis les paramètres de l'application.",
+    privacy_3_title: "Partage des données",
+    privacy_3_body: "Vos données ne sont jamais vendues. Elles sont uniquement partagées avec les prestataires techniques nécessaires au fonctionnement du service (hébergement, paiement).",
+    privacy_4_title: "Contact",
+    privacy_4_body: "Pour toute question sur vos données, utilisez le bouton Contact en bas de page.",
     pm_title: "Sur quel appareil ?",
     pm_sub: "Choisissez votre appareil pour l'installer en quelques secondes",
     pm_pc_lbl: "Ordinateur",
-    pm_direct_login: "Connexion / Inscription",
+    pm_direct_login: "Commencer mon essai",
     pm_direct_hint: "Déjà décidé ? Passez directement à l'app, sans les étapes d'installation.",
+    pm_download_btn: "📥 Télécharger l'application",
+    pm_download_sub: "Choisissez votre appareil",
     pm_download_lbl: "Installer l'application",
     pm_or: "ou",
     pm_desktop_title: "Installer sur ordinateur",
@@ -248,6 +277,7 @@ const TRANSLATIONS = {
   },
   en: {
     cta: "Join HomeSync",
+    cta_nav: "Join",
     intro_answer: "HomeSync answers all these questions.",
     scroll_hint: "CONTINUE",
     modules_kicker: "One single app",
@@ -376,6 +406,7 @@ const TRANSLATIONS = {
     amb_err_generic: "Something went wrong — try again in a moment.",
     amb_signout: "Log out",
     amb_link_lbl: "Your referral link",
+    amb_code_lbl: "Or just your code (to share out loud)",
     amb_tab_dashboard: "📊 Dashboard",
     amb_tab_news: "📢 News",
     amb_tab_manage: "⚙️ Manage",
@@ -406,11 +437,38 @@ const TRANSLATIONS = {
     ask_form_message_ph: "Write your question here…",
     ask_form_send: "Send",
     ask_form_hint: "Opens your email app, with everything pre-filled.",
+    footer_cgu: "Terms and conditions",
+    footer_contact: "Contact",
+    footer_privacy: "Privacy policy",
+    footer_ambassador: "Become an ambassador",
+    landing_amb_code_link: "🤝 Have an ambassador code?",
+    landing_amb_code_ph: "JEANYVESSNAL",
+    landing_amb_code_saved: "✓ Code saved — it will be used with your subscription.",
+    cgu_1_title: "The service",
+    cgu_1_body: "HomeSync is a household management app (shopping, stock, budget, recipes, calendar) published by Minzri, available by subscription.",
+    cgu_2_title: "Subscription and free trial",
+    cgu_2_body: "The subscription includes a 7-day free trial (14 days via an ambassador link), then €3.99/month, cancellable anytime in one tap from the app, with no commitment or hidden fees.",
+    cgu_3_title: "One subscription, several members",
+    cgu_3_body: "A single subscription covers up to 6 members of the same household, at no extra cost per person.",
+    cgu_4_title: "Payment",
+    cgu_4_body: "Payments are securely processed by Stripe. Minzri never stores your full banking details.",
+    cgu_5_title: "Cancellation",
+    cgu_5_body: "You can cancel your subscription at any time from the app. Access remains active until the end of the already-paid period.",
+    privacy_1_title: "Data collected",
+    privacy_1_body: "Name, email, and the data you enter in the app (shopping, stock, budget, recipes, calendar) — only to make the service work.",
+    privacy_2_title: "Your rights",
+    privacy_2_body: "You can export or delete all your data at any time, directly from the app's settings.",
+    privacy_3_title: "Data sharing",
+    privacy_3_body: "Your data is never sold. It is only shared with the technical providers necessary for the service to work (hosting, payment).",
+    privacy_4_title: "Contact",
+    privacy_4_body: "For any question about your data, use the Contact button at the bottom of the page.",
     pm_title: "Which device?",
     pm_sub: "Pick your device to install it in a few seconds",
     pm_pc_lbl: "Computer",
-    pm_direct_login: "Log in / Sign up",
+    pm_direct_login: "Start my trial",
     pm_direct_hint: "Already decided? Skip straight to the app, no install steps.",
+    pm_download_btn: "📥 Install the app",
+    pm_download_sub: "Choose your device",
     pm_download_lbl: "Install the app",
     pm_or: "or",
     pm_desktop_title: "Install on computer",
@@ -595,6 +653,47 @@ const APP_URL = "https://home-sync-beta.vercel.app";
     }
   } catch {}
 })();
+
+// ── Champ "code ambassadeur" sur la landing (près du héros) — capte le code
+// le plus tôt possible dans le parcours, pour ceux qui connaissent un code de
+// vive voix sans avoir cliqué de lien (ex: installation directe depuis un store).
+// Ce bloc HTML existait déjà mais n'avait jamais été branché — corrigé ici. ──
+(function initLandingAmbCode() {
+  const toggle = document.getElementById('landingAmbCodeLink');
+  const wrap = document.getElementById('landingAmbCodeWrap');
+  const input = document.getElementById('landingAmbCode');
+  const savedEl = document.getElementById('landingAmbCodeSaved');
+  if (!toggle || !wrap || !input) return;
+
+  toggle.addEventListener('click', () => {
+    wrap.style.display = wrap.style.display === 'none' ? '' : 'none';
+    if (wrap.style.display !== 'none') input.focus();
+  });
+
+  input.addEventListener('input', () => {
+    const code = input.value.trim().toUpperCase();
+    input.value = code;
+    if (!code) { savedEl.style.display = 'none'; return; }
+
+    localStorage.setItem('homesync_ref_code', code);
+    localStorage.setItem('homesync_ref_captured_at', String(Date.now()));
+    savedEl.style.display = '';
+
+    const alreadyLogged = sessionStorage.getItem('homesync_ref_click_logged_' + code);
+    if (!alreadyLogged) {
+      fetch('https://jkiofmoqwvcgbabmqosn.supabase.co/rest/v1/rpc/log_referral_click', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'apikey': 'sb_publishable_wB-lYIAitkLuo6ARwX6tKw_ZY3ZmLRT',
+          'Authorization': 'Bearer sb_publishable_wB-lYIAitkLuo6ARwX6tKw_ZY3ZmLRT',
+        },
+        body: JSON.stringify({ p_code: code }),
+      }).catch(() => {});
+      sessionStorage.setItem('homesync_ref_click_logged_' + code, '1');
+    }
+  });
+})();
 function getAppUrlWithRef(baseParams = '') {
   let ref = '';
   try {
@@ -612,12 +711,21 @@ function getAppUrlWithRef(baseParams = '') {
 // ── Modale de choix plateforme — interceptée sur les 3 CTA "Commencer" ──
 const pmOverlay = document.getElementById('pmOverlay');
 const pmChoiceScreen = document.getElementById('pmChoiceScreen');
+const pmDownloadScreen = document.getElementById('pmDownloadScreen');
 const pmStepsAndroid = document.getElementById('pmStepsAndroid');
 const pmStepsIphone  = document.getElementById('pmStepsIphone');
 const pmStepsDesktop = document.getElementById('pmStepsDesktop');
 
 function pmShowChoice() {
   pmChoiceScreen.style.display = 'block';
+  pmDownloadScreen.style.display = 'none';
+  pmStepsAndroid.classList.remove('show');
+  pmStepsIphone.classList.remove('show');
+  pmStepsDesktop.classList.remove('show');
+}
+function pmShowDownload() {
+  pmChoiceScreen.style.display = 'none';
+  pmDownloadScreen.style.display = 'block';
   pmStepsAndroid.classList.remove('show');
   pmStepsIphone.classList.remove('show');
   pmStepsDesktop.classList.remove('show');
@@ -631,6 +739,20 @@ const askForm = document.getElementById('askForm');
 const CONTACT_EMAIL = 'part.kobbaz@outlook.fr';
 
 function askOpen() { askOverlay.classList.add('show'); document.getElementById('askSubject').focus(); }
+
+// ── Pied de page — CGU / Contact / Politique / Devenir ambassadeur ──
+document.getElementById('footerContact').addEventListener('click', askOpen);
+document.getElementById('footerAmbassador').addEventListener('click', () => {
+  document.getElementById('ctaAmbassador').click();
+});
+const cguOverlay = document.getElementById('cguOverlay');
+document.getElementById('footerCgu').addEventListener('click', () => cguOverlay.classList.add('show'));
+document.getElementById('cguClose').addEventListener('click', () => cguOverlay.classList.remove('show'));
+cguOverlay.addEventListener('click', (e) => { if (e.target === cguOverlay) cguOverlay.classList.remove('show'); });
+const privacyOverlay = document.getElementById('privacyOverlay');
+document.getElementById('footerPrivacy').addEventListener('click', () => privacyOverlay.classList.add('show'));
+document.getElementById('privacyClose').addEventListener('click', () => privacyOverlay.classList.remove('show'));
+privacyOverlay.addEventListener('click', (e) => { if (e.target === privacyOverlay) privacyOverlay.classList.remove('show'); });
 function askClose() { askOverlay.classList.remove('show'); }
 
 document.getElementById('askBtnNav').addEventListener('click', askOpen);
@@ -657,16 +779,19 @@ document.querySelectorAll('#ctaNav,#introCta,#ctaFinal').forEach(el => {
   });
 });
 
+document.getElementById('pmShowDownload').addEventListener('click', (e) => { e.preventDefault(); pmShowDownload(); });
+document.getElementById('pmBackDownload').addEventListener('click', pmShowChoice);
+
 document.getElementById('pmAndroid').addEventListener('click', () => {
-  pmChoiceScreen.style.display = 'none';
+  pmDownloadScreen.style.display = 'none';
   pmStepsAndroid.classList.add('show');
 });
 document.getElementById('pmIphone').addEventListener('click', () => {
-  pmChoiceScreen.style.display = 'none';
+  pmDownloadScreen.style.display = 'none';
   pmStepsIphone.classList.add('show');
 });
 document.getElementById('pmSkip').addEventListener('click', () => {
-  pmChoiceScreen.style.display = 'none';
+  pmDownloadScreen.style.display = 'none';
   pmStepsDesktop.classList.add('show');
 });
 // Accessibilité clavier pour tous les éléments agissant comme des boutons (role="button")
@@ -678,9 +803,9 @@ document.querySelectorAll('[role="button"]').forEach(el => {
     }
   });
 });
-document.getElementById('pmBack1').addEventListener('click', pmShowChoice);
-document.getElementById('pmBack2').addEventListener('click', pmShowChoice);
-document.getElementById('pmBack3').addEventListener('click', pmShowChoice);
+document.getElementById('pmBack1').addEventListener('click', pmShowDownload);
+document.getElementById('pmBack2').addEventListener('click', pmShowDownload);
+document.getElementById('pmBack3').addEventListener('click', pmShowDownload);
 document.getElementById('pmDirectLogin').addEventListener('click', (e) => { e.preventDefault(); window.location.href = getAppUrlWithRef('start=login'); });
 document.getElementById('pmGoAndroid').addEventListener('click', (e) => { e.preventDefault(); window.location.href = getAppUrlWithRef('start=login'); });
 document.getElementById('pmGoIphone').addEventListener('click', (e) => { e.preventDefault(); window.location.href = getAppUrlWithRef('start=login'); });
@@ -828,8 +953,23 @@ if (gsapReady && !reduced) {
 // ── Fond "verre dépoli" de la nav dès qu'on a scrollé un peu — indépendant de GSAP ──
 const navEl = document.getElementById('nav');
 const updateNavBg = () => { navEl.classList.toggle('scrolled', window.scrollY > 40); };
+
+// Le "CONTINUER" est en position fixe (pour ne jamais chevaucher le contenu
+// du héros, cf. correctif précédent) — mais rien ne le masquait une fois
+// qu'on avait vraiment défilé plus bas, il restait affiché indéfiniment.
+// On le cache dès qu'on quitte la zone du héros.
+const updateScrollHintVisibility = () => {
+  const hint = document.getElementById('scrollHint');
+  if (!hint) return;
+  const introEl = document.getElementById('intro');
+  const introBottom = introEl ? introEl.getBoundingClientRect().bottom : 0;
+  hint.style.opacity = (introBottom > 100) ? '' : '0';
+  hint.style.pointerEvents = (introBottom > 100) ? '' : 'none';
+};
+window.addEventListener('scroll', updateScrollHintVisibility, { passive:true });
 window.addEventListener('scroll', updateNavBg, { passive:true });
 updateNavBg();
+updateScrollHintVisibility();
 
 // ── Galerie de captures d'écran — carrousel simple, sans dépendance ──
 (function initGallery() {
@@ -1153,6 +1293,7 @@ updateNavBg();
 
     referralLink = `${APP_ORIGIN}/?ref=${ambassador.code}`;
     linkBox.textContent = referralLink;
+    document.getElementById('ambCodeBox').textContent = ambassador.code;
 
     ibanInput.value = '';
     ibanInput.placeholder = ambassador.iban ? translate('amb_iban_already_saved') : 'FR76 XXXX XXXX XXXX XXXX XXXX XXX';
@@ -1188,6 +1329,13 @@ updateNavBg();
     navigator.clipboard?.writeText(referralLink).then(() => {
       copyLinkBtn.innerHTML = '✓ ' + translate('amb_copied');
       setTimeout(() => copyLinkBtn.innerHTML = '📋 <span>' + translate('amb_copy_btn') + '</span>', 2000);
+    });
+  });
+  document.getElementById('ambCopyCode').addEventListener('click', () => {
+    const btn = document.getElementById('ambCopyCode');
+    navigator.clipboard?.writeText(currentAmbassador?.code || '').then(() => {
+      btn.innerHTML = '✓ ' + translate('amb_copied');
+      setTimeout(() => btn.innerHTML = '📋 <span>' + translate('amb_copy_btn') + '</span>', 2000);
     });
   });
   shareLinkBtn.addEventListener('click', async () => {
