@@ -98,8 +98,14 @@ const TRANSLATIONS = {
     amb_err_generic: "Un souci est survenu — réessayez dans un instant.",
     amb_signout: "Déconnexion",
     amb_link_lbl: "Votre lien de parrainage",
+    amb_tab_dashboard: "📊 Tableau de bord",
+    amb_tab_news: "📢 Actualités",
+    amb_tab_manage: "⚙️ Gestion",
     amb_share_btn: "Partager",
     amb_share_text: "J'utilise HomeSync pour organiser mon foyer — je te le recommande :",
+    amb_qr_title: "Votre QR code",
+    amb_qr_sub: "Montrez-le ou téléchargez-le pour le partager.",
+    amb_qr_download: "⬇️ Télécharger l'image",
     amb_stat_pending: "Commissions en attente",
     amb_stat_active: "Abonnés actifs",
     amb_stat_total: "Clients apportés",
@@ -150,10 +156,11 @@ const TRANSLATIONS = {
     pm_i_step1_t: "Appuyez sur Partager", pm_i_step1_d: "Le carré avec une flèche vers le haut, en bas de Safari",
     pm_i_step2_t: "Choisissez \"Sur l'écran d'accueil\"", pm_i_step2_d: "Faites défiler la liste si besoin",
     pm_i_step3_t: "Appuyez sur \"Ajouter\"", pm_i_step3_d: "HomeSync s'ajoute à votre écran d'accueil",
-    fb1_q: "Qu'est-ce qu'il reste à la maison ?", fb1_title: "Ne rachetez plus ce que vous avez déjà.", fb1_text: "Consultez votre stock en temps réel et sachez immédiatement ce qu'il reste chez vous.",
+    fb1_q: "On a déjà ça à la maison, non ?", fb1_title: "Ne rachetez plus ce que vous avez déjà.", fb1_text: "Consultez votre stock en temps réel et sachez immédiatement ce qu'il reste chez vous.",
     fb2_q: "Combien vais-je payer à la caisse ?", fb2_title: "Connaissez le total avant d'arriver en caisse.", fb2_text: "Ajoutez les prix pendant vos courses et gardez votre budget sous contrôle.",
     fb3_q: "Qui fait quoi cette semaine ?", fb3_title: "Toute la famille sait quoi faire.", fb3_text: "Rendez-vous, tâches et événements sont synchronisés automatiquement.",
 
+    forwho_bridge: "Si une de ces situations vous parle, HomeSync a été pensé pour vous.",
     forwho_title: "Ça, c'est peut-être vous",
     forwho1_title: "Parents qui jonglent",
     forwho1_text: "Entre le travail, les enfants et les courses de dernière minute — plus besoin de tout garder en tête.",
@@ -174,12 +181,12 @@ const TRANSLATIONS = {
     faq3_a: "Jusqu'à 6 membres, avec un seul abonnement — pas de prix par personne.",
     faq4_q: "Un enfant peut avoir son propre accès ?",
     faq4_a: "Oui, chaque membre du foyer a son propre compte et se connecte depuis son propre appareil.",
-    mc_stock_tag: "Stock", mc_stock_q: "Qu'est-ce qu'il me reste à la maison ?", mc_stock_a: ["Chaque produit affiche sa date de péremption, pour ne jamais être pris de court.", "Cuisinez une recette et le stock se met à jour tout seul.", "Presque vide ? L'article part directement dans vos courses."],
-    mc_courses_tag: "Courses", mc_courses_q: "Qu'est-ce qu'il faut racheter ?", mc_courses_a: ["Ajoutez un article en tapant, ou collez toute une liste d'un coup.", "Cochez au fur et à mesure — une fois validée, la liste rejoint automatiquement le stock.", "Vos listes types se sauvegardent pour la semaine suivante."],
-    mc_budget_tag: "Budget", mc_budget_q: "Combien vais-je dépenser ce mois-ci ?", mc_budget_a: ["Le total se calcule pendant vos courses, avant même la caisse.", "Connecté directement aux courses et aux charges récurrentes comme le loyer.", "Un résumé s'exporte en PDF à tout moment."],
-    mc_recettes_tag: "Recettes", mc_recettes_q: "Qu'est-ce qu'on mange ce soir… et si je planifie pour toute la semaine ?", mc_recettes_a: ["Cuisinez un plat, et les ingrédients sont déduits automatiquement de votre stock.", "Il vous manque quelque chose ? Un bouton l'ajoute directement aux courses.", "Planifiez la semaine, la liste se génère toute seule."],
-    mc_agenda_tag: "Agenda", mc_agenda_q: "Qui fait quoi, et quand ?", mc_agenda_a: ["Les dates de péremption du stock y apparaissent automatiquement, tout comme vos charges récurrentes.", "Toute la famille voit les mêmes rendez-vous, en temps réel.", "Un rappel arrive automatiquement avant l'échéance."],
-    mc_membres_tag: "Membres", mc_membres_q: "Comment toute la famille reste connectée ?", mc_membres_a: ["Chaque membre se connecte depuis son propre appareil.", "Ce que l'un ajoute, les autres le voient à l'instant.", "Invitez en un clic, avec un simple code ou un QR code.", "Un seul abonnement suffit pour jusqu'à 6 membres — personne ne paie de son côté."],
+    mc_stock_tag: "📦 Stock", mc_stock_q: "Qu'est-ce qu'il me reste à la maison ?", mc_stock_a: ["Chaque produit affiche sa date de péremption, pour ne jamais être pris de court.", "Cuisinez une recette et le stock se met à jour tout seul.", "Presque vide ? L'article part directement dans vos courses.", "Je ne fais plus l'inventaire du frigo dans ma tête — un coup d'œil et je sais s'il reste des œufs."],
+    mc_courses_tag: "🛒 Courses", mc_courses_q: "Qu'est-ce qu'il faut racheter ?", mc_courses_a: ["Ajoutez un article en tapant, ou collez toute une liste d'un coup.", "Cochez au fur et à mesure — une fois validée, la liste rejoint automatiquement le stock.", "Vos listes types se sauvegardent pour la semaine suivante.", "Je ne me demande plus ce qu'on a oublié — la liste est déjà là, mise à jour par toute la famille."],
+    mc_budget_tag: "💰 Budget", mc_budget_q: "Combien vais-je dépenser ce mois-ci ?", mc_budget_a: ["Le total se calcule pendant vos courses, avant même la caisse.", "Connecté directement aux courses et aux charges récurrentes comme le loyer.", "Un résumé s'exporte en PDF à tout moment.", "Je ne découvre plus le montant à la fin du mois — je vois où part chaque euro, en temps réel."],
+    mc_recettes_tag: "🍳 Recettes", mc_recettes_q: "Qu'est-ce qu'on mange ce soir… et si je planifie pour toute la semaine ?", mc_recettes_a: ["Cuisinez un plat, et les ingrédients sont déduits automatiquement de votre stock.", "Il vous manque quelque chose ? Un bouton l'ajoute directement aux courses.", "Planifiez la semaine, la liste se génère toute seule.", "Je ne fais pas que juste enregistrer mes recettes — je planifie les repas de chaque personne, ça m'évite de réfléchir à quoi manger."],
+    mc_agenda_tag: "📅 Agenda", mc_agenda_q: "Qui fait quoi, et quand ?", mc_agenda_a: ["Les dates de péremption du stock y apparaissent automatiquement, tout comme vos charges récurrentes.", "Toute la famille voit les mêmes rendez-vous, en temps réel.", "Un rappel arrive automatiquement avant l'échéance.", "Je n'ai plus à rappeler à tout le monde qui doit faire quoi — chacun voit son planning, sans que j'aie à répéter."],
+    mc_membres_tag: "👥 Membres", mc_membres_q: "Comment toute la famille reste connectée ?", mc_membres_a: ["Chaque membre se connecte depuis son propre appareil.", "Ce que l'un ajoute, les autres le voient à l'instant.", "Invitez en un clic, avec un simple code ou un QR code.", "Un seul abonnement suffit pour jusqu'à 6 membres — personne ne paie de son côté.", "Je n'ai plus à envoyer 10 messages pour dire la même chose — tout le monde voit la même info, au même moment."],
 
     gallery_title: "HomeSync, en vrai",
     gallery_sub: "Un aperçu réel de l'application, telle qu'elle est aujourd'hui.",
@@ -291,8 +298,14 @@ const TRANSLATIONS = {
     amb_err_generic: "Something went wrong — try again in a moment.",
     amb_signout: "Log out",
     amb_link_lbl: "Your referral link",
+    amb_tab_dashboard: "📊 Dashboard",
+    amb_tab_news: "📢 News",
+    amb_tab_manage: "⚙️ Manage",
     amb_share_btn: "Share",
     amb_share_text: "I use HomeSync to organize my household — I recommend it:",
+    amb_qr_title: "Your QR code",
+    amb_qr_sub: "Show it or download it to share.",
+    amb_qr_download: "⬇️ Download image",
     amb_stat_pending: "Pending commissions",
     amb_stat_active: "Active subscribers",
     amb_stat_total: "Customers brought in",
@@ -343,10 +356,11 @@ const TRANSLATIONS = {
     pm_i_step1_t: "Tap Share", pm_i_step1_d: "The square with an arrow pointing up, at the bottom of Safari",
     pm_i_step2_t: "Choose \"Add to Home Screen\"", pm_i_step2_d: "Scroll the list if needed",
     pm_i_step3_t: "Tap \"Add\"", pm_i_step3_d: "HomeSync is added to your home screen",
-    fb1_q: "What's left at home?", fb1_title: "Stop buying what you already have.", fb1_text: "Check your stock in real time and know instantly what's left at home.",
+    fb1_q: "Didn't we already have that?", fb1_title: "Stop buying what you already have.", fb1_text: "Check your stock in real time and know instantly what's left at home.",
     fb2_q: "How much will I pay at checkout?", fb2_title: "Know the total before you reach the register.", fb2_text: "Add prices as you shop and keep your budget under control.",
     fb3_q: "Who's doing what this week?", fb3_title: "The whole family knows what to do.", fb3_text: "Appointments, tasks and events sync automatically.",
 
+    forwho_bridge: "If any of these sound like you, HomeSync was built with you in mind.",
     forwho_title: "This might be you",
     forwho1_title: "Parents juggling it all",
     forwho1_text: "Between work, the kids, and last-minute grocery runs — no need to keep it all in your head anymore.",
@@ -367,12 +381,12 @@ const TRANSLATIONS = {
     faq3_a: "Up to 6 members, with a single subscription — no per-person pricing.",
     faq4_q: "Can a child have their own access?",
     faq4_a: "Yes, each household member has their own account and logs in from their own device.",
-    mc_stock_tag: "Stock", mc_stock_q: "What's left at home?", mc_stock_a: ["Every product shows its expiry date, so you're never caught off guard.", "Cook a recipe and the stock updates itself.", "Almost empty? The item goes straight to your shopping list."],
-    mc_courses_tag: "Shopping", mc_courses_q: "What do I need to buy?", mc_courses_a: ["Add an item by typing, or paste a whole list at once.", "Check items off as you go — once validated, the list automatically joins the stock.", "Save your usual lists for next week."],
-    mc_budget_tag: "Budget", mc_budget_q: "How much will I spend this month?", mc_budget_a: ["The total is calculated as you shop, before you even reach the register.", "Directly connected to shopping and recurring charges like rent.", "Export a summary as PDF anytime."],
-    mc_recettes_tag: "Recipes", mc_recettes_q: "What's for dinner tonight… and what about planning the whole week?", mc_recettes_a: ["Cook a dish, and ingredients are automatically deducted from your stock.", "Missing something? A button adds it straight to your shopping list.", "Plan the week, the list builds itself."],
-    mc_agenda_tag: "Calendar", mc_agenda_q: "Who's doing what, and when?", mc_agenda_a: ["Stock expiry dates appear here automatically, along with your recurring charges.", "The whole family sees the same events, in real time.", "A reminder arrives automatically before the deadline."],
-    mc_membres_tag: "Members", mc_membres_q: "How does the whole family stay connected?", mc_membres_a: ["Each member logs in from their own device.", "What one adds, the others see instantly.", "Invite in one click, with a simple code or QR code.", "One subscription covers up to 6 members — no one pays individually."],
+    mc_stock_tag: "📦 Stock", mc_stock_q: "What's left at home?", mc_stock_a: ["Every product shows its expiry date, so you're never caught off guard.", "Cook a recipe and the stock updates itself.", "Almost empty? The item goes straight to your shopping list.", "I no longer take stock of the fridge in my head — one glance tells me if we're out of eggs."],
+    mc_courses_tag: "🛒 Shopping", mc_courses_q: "What do I need to buy?", mc_courses_a: ["Add an item by typing, or paste a whole list at once.", "Check items off as you go — once validated, the list automatically joins the stock.", "Save your usual lists for next week.", "I no longer wonder what we forgot — the list is already there, updated by the whole family."],
+    mc_budget_tag: "💰 Budget", mc_budget_q: "How much will I spend this month?", mc_budget_a: ["The total is calculated as you shop, before you even reach the register.", "Directly connected to shopping and recurring charges like rent.", "Export a summary as PDF anytime.", "I no longer find out the total at the end of the month — I see where every euro goes, in real time."],
+    mc_recettes_tag: "🍳 Recipes", mc_recettes_q: "What's for dinner tonight… and what about planning the whole week?", mc_recettes_a: ["Cook a dish, and ingredients are automatically deducted from your stock.", "Missing something? A button adds it straight to your shopping list.", "Plan the week, the list builds itself.", "I don't just save recipes — I plan meals for each person, so I never have to think about what to cook."],
+    mc_agenda_tag: "📅 Calendar", mc_agenda_q: "Who's doing what, and when?", mc_agenda_a: ["Stock expiry dates appear here automatically, along with your recurring charges.", "The whole family sees the same events, in real time.", "A reminder arrives automatically before the deadline.", "I no longer have to remind everyone who's doing what — everyone sees their own schedule, without me repeating myself."],
+    mc_membres_tag: "👥 Members", mc_membres_q: "How does the whole family stay connected?", mc_membres_a: ["Each member logs in from their own device.", "What one adds, the others see instantly.", "Invite in one click, with a simple code or QR code.", "One subscription covers up to 6 members — no one pays individually.", "I no longer send 10 messages to say the same thing — everyone sees the same info, at the same time."],
 
     gallery_title: "HomeSync, for real",
     gallery_sub: "A real look at the app, as it stands today.",
@@ -1036,6 +1050,7 @@ updateNavBg();
     }
 
     dashOverlay.classList.add('show');
+    switchAmbTab('dash');
     loadCommunity();
     checkAdmin(user);
   }
@@ -1055,6 +1070,30 @@ updateNavBg();
     }
   });
 
+  // ── QR code du lien de parrainage ──
+  const qrOverlay = document.getElementById('ambQrOverlay');
+  document.getElementById('ambShowQr').addEventListener('click', () => {
+    const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=${encodeURIComponent(referralLink)}`;
+    document.getElementById('ambQrImg').src = qrUrl;
+    document.getElementById('ambQrCodeText').textContent = referralLink;
+    qrOverlay.classList.add('show');
+  });
+  document.getElementById('ambQrClose').addEventListener('click', () => qrOverlay.classList.remove('show'));
+  qrOverlay.addEventListener('click', (e) => { if (e.target === qrOverlay) qrOverlay.classList.remove('show'); });
+  document.getElementById('ambQrDownload').addEventListener('click', async () => {
+    try {
+      const res = await fetch(document.getElementById('ambQrImg').src);
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = `homesync-qr-${currentAmbassador?.code || 'parrainage'}.png`;
+      a.click();
+      URL.revokeObjectURL(url);
+    } catch {
+      window.open(document.getElementById('ambQrImg').src, '_blank');
+    }
+  });
+
   saveBankBtn.addEventListener('click', async () => {
     if (!currentAmbassador) return;
     saveBankBtn.disabled = true;
@@ -1069,6 +1108,22 @@ updateNavBg();
   document.getElementById('ambDashClose').addEventListener('click', () => {
     dashOverlay.classList.remove('show');
   });
+
+  // ── Onglets du tableau de bord ambassadeur ──
+  const ambTabs = {
+    dash: { btn: document.getElementById('ambTabDash'), panel: document.getElementById('ambPanelDash') },
+    news: { btn: document.getElementById('ambTabNews'), panel: document.getElementById('ambPanelNews') },
+    manage: { btn: document.getElementById('ambTabManage'), panel: document.getElementById('ambPanelManage') },
+  };
+  function switchAmbTab(key) {
+    Object.entries(ambTabs).forEach(([k, t]) => {
+      t.btn.classList.toggle('active', k === key);
+      t.panel.style.display = k === key ? '' : 'none';
+    });
+  }
+  ambTabs.dash.btn.addEventListener('click', () => switchAmbTab('dash'));
+  ambTabs.news.btn.addEventListener('click', () => switchAmbTab('news'));
+  ambTabs.manage.btn.addEventListener('click', () => switchAmbTab('manage'));
 
   signOutBtn.addEventListener('click', async () => {
     await supabase.auth.signOut();
