@@ -34,10 +34,13 @@ const TRANSLATIONS = {
     amb_explain_payout: "dès que votre solde atteint 15 €. En dessous, il s'accumule simplement au mois suivant.",
     amb_faq_title: "❓ Comment ça marche",
     amb_explain_pending: "Un compte \"en attente\" est en cours de vérification — votre lien fonctionne déjà, les commissions s'activent dès la validation.",
+    amb_explain_iban: "Pour recevoir vos commissions, renseignez votre IBAN dans l'onglet \"Gestion\" — sans lui, impossible de vous verser l'argent.",
     amb_community_title: "📢 Actualités",
     amb_leaderboard_lbl: "Votre position",
     amb_leaderboard_empty: "Pas encore de classement disponible.",
     amb_admin_no_iban: "Pas encore d'IBAN renseigné",
+    amb_admin_to_pay: "À verser",
+    amb_admin_active_subs: "Abonnés actifs",
     amb_admin_tab_rank: "Classement",
     amb_news_empty: "Aucune actualité pour l'instant.",
     amb_my_rank_label: "Votre position",
@@ -234,10 +237,13 @@ const TRANSLATIONS = {
     amb_explain_payout: "as soon as your balance reaches 15 €. Below that, it simply carries over to the next month.",
     amb_faq_title: "❓ How it works",
     amb_explain_pending: "A \"pending\" account is being reviewed — your link already works, commissions activate once approved.",
+    amb_explain_iban: "To receive your commissions, add your IBAN in the \"Manage\" tab — without it, we can't pay you.",
     amb_community_title: "📢 News",
     amb_leaderboard_lbl: "Your position",
     amb_leaderboard_empty: "No leaderboard available yet.",
     amb_admin_no_iban: "No IBAN provided yet",
+    amb_admin_to_pay: "To pay",
+    amb_admin_active_subs: "Active subscribers",
     amb_admin_tab_rank: "Leaderboard",
     amb_news_empty: "No news yet.",
     amb_my_rank_label: "Your position",
@@ -1285,13 +1291,17 @@ updateNavBg();
     adminAllList.innerHTML = items.length ? items.map(a => `
       <div class="amb-admin-card">
         <div class="amb-admin-card-row">
-          <div>
-            <div class="amb-admin-card-name">${escapeHtml(a.name)} — ${a.status}</div>
+          <div style="cursor:pointer;" data-toggle="${a.id}">
+            <div class="amb-admin-card-name">${escapeHtml(a.name)} — ${a.status} <span style="color:var(--mist); font-weight:400;">▾</span></div>
             <div class="amb-admin-card-email">${escapeHtml(a.email)} · ${escapeHtml(a.code)}</div>
-            <div class="amb-admin-card-email">${a.iban ? `💳 ${escapeHtml(a.iban)} — ${escapeHtml(a.iban_holder_name||'')}` : translate('amb_admin_no_iban')}</div>
           </div>
         </div>
-        <div class="amb-admin-actions">
+        <div id="ambDetail-${a.id}" style="display:none; margin-top:10px; padding-top:10px; border-top:1px dashed var(--line);">
+          <div class="amb-admin-card-email" style="margin-bottom:5px;">💰 ${translate('amb_admin_to_pay')} : <b style="color:var(--mint);">${Number(a.pending_commission||0).toFixed(2)} €</b></div>
+          <div class="amb-admin-card-email" style="margin-bottom:5px;">👥 ${translate('amb_admin_active_subs')} : <b>${a.active_subscribers||0}</b></div>
+          <div class="amb-admin-card-email">${a.iban ? `💳 ${escapeHtml(a.iban)} — ${escapeHtml(a.iban_holder_name||'')}` : translate('amb_admin_no_iban')}</div>
+        </div>
+        <div class="amb-admin-actions" style="margin-top:10px;">
           ${a.status === 'suspended'
             ? `<button class="amb-btn-approve" data-id="${a.id}" data-action="reactivate">${translate('amb_admin_reactivate')}</button>`
             : `<button class="amb-btn-reject" data-id="${a.id}" data-action="suspend">${translate('amb_admin_suspend')}</button>`}
@@ -1299,8 +1309,16 @@ updateNavBg();
       </div>
     `).join('') : `<p class="amb-empty">${translate('amb_admin_no_pending')}</p>`;
 
+    adminAllList.querySelectorAll('[data-toggle]').forEach(el => {
+      el.addEventListener('click', () => {
+        const detail = document.getElementById('ambDetail-' + el.dataset.toggle);
+        detail.style.display = detail.style.display === 'none' ? '' : 'none';
+      });
+    });
+
     adminAllList.querySelectorAll('button[data-action]').forEach(btn => {
-      btn.addEventListener('click', async () => {
+      btn.addEventListener('click', async (e) => {
+        e.stopPropagation();
         btn.disabled = true;
         await callAdminAction({ action: btn.dataset.action, ambassador_id: btn.dataset.id });
         await loadAllList();
