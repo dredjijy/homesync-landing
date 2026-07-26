@@ -118,6 +118,7 @@ const TRANSLATIONS = {
     amb_admin_age_lbl: "Âge déclaré",
     amb_admin_certified: "Certifié 18+",
     amb_admin_not_certified: "Non certifié",
+    amb_admin_search_ph: "Rechercher un nom ou un email…",
     amb_err_terms: "Merci d'accepter les conditions pour continuer.",
     amb_login_sub: "Connectez-vous pour accéder à votre tableau de bord.",
     amb_app_user_hint: "Déjà un compte HomeSync ? Connectez-vous directement avec — votre profil ambassadeur se crée automatiquement.",
@@ -356,6 +357,7 @@ const TRANSLATIONS = {
     amb_admin_age_lbl: "Declared age",
     amb_admin_certified: "18+ certified",
     amb_admin_not_certified: "Not certified",
+    amb_admin_search_ph: "Search a name or email…",
     amb_err_terms: "Please accept the terms to continue.",
     amb_login_sub: "Log in to access your dashboard.",
     amb_app_user_hint: "Already have a HomeSync account? Log in directly with it — your ambassador profile is created automatically.",
@@ -1386,9 +1388,16 @@ updateNavBg();
     await loadPendingList();
   }
 
-  async function loadPendingList() {
-    const result = await callAdminAction({ action: 'list_pending' });
-    const items = result.ambassadors || [];
+  let pendingItemsCache = [];
+  let allItemsCache = [];
+
+  function matchesSearch(a, query) {
+    if (!query) return true;
+    const q = query.toLowerCase();
+    return (a.name||'').toLowerCase().includes(q) || (a.email||'').toLowerCase().includes(q) || (a.code||'').toLowerCase().includes(q);
+  }
+
+  function renderPendingList(items) {
     adminPendingList.innerHTML = items.length ? items.map(a => `
       <div class="amb-admin-card">
         <div class="amb-admin-card-row">
@@ -1414,9 +1423,14 @@ updateNavBg();
     });
   }
 
-  async function loadAllList() {
-    const result = await callAdminAction({ action: 'list_all' });
-    const items = result.ambassadors || [];
+  async function loadPendingList() {
+    const result = await callAdminAction({ action: 'list_pending' });
+    pendingItemsCache = result.ambassadors || [];
+    const query = document.getElementById('ambAdminSearch').value.trim();
+    renderPendingList(pendingItemsCache.filter(a => matchesSearch(a, query)));
+  }
+
+  function renderAllList(items) {
     adminAllList.innerHTML = items.length ? items.map(a => `
       <div class="amb-admin-card">
         <div class="amb-admin-card-row">
@@ -1456,6 +1470,19 @@ updateNavBg();
       });
     });
   }
+
+  async function loadAllList() {
+    const result = await callAdminAction({ action: 'list_all' });
+    allItemsCache = result.ambassadors || [];
+    const query = document.getElementById('ambAdminSearch').value.trim();
+    renderAllList(allItemsCache.filter(a => matchesSearch(a, query)));
+  }
+
+  document.getElementById('ambAdminSearch').addEventListener('input', (e) => {
+    const query = e.target.value.trim();
+    if (adminPendingList.style.display !== 'none') renderPendingList(pendingItemsCache.filter(a => matchesSearch(a, query)));
+    if (adminAllList.style.display !== 'none') renderAllList(allItemsCache.filter(a => matchesSearch(a, query)));
+  });
 
   async function loadAdminLeaderboard() {
     const result = await callAdminAction({ action: 'list_leaderboard' });
@@ -1531,6 +1558,9 @@ updateNavBg();
     document.getElementById('ambAdminRankList').style.display = 'none';
     document.getElementById('ambAdminPayoutsList').style.display = 'none';
     adminPostForm.style.display = 'none';
+    document.getElementById('ambAdminSearch').value = '';
+    const searchWrap = document.getElementById('ambAdminSearchWrap');
+    searchWrap.style.display = (tab === 'pending' || tab === 'all') ? '' : 'none';
     if (tab === 'pending') { adminTabPending.classList.add('active'); adminPendingList.style.display = ''; loadPendingList(); }
     if (tab === 'all') { adminTabAll.classList.add('active'); adminAllList.style.display = ''; loadAllList(); }
     if (tab === 'rank') { adminTabRank.classList.add('active'); document.getElementById('ambAdminRankList').style.display = ''; loadAdminLeaderboard(); }
