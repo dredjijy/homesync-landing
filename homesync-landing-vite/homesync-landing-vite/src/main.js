@@ -820,7 +820,7 @@ updateNavBg();
   const SUPA_URL = "https://jkiofmoqwvcgbabmqosn.supabase.co";
   const SUPA_KEY = "sb_publishable_wB-lYIAitkLuo6ARwX6tKw_ZY3ZmLRT";
   const supabase = window.supabase.createClient(SUPA_URL, SUPA_KEY);
-  const APP_ORIGIN = "https://homesync-landing-seven.vercel.app";
+  const APP_ORIGIN = "https://minzri.com";
 
   function translate(key) {
     try { return TRANSLATIONS[currentLang]?.[key] || TRANSLATIONS.fr[key] || key; }
