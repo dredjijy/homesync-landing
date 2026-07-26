@@ -1047,6 +1047,14 @@ updateNavBg();
     else { openAuthModal(); }
   });
 
+  // Au chargement de la page (y compris après un rafraîchissement), si une
+  // session existe déjà, on rouvre directement le tableau de bord — sans ça,
+  // chaque F5 renvoyait vers la landing et obligeait à recliquer le bouton.
+  (async () => {
+    const { data } = await supabase.auth.getSession();
+    if (data.session) { await loadDashboard(); }
+  })();
+
   // ── Tableau de bord ──
   const dashName = document.getElementById('ambDashName');
   const statusBadge = document.getElementById('ambStatusBadge');
