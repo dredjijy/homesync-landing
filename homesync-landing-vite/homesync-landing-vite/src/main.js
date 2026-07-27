@@ -51,7 +51,7 @@ const TRANSLATIONS = {
     amb_qr_btn: "QR code",
     amb_copied: "Copié !",
     amb_presentation_title: "📱 Présenter l'application",
-    amb_presentation_intro: "De quoi parler autour de vous — simple à expliquer, même sans avoir l'app sous les yeux.",
+    amb_presentation_intro: "Appuyez sur un module pour voir un argumentaire détaillé, avec des exemples concrets et à qui ça peut parler.",
     amb_pres_what_title: "C'est quoi, HomeSync ?",
     amb_pres_what_text: "Une application pour gérer sa maison en famille. Fini les post-it, les listes oubliées, ou les messages \"tu as pensé à...\" — tout est au même endroit, partagé par tout le monde.",
     amb_pres_stock_title: "Le stock de la maison",
@@ -74,6 +74,30 @@ const TRANSLATIONS = {
     amb_pres_help_text: "Des réponses simples directement dans l'app pour chaque fonctionnalité, en cas de doute.",
     amb_pres_price_title: "Le prix",
     amb_pres_price_text: "3,99€ par mois, pour toute la famille jusqu'à 6 personnes — pas un prix par personne. 7 jours d'essai gratuit, résiliable en un clic, sans engagement.",
+    amb_pres_who_lbl: "👉 Ça peut plaire à :",
+    amb_pres_ex_lbl: "💬 Exemple :",
+    amb_pres_what_who: "toute personne qui gère un foyer, seule ou à plusieurs — familles, couples, colocataires.",
+    amb_pres_what_ex: "\"Tu sais quand tu dois répéter 3 fois la même chose à toute la famille ? Avec HomeSync, tout le monde voit la même info, plus besoin de répéter.\"",
+    amb_pres_stock_who: "ceux qui rachètent souvent en double, ou qui font les courses \"à l'aveugle\" sans savoir ce qu'il reste.",
+    amb_pres_stock_ex: "\"Tu te souviens la dernière fois où t'as racheté du riz alors qu'il y en avait déjà un paquet ? Ça n'arrive plus.\"",
+    amb_pres_shopping_who: "les couples ou colocataires où chacun fait les courses de son côté, ou les parents qui envoient un ado faire une course.",
+    amb_pres_shopping_ex: "\"Ton conjoint est au magasin et toi tu penses à un truc à ajouter ? Tu l'ajoutes depuis ton canapé, ça apparaît direct sur son téléphone.\"",
+    amb_pres_budget_who: "ceux qui veulent mieux suivre leurs dépenses du quotidien, sans utiliser un tableur compliqué.",
+    amb_pres_budget_ex: "\"Fini la surprise le 30 du mois — tu vois en direct combien il reste sur ton budget courses.\"",
+    amb_pres_recipes_who: "ceux qui galèrent chaque soir à trouver une idée de repas, ou qui veulent mieux organiser leurs menus de la semaine.",
+    amb_pres_recipes_ex: "\"Le fameux 'on mange quoi ce soir ?' — un bouton te propose une recette au hasard, et ajoute direct ce qu'il manque à ta liste de courses.\"",
+    amb_pres_calendar_who: "les familles avec enfants (rendez-vous, activités), ou les foyers qui veulent répartir équitablement les tâches ménagères.",
+    amb_pres_calendar_ex: "\"Qui sort les poubelles cette semaine ? La tâche tourne automatiquement entre les membres de la famille, plus besoin d'y penser.\"",
+    amb_pres_vacation_who: "les groupes d'amis ou familles qui partent ensemble et qui galèrent toujours à calculer qui doit combien après.",
+    amb_pres_vacation_ex: "\"Fini la calculette à la fin du voyage entre amis — l'app dit exactement qui doit rembourser qui.\"",
+    amb_pres_members_who: "les familles jusqu'à 6 personnes, où chacun veut son propre accès sans dépendre du téléphone d'un seul.",
+    amb_pres_members_ex: "\"Chaque membre de la famille se connecte depuis son propre téléphone, avec son propre nom — pas besoin de partager un seul compte.\"",
+    amb_pres_theme_who: "ceux qui aiment personnaliser leurs apps, ou simplement changer d'ambiance visuelle.",
+    amb_pres_theme_ex: "\"Chacun peut choisir son thème préféré, ça reste propre à chaque personne, pas imposé à toute la famille.\"",
+    amb_pres_help_who: "ceux qui hésitent à essayer une nouvelle app par peur de ne pas savoir s'en servir.",
+    amb_pres_help_ex: "\"Un doute sur une fonctionnalité ? La réponse est directement dans l'app, pas besoin de chercher ailleurs.\"",
+    amb_pres_price_who: "tout le monde — c'est justement l'argument qui rassure ceux qui hésitent sur le prix des abonnements en général.",
+    amb_pres_price_ex: "\"Ça revient à moins de 70 centimes par personne et par mois si vous êtes 6 — et tu peux tester gratuitement avant de payer quoi que ce soit.\"",
     amb_community_title: "📢 Actualités",
     amb_leaderboard_lbl: "Votre position",
     amb_leaderboard_empty: "Pas encore de classement disponible.",
@@ -88,6 +112,10 @@ const TRANSLATIONS = {
     amb_admin_tab_pending: "En attente",
     amb_admin_tab_all: "Tous",
     amb_admin_tab_post: "Publier",
+    amb_admin_tab_activity: "Activité app",
+    amb_activity_sessions: "ouvertures",
+    amb_activity_days_active: "jours entre 1ère et dernière visite",
+    amb_activity_empty: "Aucune donnée d'activité pour l'instant.",
     amb_admin_post_title_lbl: "Titre",
     amb_admin_post_body_lbl: "Message",
     amb_admin_post_image_lbl: "Photo (optionnelle)",
@@ -344,7 +372,7 @@ const TRANSLATIONS = {
     amb_qr_btn: "QR code",
     amb_copied: "Copied!",
     amb_presentation_title: "📱 Present the app",
-    amb_presentation_intro: "Something to talk about — simple to explain, even without the app in front of you.",
+    amb_presentation_intro: "Tap a module to see a detailed pitch, with concrete examples and who it might appeal to.",
     amb_pres_what_title: "What is HomeSync?",
     amb_pres_what_text: "An app to manage your household as a family. No more sticky notes, forgotten lists, or \"did you remember to...\" messages — everything is in one place, shared by everyone.",
     amb_pres_stock_title: "Household stock",
@@ -367,6 +395,30 @@ const TRANSLATIONS = {
     amb_pres_help_text: "Simple answers right in the app for every feature, whenever in doubt.",
     amb_pres_price_title: "The price",
     amb_pres_price_text: "€3.99 a month, for the whole family up to 6 people — not a per-person price. 7-day free trial, cancel anytime in one tap, no commitment.",
+    amb_pres_who_lbl: "👉 Good fit for:",
+    amb_pres_ex_lbl: "💬 Example:",
+    amb_pres_what_who: "anyone managing a household, alone or with others — families, couples, roommates.",
+    amb_pres_what_ex: "\"You know when you have to repeat the same thing 3 times to the whole family? With HomeSync, everyone sees the same info, no more repeating yourself.\"",
+    amb_pres_stock_who: "those who often buy duplicates, or shop 'blindly' without knowing what's left at home.",
+    amb_pres_stock_ex: "\"Remember that time you bought rice when there was already a bag? That doesn't happen anymore.\"",
+    amb_pres_shopping_who: "couples or roommates who shop separately, or parents sending a teen to run an errand.",
+    amb_pres_shopping_ex: "\"Your partner is at the store and you think of something to add? Add it from your couch, it shows up instantly on their phone.\"",
+    amb_pres_budget_who: "those who want to better track daily spending, without using a complicated spreadsheet.",
+    amb_pres_budget_ex: "\"No more surprise on the 30th — you see in real time how much is left in your shopping budget.\"",
+    amb_pres_recipes_who: "those who struggle every night to find a meal idea, or want to better organize their weekly menus.",
+    amb_pres_recipes_ex: "\"The classic 'what's for dinner?' — a button suggests a random recipe, and adds what's missing straight to your shopping list.\"",
+    amb_pres_calendar_who: "families with kids (appointments, activities), or households wanting to fairly split chores.",
+    amb_pres_calendar_ex: "\"Who's taking out the trash this week? The chore rotates automatically between family members, no need to think about it.\"",
+    amb_pres_vacation_who: "groups of friends or families traveling together who always struggle to calculate who owes what afterward.",
+    amb_pres_vacation_ex: "\"No more calculator at the end of a trip with friends — the app tells you exactly who owes whom.\"",
+    amb_pres_members_who: "families up to 6 people, where everyone wants their own access without depending on one shared phone.",
+    amb_pres_members_ex: "\"Each family member logs in from their own phone, with their own name — no need to share a single account.\"",
+    amb_pres_theme_who: "those who like personalizing their apps, or simply changing the visual mood.",
+    amb_pres_theme_ex: "\"Everyone can pick their favorite theme, it stays personal to each person, not imposed on the whole family.\"",
+    amb_pres_help_who: "those hesitant to try a new app for fear of not knowing how to use it.",
+    amb_pres_help_ex: "\"Unsure about a feature? The answer is right there in the app, no need to look elsewhere.\"",
+    amb_pres_price_who: "everyone — it's precisely the argument that reassures those hesitant about subscription prices in general.",
+    amb_pres_price_ex: "\"It comes down to less than 70 cents per person per month if there are 6 of you — and you can try it free before paying anything.\"",
     amb_community_title: "📢 News",
     amb_leaderboard_lbl: "Your position",
     amb_leaderboard_empty: "No leaderboard available yet.",
@@ -381,6 +433,10 @@ const TRANSLATIONS = {
     amb_admin_tab_pending: "Pending",
     amb_admin_tab_all: "All",
     amb_admin_tab_post: "Post",
+    amb_admin_tab_activity: "App activity",
+    amb_activity_sessions: "sessions",
+    amb_activity_days_active: "days between 1st and last visit",
+    amb_activity_empty: "No activity data yet.",
     amb_admin_post_title_lbl: "Title",
     amb_admin_post_body_lbl: "Message",
     amb_admin_post_submit: "Publish news",
@@ -1566,6 +1622,7 @@ updateScrollHintVisibility();
   const adminTabRank = document.getElementById('ambAdminTabRank');
   const adminTabPayouts = document.getElementById('ambAdminTabPayouts');
   const adminTabPost = document.getElementById('ambAdminTabPost');
+  const adminTabActivity = document.getElementById('ambAdminTabActivity');
   const adminPendingList = document.getElementById('ambAdminPendingList');
   const adminAllList = document.getElementById('ambAdminAllList');
   const adminPostForm = document.getElementById('ambAdminPostForm');
@@ -1695,6 +1752,28 @@ updateScrollHintVisibility();
     `).join('') : `<p class="amb-empty">${translate('amb_leaderboard_empty')}</p>`;
   }
 
+  async function loadAppActivity() {
+    const result = await callAdminAction({ action: 'list_app_activity' });
+    const items = result.activity || [];
+    const list = document.getElementById('ambAdminActivityList');
+    list.innerHTML = items.length ? items.map(a => {
+      const daysActive = Math.round((new Date(a.last_seen_at) - new Date(a.first_seen_at)) / 86400000);
+      const inscrit = new Date(a.first_seen_at).toLocaleDateString(currentLang === 'en' ? 'en-US' : 'fr-FR', { day: 'numeric', month: 'short' });
+      const derniere = new Date(a.last_seen_at).toLocaleDateString(currentLang === 'en' ? 'en-US' : 'fr-FR', { day: 'numeric', month: 'short' });
+      const oneSessionOnly = a.session_count <= 1;
+      return `
+        <div class="amb-admin-card">
+          <div class="amb-admin-card-row">
+            <div>
+              <div class="amb-admin-card-name">${inscrit} → ${derniere} ${oneSessionOnly ? '⚠️' : ''}</div>
+              <div class="amb-admin-card-email">${a.session_count} ${translate('amb_activity_sessions')} · ${daysActive} ${translate('amb_activity_days_active')}</div>
+            </div>
+          </div>
+        </div>
+      `;
+    }).join('') : `<p class="amb-empty">${translate('amb_activity_empty')}</p>`;
+  }
+
   async function loadPayouts() {
     const result = await callAdminAction({ action: 'list_payouts' });
     const items = result.payouts || [];
@@ -1750,12 +1829,13 @@ updateScrollHintVisibility();
   }
 
   function switchAdminTab(tab) {
-    [adminTabPending, adminTabAll, adminTabRank, adminTabPayouts, adminTabPost].forEach(t => t.classList.remove('active'));
+    [adminTabPending, adminTabAll, adminTabRank, adminTabPayouts, adminTabPost, adminTabActivity].forEach(t => t.classList.remove('active'));
     adminPendingList.style.display = 'none';
     adminAllList.style.display = 'none';
     document.getElementById('ambAdminRankList').style.display = 'none';
     document.getElementById('ambAdminPayoutsList').style.display = 'none';
     adminPostForm.style.display = 'none';
+    document.getElementById('ambAdminActivityList').style.display = 'none';
     document.getElementById('ambAdminSearch').value = '';
     const searchWrap = document.getElementById('ambAdminSearchWrap');
     searchWrap.style.display = (tab === 'pending' || tab === 'all') ? '' : 'none';
@@ -1764,12 +1844,14 @@ updateScrollHintVisibility();
     if (tab === 'rank') { adminTabRank.classList.add('active'); document.getElementById('ambAdminRankList').style.display = ''; loadAdminLeaderboard(); }
     if (tab === 'payouts') { adminTabPayouts.classList.add('active'); document.getElementById('ambAdminPayoutsList').style.display = ''; loadPayouts(); }
     if (tab === 'post') { adminTabPost.classList.add('active'); adminPostForm.style.display = ''; loadExistingPosts(); }
+    if (tab === 'activity') { adminTabActivity.classList.add('active'); document.getElementById('ambAdminActivityList').style.display = ''; loadAppActivity(); }
   }
   adminTabPending.addEventListener('click', () => switchAdminTab('pending'));
   adminTabAll.addEventListener('click', () => switchAdminTab('all'));
   adminTabRank.addEventListener('click', () => switchAdminTab('rank'));
   adminTabPayouts.addEventListener('click', () => switchAdminTab('payouts'));
   adminTabPost.addEventListener('click', () => switchAdminTab('post'));
+  adminTabActivity.addEventListener('click', () => switchAdminTab('activity'));
 
   document.getElementById('ambAdminPostImage').addEventListener('change', (e) => {
     const file = e.target.files[0];
