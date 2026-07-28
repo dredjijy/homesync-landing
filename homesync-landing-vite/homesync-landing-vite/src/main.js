@@ -116,6 +116,12 @@ const TRANSLATIONS = {
     amb_activity_sessions: "ouvertures",
     amb_activity_days_active: "jours entre 1ère et dernière visite",
     amb_activity_empty: "Aucune donnée d'activité pour l'instant.",
+    amb_activity_unknown: "Nom inconnu",
+    amb_activity_landing_total: "Visiteurs uniques landing",
+    amb_activity_landing_7d: "Landing — 7 derniers jours",
+    amb_activity_app_total: "Visiteurs uniques app",
+    amb_activity_app_7d: "App — 7 derniers jours",
+    amb_activity_households_lbl: "Foyers inscrits",
     amb_admin_post_title_lbl: "Titre",
     amb_admin_post_body_lbl: "Message",
     amb_admin_post_image_lbl: "Photo (optionnelle)",
@@ -437,6 +443,12 @@ const TRANSLATIONS = {
     amb_activity_sessions: "sessions",
     amb_activity_days_active: "days between 1st and last visit",
     amb_activity_empty: "No activity data yet.",
+    amb_activity_unknown: "Unknown name",
+    amb_activity_landing_total: "Unique landing visitors",
+    amb_activity_landing_7d: "Landing — last 7 days",
+    amb_activity_app_total: "Unique app visitors",
+    amb_activity_app_7d: "App — last 7 days",
+    amb_activity_households_lbl: "Registered households",
     amb_admin_post_title_lbl: "Title",
     amb_admin_post_body_lbl: "Message",
     amb_admin_post_submit: "Publish news",
@@ -764,6 +776,27 @@ const APP_URL = "https://home-sync-beta.vercel.app";
 // le plus tôt possible dans le parcours, pour ceux qui connaissent un code de
 // vive voix sans avoir cliqué de lien (ex: installation directe depuis un store).
 // Ce bloc HTML existait déjà mais n'avait jamais été branché — corrigé ici. ──
+// ── Suivi de visite anonyme — juste pour compter les visiteurs uniques,
+// jamais lié à une identité réelle, un seul enregistrement par jour. ──
+(function trackLandingVisit() {
+  try {
+    let visitorId = localStorage.getItem('homesync_visitor_id');
+    if (!visitorId) {
+      visitorId = crypto.randomUUID();
+      localStorage.setItem('homesync_visitor_id', visitorId);
+    }
+    fetch('https://jkiofmoqwvcgbabmqosn.supabase.co/rest/v1/rpc/log_visit', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': 'sb_publishable_wB-lYIAitkLuo6ARwX6tKw_ZY3ZmLRT',
+        'Authorization': 'Bearer sb_publishable_wB-lYIAitkLuo6ARwX6tKw_ZY3ZmLRT',
+      },
+      body: JSON.stringify({ p_visitor_id: visitorId, p_page: 'landing' }),
+    }).catch(() => {});
+  } catch {}
+})();
+
 (function initLandingAmbCode() {
   const toggle = document.getElementById('landingAmbCodeLink');
   const wrap = document.getElementById('landingAmbCodeWrap');
@@ -1753,10 +1786,35 @@ updateScrollHintVisibility();
   }
 
   async function loadAppActivity() {
+    const statsResult = await callAdminAction({ action: 'list_visitor_stats' });
+    const s = statsResult.stats || {};
+    const list = document.getElementById('ambAdminActivityList');
+
+    const statsHtml = `
+      <div class="amb-stat-grid" style="margin-bottom:16px;">
+        <div class="amb-stat-card">
+          <div class="amb-stat-val">${s.landing?.total_unique ?? 0}</div>
+          <div class="amb-stat-lbl">${translate('amb_activity_landing_total')}</div>
+        </div>
+        <div class="amb-stat-card">
+          <div class="amb-stat-val">${s.landing?.last_7_days ?? 0}</div>
+          <div class="amb-stat-lbl">${translate('amb_activity_landing_7d')}</div>
+        </div>
+        <div class="amb-stat-card">
+          <div class="amb-stat-val">${s.app?.total_unique ?? 0}</div>
+          <div class="amb-stat-lbl">${translate('amb_activity_app_total')}</div>
+        </div>
+        <div class="amb-stat-card">
+          <div class="amb-stat-val">${s.app?.last_7_days ?? 0}</div>
+          <div class="amb-stat-lbl">${translate('amb_activity_app_7d')}</div>
+        </div>
+      </div>
+      <div class="amb-leaderboard-lbl">${translate('amb_activity_households_lbl')}</div>
+    `;
+
     const result = await callAdminAction({ action: 'list_app_activity' });
     const items = result.activity || [];
-    const list = document.getElementById('ambAdminActivityList');
-    list.innerHTML = items.length ? items.map(a => {
+    const householdsHtml = items.length ? items.map(a => {
       const daysActive = Math.round((new Date(a.last_seen_at) - new Date(a.first_seen_at)) / 86400000);
       const inscrit = new Date(a.first_seen_at).toLocaleDateString(currentLang === 'en' ? 'en-US' : 'fr-FR', { day: 'numeric', month: 'short' });
       const derniere = new Date(a.last_seen_at).toLocaleDateString(currentLang === 'en' ? 'en-US' : 'fr-FR', { day: 'numeric', month: 'short' });
@@ -1765,13 +1823,16 @@ updateScrollHintVisibility();
         <div class="amb-admin-card">
           <div class="amb-admin-card-row">
             <div>
-              <div class="amb-admin-card-name">${inscrit} → ${derniere} ${oneSessionOnly ? '⚠️' : ''}</div>
-              <div class="amb-admin-card-email">${a.session_count} ${translate('amb_activity_sessions')} · ${daysActive} ${translate('amb_activity_days_active')}</div>
+              <div class="amb-admin-card-name">${escapeHtml(a.admin_name || translate('amb_activity_unknown'))} ${oneSessionOnly ? '⚠️' : ''}</div>
+              <div class="amb-admin-card-email">${escapeHtml(a.admin_email || '—')}</div>
+              <div class="amb-admin-card-email">${inscrit} → ${derniere} · ${a.session_count} ${translate('amb_activity_sessions')} · ${daysActive} ${translate('amb_activity_days_active')}</div>
             </div>
           </div>
         </div>
       `;
     }).join('') : `<p class="amb-empty">${translate('amb_activity_empty')}</p>`;
+
+    list.innerHTML = statsHtml + householdsHtml;
   }
 
   async function loadPayouts() {
