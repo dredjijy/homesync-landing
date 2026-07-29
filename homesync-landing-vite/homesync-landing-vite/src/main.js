@@ -1156,6 +1156,11 @@ updateScrollHintVisibility();
   });
   lightboxClose.addEventListener('click', closeLightbox);
   lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+
+  // Même zoom pour les images ajoutées dans "Présenter l'application" (espace ambassadeur)
+  document.querySelectorAll('.amb-pres-img').forEach(img => {
+    img.addEventListener('click', () => openLightbox(img.src, img.alt));
+  });
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
 })();
 
