@@ -2162,7 +2162,6 @@ updateScrollHintVisibility();
 
   openBtn.addEventListener('click', () => { overlay.classList.add('show'); checkSession(); });
   closeBtn.addEventListener('click', () => overlay.classList.remove('show'));
-  overlay.addEventListener('click', e => { if (e.target === overlay) overlay.classList.remove('show'); });
 
   function showAuthState(state) {
     authWrap.style.display = state === 'auth' ? '' : 'none';
