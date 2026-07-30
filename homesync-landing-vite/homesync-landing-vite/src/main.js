@@ -255,6 +255,11 @@ const TRANSLATIONS = {
     blogger_rejected_sub: "Votre demande n'a pas été validée cette fois-ci.",
     amb_admin_tab_bloggers: "Blogueurs",
     amb_admin_tab_tips: "Conseils",
+    amb_admin_tab_promo: "Portes ouvertes",
+    promo_field_label: "Nom de la période (interne)",
+    promo_field_start: "Date de début",
+    promo_field_end: "Date de fin",
+    promo_create_btn: "+ Créer cette période gratuite",
     landing_amb_code_link: "🤝 Vous avez un code ambassadeur ?",
     landing_amb_code_ph: "PRENOM1234",
     landing_amb_code_saved: "✓ Code enregistré — il sera utilisé lors de votre abonnement.",
@@ -605,6 +610,11 @@ const TRANSLATIONS = {
     blogger_rejected_sub: "Your request wasn't approved this time.",
     amb_admin_tab_bloggers: "Bloggers",
     amb_admin_tab_tips: "Tips",
+    amb_admin_tab_promo: "Open house",
+    promo_field_label: "Period name (internal)",
+    promo_field_start: "Start date",
+    promo_field_end: "End date",
+    promo_create_btn: "+ Create this free period",
     landing_amb_code_link: "🤝 Have an ambassador code?",
     landing_amb_code_ph: "FIRSTNAME1234",
     landing_amb_code_saved: "✓ Code saved — it will be used with your subscription.",
@@ -1709,6 +1719,7 @@ updateScrollHintVisibility();
   const adminTabActivity = document.getElementById('ambAdminTabActivity');
   const adminTabBloggers = document.getElementById('ambAdminTabBloggers');
   const adminTabTips = document.getElementById('ambAdminTabTips');
+  const adminTabPromo = document.getElementById('ambAdminTabPromo');
   const adminPendingList = document.getElementById('ambAdminPendingList');
   const adminAllList = document.getElementById('ambAdminAllList');
   const adminPostForm = document.getElementById('ambAdminPostForm');
@@ -1943,7 +1954,7 @@ updateScrollHintVisibility();
   }
 
   function switchAdminTab(tab) {
-    [adminTabPending, adminTabAll, adminTabRank, adminTabPayouts, adminTabPost, adminTabActivity, adminTabBloggers, adminTabTips].forEach(t => t.classList.remove('active'));
+    [adminTabPending, adminTabAll, adminTabRank, adminTabPayouts, adminTabPost, adminTabActivity, adminTabBloggers, adminTabTips, adminTabPromo].forEach(t => t.classList.remove('active'));
     adminPendingList.style.display = 'none';
     adminAllList.style.display = 'none';
     document.getElementById('ambAdminRankList').style.display = 'none';
@@ -1952,6 +1963,7 @@ updateScrollHintVisibility();
     document.getElementById('ambAdminActivityList').style.display = 'none';
     document.getElementById('ambAdminBloggersList').style.display = 'none';
     document.getElementById('ambAdminTipsList').style.display = 'none';
+    document.getElementById('ambAdminPromoList').style.display = 'none';
     document.getElementById('ambAdminSearch').value = '';
     const searchWrap = document.getElementById('ambAdminSearchWrap');
     searchWrap.style.display = (tab === 'pending' || tab === 'all') ? '' : 'none';
@@ -1963,6 +1975,7 @@ updateScrollHintVisibility();
     if (tab === 'activity') { adminTabActivity.classList.add('active'); document.getElementById('ambAdminActivityList').style.display = ''; loadAppActivity(); }
     if (tab === 'bloggers') { adminTabBloggers.classList.add('active'); document.getElementById('ambAdminBloggersList').style.display = ''; loadPendingBloggers(); }
     if (tab === 'tips') { adminTabTips.classList.add('active'); document.getElementById('ambAdminTipsList').style.display = ''; loadPendingTips(); }
+    if (tab === 'promo') { adminTabPromo.classList.add('active'); document.getElementById('ambAdminPromoList').style.display = ''; loadPromoPeriods(); }
   }
   adminTabPending.addEventListener('click', () => switchAdminTab('pending'));
   adminTabAll.addEventListener('click', () => switchAdminTab('all'));
@@ -1972,6 +1985,50 @@ updateScrollHintVisibility();
   adminTabActivity.addEventListener('click', () => switchAdminTab('activity'));
   adminTabBloggers.addEventListener('click', () => switchAdminTab('bloggers'));
   adminTabTips.addEventListener('click', () => switchAdminTab('tips'));
+  adminTabPromo.addEventListener('click', () => switchAdminTab('promo'));
+
+  // ── Journées "portes ouvertes" — créer/supprimer des périodes gratuites globales ──
+  async function loadPromoPeriods() {
+    const list = document.getElementById('promoPeriodsList');
+    list.innerHTML = '<p style="color:var(--mist);">Chargement…</p>';
+    const { data: periods, error } = await supabase.from('promo_periods').select('*').order('start_date', { ascending:false });
+    if (error) { list.innerHTML = '<p style="color:var(--mist);">Impossible de charger.</p>'; return; }
+    if (!periods || periods.length === 0) { list.innerHTML = '<p style="color:var(--mist);">Aucune période créée pour l\'instant.</p>'; return; }
+    list.innerHTML = '';
+    const todayStr = new Date().toISOString().slice(0,10);
+    periods.forEach(p => {
+      const isActive = p.start_date <= todayStr && p.end_date >= todayStr;
+      const card = document.createElement('div');
+      card.style.cssText = "background:rgba(255,255,255,0.03); border-radius:14px; padding:14px; margin-bottom:10px;";
+      card.innerHTML = `
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:6px;">
+          <div style="color:var(--paper); font-weight:700; font-size:14px;">${p.label}</div>
+          ${isActive ? '<span style="background:rgba(110,190,138,0.2); color:#6EBE8A; font-size:10px; font-weight:700; padding:3px 8px; border-radius:99px;">Active</span>' : ''}
+        </div>
+        <div style="color:var(--mist); font-size:12px; margin-bottom:10px;">${p.start_date} → ${p.end_date}</div>
+        <button class="btn btn-ghost promo-delete-btn" style="font-size:12px; padding:6px 12px; color:var(--rose);" data-id="${p.id}">Supprimer</button>
+      `;
+      list.appendChild(card);
+      card.querySelector('.promo-delete-btn').addEventListener('click', async () => {
+        if (!confirm('Supprimer cette période gratuite ?')) return;
+        await supabase.rpc('admin_delete_promo_period', { p_id: p.id });
+        loadPromoPeriods();
+      });
+    });
+  }
+
+  document.getElementById('promoCreateBtn').addEventListener('click', async () => {
+    const label = document.getElementById('promoLabel').value.trim();
+    const startDate = document.getElementById('promoStartDate').value;
+    const endDate = document.getElementById('promoEndDate').value;
+    if (!label || !startDate || !endDate) { alert('Merci de remplir tous les champs.'); return; }
+    const { data: result } = await supabase.rpc('admin_create_promo_period', { p_label:label, p_start_date:startDate, p_end_date:endDate });
+    if (!result || !result.ok) { alert(result?.error || 'Erreur.'); return; }
+    document.getElementById('promoLabel').value = '';
+    document.getElementById('promoStartDate').value = '';
+    document.getElementById('promoEndDate').value = '';
+    loadPromoPeriods();
+  });
 
   // ── Modération : blogueurs en attente ──
   async function loadPendingBloggers() {
