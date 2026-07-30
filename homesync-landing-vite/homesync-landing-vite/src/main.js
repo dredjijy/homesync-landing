@@ -232,6 +232,29 @@ const TRANSLATIONS = {
     footer_contact: "Contact",
     footer_privacy: "Politique de confidentialité",
     footer_ambassador: "Devenir ambassadeur",
+    footer_blogger: "Espace blogueur",
+    blogger_login_title: "Espace blogueur",
+    blogger_login_sub: "Connectez-vous pour gérer les Conseils & Astuces.",
+    blogger_login_btn: "Se connecter",
+    blogger_dash_title: "Conseils & Astuces",
+    blogger_new_tip_btn: "+ Nouveau conseil",
+    blogger_field_title: "Titre",
+    blogger_field_desc: "Description courte",
+    blogger_field_category: "Catégorie",
+    blogger_field_source_name: "Nom du créateur / de la source",
+    blogger_field_source_url: "Lien (YouTube, TikTok, Instagram, article…)",
+    blogger_field_thumbnail: "Style de miniature",
+    blogger_save_draft: "Enregistrer en brouillon",
+    blogger_publish: "Publier",
+    blogger_submit_review: "Soumettre pour publication",
+    blogger_toggle_to_signup: "Pas encore de compte blogueur ?",
+    blogger_toggle_link_signup: "S'inscrire",
+    blogger_pending_title: "Demande envoyée",
+    blogger_pending_sub: "Votre inscription est en attente de validation par l'administrateur. Revenez un peu plus tard.",
+    blogger_rejected_title: "Demande non retenue",
+    blogger_rejected_sub: "Votre demande n'a pas été validée cette fois-ci.",
+    amb_admin_tab_bloggers: "Blogueurs",
+    amb_admin_tab_tips: "Conseils",
     landing_amb_code_link: "🤝 Vous avez un code ambassadeur ?",
     landing_amb_code_ph: "PRENOM1234",
     landing_amb_code_saved: "✓ Code enregistré — il sera utilisé lors de votre abonnement.",
@@ -559,6 +582,29 @@ const TRANSLATIONS = {
     footer_contact: "Contact",
     footer_privacy: "Privacy policy",
     footer_ambassador: "Become an ambassador",
+    footer_blogger: "Blogger space",
+    blogger_login_title: "Blogger space",
+    blogger_login_sub: "Sign in to manage Tips & Tricks.",
+    blogger_login_btn: "Sign in",
+    blogger_dash_title: "Tips & Tricks",
+    blogger_new_tip_btn: "+ New tip",
+    blogger_field_title: "Title",
+    blogger_field_desc: "Short description",
+    blogger_field_category: "Category",
+    blogger_field_source_name: "Creator / source name",
+    blogger_field_source_url: "Link (YouTube, TikTok, Instagram, article…)",
+    blogger_field_thumbnail: "Thumbnail style",
+    blogger_save_draft: "Save as draft",
+    blogger_publish: "Publish",
+    blogger_submit_review: "Submit for publication",
+    blogger_toggle_to_signup: "No blogger account yet?",
+    blogger_toggle_link_signup: "Sign up",
+    blogger_pending_title: "Request sent",
+    blogger_pending_sub: "Your signup is pending approval by the administrator. Check back later.",
+    blogger_rejected_title: "Request not approved",
+    blogger_rejected_sub: "Your request wasn't approved this time.",
+    amb_admin_tab_bloggers: "Bloggers",
+    amb_admin_tab_tips: "Tips",
     landing_amb_code_link: "🤝 Have an ambassador code?",
     landing_amb_code_ph: "FIRSTNAME1234",
     landing_amb_code_saved: "✓ Code saved — it will be used with your subscription.",
@@ -1661,6 +1707,8 @@ updateScrollHintVisibility();
   const adminTabPayouts = document.getElementById('ambAdminTabPayouts');
   const adminTabPost = document.getElementById('ambAdminTabPost');
   const adminTabActivity = document.getElementById('ambAdminTabActivity');
+  const adminTabBloggers = document.getElementById('ambAdminTabBloggers');
+  const adminTabTips = document.getElementById('ambAdminTabTips');
   const adminPendingList = document.getElementById('ambAdminPendingList');
   const adminAllList = document.getElementById('ambAdminAllList');
   const adminPostForm = document.getElementById('ambAdminPostForm');
@@ -1895,13 +1943,15 @@ updateScrollHintVisibility();
   }
 
   function switchAdminTab(tab) {
-    [adminTabPending, adminTabAll, adminTabRank, adminTabPayouts, adminTabPost, adminTabActivity].forEach(t => t.classList.remove('active'));
+    [adminTabPending, adminTabAll, adminTabRank, adminTabPayouts, adminTabPost, adminTabActivity, adminTabBloggers, adminTabTips].forEach(t => t.classList.remove('active'));
     adminPendingList.style.display = 'none';
     adminAllList.style.display = 'none';
     document.getElementById('ambAdminRankList').style.display = 'none';
     document.getElementById('ambAdminPayoutsList').style.display = 'none';
     adminPostForm.style.display = 'none';
     document.getElementById('ambAdminActivityList').style.display = 'none';
+    document.getElementById('ambAdminBloggersList').style.display = 'none';
+    document.getElementById('ambAdminTipsList').style.display = 'none';
     document.getElementById('ambAdminSearch').value = '';
     const searchWrap = document.getElementById('ambAdminSearchWrap');
     searchWrap.style.display = (tab === 'pending' || tab === 'all') ? '' : 'none';
@@ -1911,6 +1961,8 @@ updateScrollHintVisibility();
     if (tab === 'payouts') { adminTabPayouts.classList.add('active'); document.getElementById('ambAdminPayoutsList').style.display = ''; loadPayouts(); }
     if (tab === 'post') { adminTabPost.classList.add('active'); adminPostForm.style.display = ''; loadExistingPosts(); }
     if (tab === 'activity') { adminTabActivity.classList.add('active'); document.getElementById('ambAdminActivityList').style.display = ''; loadAppActivity(); }
+    if (tab === 'bloggers') { adminTabBloggers.classList.add('active'); document.getElementById('ambAdminBloggersList').style.display = ''; loadPendingBloggers(); }
+    if (tab === 'tips') { adminTabTips.classList.add('active'); document.getElementById('ambAdminTipsList').style.display = ''; loadPendingTips(); }
   }
   adminTabPending.addEventListener('click', () => switchAdminTab('pending'));
   adminTabAll.addEventListener('click', () => switchAdminTab('all'));
@@ -1918,6 +1970,73 @@ updateScrollHintVisibility();
   adminTabPayouts.addEventListener('click', () => switchAdminTab('payouts'));
   adminTabPost.addEventListener('click', () => switchAdminTab('post'));
   adminTabActivity.addEventListener('click', () => switchAdminTab('activity'));
+  adminTabBloggers.addEventListener('click', () => switchAdminTab('bloggers'));
+  adminTabTips.addEventListener('click', () => switchAdminTab('tips'));
+
+  // ── Modération : blogueurs en attente ──
+  async function loadPendingBloggers() {
+    const list = document.getElementById('ambAdminBloggersList');
+    list.innerHTML = '<p style="color:var(--mist);">Chargement…</p>';
+    const { data: bloggers, error } = await supabase.rpc('admin_list_pending_bloggers');
+    if (error) { list.innerHTML = '<p style="color:var(--mist);">Impossible de charger.</p>'; return; }
+    if (!bloggers || bloggers.length === 0) { list.innerHTML = '<p style="color:var(--mist);">Aucune demande en attente.</p>'; return; }
+    list.innerHTML = '';
+    bloggers.forEach(b => {
+      const card = document.createElement('div');
+      card.style.cssText = "background:rgba(255,255,255,0.03); border-radius:14px; padding:14px; margin-bottom:10px;";
+      card.innerHTML = `
+        <div style="color:var(--paper); font-weight:700; font-size:14px; margin-bottom:4px;">${b.name}</div>
+        <div style="color:var(--mist); font-size:12px; margin-bottom:10px;">${b.email}</div>
+        <div style="display:flex; gap:8px;">
+          <button class="btn btn-primary blogger-approve-btn" style="flex:1; font-size:12px; padding:8px;" data-id="${b.id}">Approuver</button>
+          <button class="btn btn-ghost blogger-reject-btn" style="flex:1; font-size:12px; padding:8px; color:var(--rose);" data-id="${b.id}">Refuser</button>
+        </div>
+      `;
+      list.appendChild(card);
+      card.querySelector('.blogger-approve-btn').addEventListener('click', async () => {
+        await supabase.rpc('admin_set_blogger_status', { p_blogger_id: b.id, p_status: 'approved' });
+        loadPendingBloggers();
+      });
+      card.querySelector('.blogger-reject-btn').addEventListener('click', async () => {
+        await supabase.rpc('admin_set_blogger_status', { p_blogger_id: b.id, p_status: 'rejected' });
+        loadPendingBloggers();
+      });
+    });
+  }
+
+  // ── Modération : conseils en attente de publication ──
+  async function loadPendingTips() {
+    const list = document.getElementById('ambAdminTipsList');
+    list.innerHTML = '<p style="color:var(--mist);">Chargement…</p>';
+    const { data: tips, error } = await supabase.rpc('admin_list_pending_tips');
+    if (error) { list.innerHTML = '<p style="color:var(--mist);">Impossible de charger.</p>'; return; }
+    if (!tips || tips.length === 0) { list.innerHTML = '<p style="color:var(--mist);">Aucun conseil en attente.</p>'; return; }
+    list.innerHTML = '';
+    tips.forEach(tip => {
+      const card = document.createElement('div');
+      card.style.cssText = "background:rgba(255,255,255,0.03); border-radius:14px; padding:14px; margin-bottom:10px;";
+      card.innerHTML = `
+        <div style="color:var(--paper); font-weight:700; font-size:14px; margin-bottom:4px;">${tip.title}</div>
+        <div style="color:var(--mist); font-size:12px; margin-bottom:8px;">${tip.category} · ${tip.source_name}</div>
+        <p style="color:var(--mist); font-size:12px; margin-bottom:10px;">${tip.description}</p>
+        <a href="${tip.source_url}" target="_blank" rel="noopener noreferrer" style="color:var(--mint); font-size:12px; display:block; margin-bottom:10px;">Voir le lien d'origine →</a>
+        <div style="display:flex; gap:8px;">
+          <button class="btn btn-primary tip-approve-btn" style="flex:1; font-size:12px; padding:8px;" data-id="${tip.id}">Approuver et publier</button>
+          <button class="btn btn-ghost tip-reject-btn" style="flex:1; font-size:12px; padding:8px; color:var(--rose);" data-id="${tip.id}">Refuser</button>
+        </div>
+      `;
+      list.appendChild(card);
+      card.querySelector('.tip-approve-btn').addEventListener('click', async () => {
+        await supabase.rpc('admin_review_tip', { p_tip_id: tip.id, p_approve: true });
+        loadPendingTips();
+      });
+      card.querySelector('.tip-reject-btn').addEventListener('click', async () => {
+        await supabase.rpc('admin_review_tip', { p_tip_id: tip.id, p_approve: false });
+        loadPendingTips();
+      });
+    });
+  }
+
 
   document.getElementById('ambAdminPostImage').addEventListener('change', (e) => {
     const file = e.target.files[0];
@@ -1957,4 +2076,244 @@ updateScrollHintVisibility();
     loadCommunity();
     loadExistingPosts();
   });
+})();
+
+// ═══════════════════════════════════════════════════════════════════════════
+// ESPACE BLOGUEUR — gestion des Conseils & Astuces
+// Bloc autonome, indépendant du reste — n'interfère avec aucune autre
+// fonctionnalité existante du site.
+// ═══════════════════════════════════════════════════════════════════════════
+(function () {
+  const openBtn  = document.getElementById('footerBlogger');
+  const overlay  = document.getElementById('bloggerOverlay');
+  const closeBtn = document.getElementById('bloggerClose');
+  if (!openBtn || !overlay || !closeBtn) return;
+
+  const SUPA_URL = "https://jkiofmoqwvcgbabmqosn.supabase.co";
+  const SUPA_KEY = "sb_publishable_wB-lYIAitkLuo6ARwX6tKw_ZY3ZmLRT";
+  const supabase = window.supabase.createClient(SUPA_URL, SUPA_KEY);
+
+  const authWrap  = document.getElementById('bloggerAuthWrap');
+  const dashWrap  = document.getElementById('bloggerDashWrap');
+  const authError = document.getElementById('bloggerAuthError');
+  const tipForm   = document.getElementById('bloggerTipForm');
+  const tipsList  = document.getElementById('bloggerTipsList');
+
+  let editingTipId = null; // null = création d'un nouveau conseil
+  let selectedThumbStyle = 'glow';
+
+  const TIP_CAT_META = {
+    'budget':          { icon:'💰', color:'#4BBEAA' },
+    'economies':       { icon:'🪙', color:'#F2C14E' },
+    'courses':         { icon:'🛒', color:'#6EA8E8' },
+    'cuisine':         { icon:'🍳', color:'#F28C6B' },
+    'maison':          { icon:'🏠', color:'#B8A9E3' },
+    'organisation':    { icon:'📋', color:'#E8617A' },
+    'anti-gaspillage': { icon:'♻️', color:'#6EBE8A' },
+    'quotidien':       { icon:'✨', color:'#E8A8C8' },
+  };
+
+  function updateThumbPreviews() {
+    const cat = TIP_CAT_META[document.getElementById('tipCategory').value] || TIP_CAT_META['budget'];
+    document.querySelectorAll('.thumb-style-opt').forEach(el => { el.style.background = `linear-gradient(135deg, ${cat.color}, ${cat.color}99)`; });
+    ['Glow','Dots','Waves'].forEach(suffix => {
+      const el = document.getElementById('thumbPreviewIcon' + suffix);
+      if (el) el.textContent = cat.icon;
+    });
+    const dotsSvg = document.getElementById('thumbPreviewDots');
+    if (dotsSvg) {
+      dotsSvg.innerHTML = Array.from({length:8}).map((_,i)=>
+        `<circle cx="${(i*37+10)%100}%" cy="${(i*53+15)%100}%" r="${2+(i%3)}" fill="#fff"/>`
+      ).join('');
+    }
+  }
+  document.getElementById('tipCategory').addEventListener('change', updateThumbPreviews);
+
+  function selectThumbStyle(style) {
+    selectedThumbStyle = style;
+    document.querySelectorAll('.thumb-style-opt').forEach(el => el.classList.toggle('selected', el.dataset.style === style));
+  }
+  document.querySelectorAll('.thumb-style-opt').forEach(el => {
+    el.addEventListener('click', () => selectThumbStyle(el.dataset.style));
+  });
+  updateThumbPreviews();
+  selectThumbStyle('glow');
+
+  const pendingWrap = document.getElementById('bloggerPendingWrap');
+  const rejectedWrap = document.getElementById('bloggerRejectedWrap');
+  let isSignupMode = false;
+
+  function setBloggerMode(signup) {
+    isSignupMode = signup;
+    document.getElementById('bloggerNameField').style.display = signup ? '' : 'none';
+    document.getElementById('bloggerAuthTitle').textContent = signup ? 'Inscription blogueur' : 'Espace blogueur';
+    document.getElementById('bloggerAuthSub').textContent = signup
+      ? "Créez votre compte — votre demande sera examinée avant validation."
+      : "Connectez-vous pour gérer les Conseils & Astuces.";
+    document.getElementById('bloggerLoginBtn').textContent = signup ? "S'inscrire" : "Se connecter";
+    document.getElementById('bloggerToggleText').textContent = signup ? "Déjà un compte blogueur ?" : "Pas encore de compte blogueur ?";
+    document.getElementById('bloggerToggleMode').textContent = signup ? "Se connecter" : "S'inscrire";
+    authError.style.display = 'none';
+  }
+  document.getElementById('bloggerToggleMode').addEventListener('click', (e) => {
+    e.preventDefault();
+    setBloggerMode(!isSignupMode);
+  });
+
+  openBtn.addEventListener('click', () => { overlay.classList.add('show'); checkSession(); });
+  closeBtn.addEventListener('click', () => overlay.classList.remove('show'));
+  overlay.addEventListener('click', e => { if (e.target === overlay) overlay.classList.remove('show'); });
+
+  function showAuthState(state) {
+    authWrap.style.display = state === 'auth' ? '' : 'none';
+    pendingWrap.style.display = state === 'pending' ? '' : 'none';
+    rejectedWrap.style.display = state === 'rejected' ? '' : 'none';
+    dashWrap.style.display = state === 'dash' ? '' : 'none';
+  }
+
+  async function checkSession() {
+    const { data: { session } } = await supabase.auth.getSession();
+    if (session) { await enterDashboard(); }
+    else { showAuthState('auth'); }
+  }
+
+  document.getElementById('bloggerLoginBtn').addEventListener('click', async () => {
+    const email = document.getElementById('bloggerEmail').value.trim();
+    const pass  = document.getElementById('bloggerPass').value;
+    authError.style.display = 'none';
+
+    if (isSignupMode) {
+      const name = document.getElementById('bloggerName').value.trim();
+      if (!name || !email || !pass) { authError.textContent = "Merci de remplir tous les champs."; authError.style.display = 'block'; return; }
+      const { data: signupData, error: signupError } = await supabase.auth.signUp({ email, password: pass });
+      if (signupError) { authError.textContent = signupError.message; authError.style.display = 'block'; return; }
+      // La ligne blogger_accounts est créée en 'pending' — jamais auto-approuvée.
+      await supabase.from('blogger_accounts').insert({ user_id: signupData.user.id, email, name, status: 'pending' });
+      showAuthState('pending');
+      return;
+    }
+
+    const { error } = await supabase.auth.signInWithPassword({ email, password: pass });
+    if (error) { authError.textContent = "Email ou mot de passe incorrect."; authError.style.display = 'block'; return; }
+    await enterDashboard();
+  });
+
+  async function enterDashboard() {
+    const { data: { user } } = await supabase.auth.getUser();
+    const { data: blogger } = await supabase.from('blogger_accounts').select('status').eq('user_id', user.id).maybeSingle();
+    if (!blogger) {
+      authError.textContent = "Ce compte n'est pas inscrit comme blogueur.";
+      authError.style.display = 'block';
+      showAuthState('auth');
+      await supabase.auth.signOut();
+      return;
+    }
+    if (blogger.status === 'pending') { showAuthState('pending'); return; }
+    if (blogger.status === 'rejected') { showAuthState('rejected'); return; }
+    showAuthState('dash');
+    loadMyTips();
+  }
+
+  async function loadMyTips() {
+    const { data: { user } } = await supabase.auth.getUser();
+    const { data: tips, error } = await supabase.from('tips').select('*').eq('created_by', user.id).order('created_at', { ascending:false });
+    tipsList.innerHTML = '';
+    if (error || !tips) { tipsList.innerHTML = '<p style="color:var(--mist);">Impossible de charger vos conseils.</p>'; return; }
+    if (tips.length === 0) { tipsList.innerHTML = '<p style="color:var(--mist);">Aucun conseil pour l\'instant.</p>'; return; }
+    tips.forEach(tip => {
+      const card = document.createElement('div');
+      card.style.cssText = "background:rgba(255,255,255,0.03); border-radius:14px; padding:14px; margin-bottom:10px;";
+      const badges = {
+        published:      '<span style="background:rgba(110,190,138,0.2); color:#6EBE8A; font-size:10px; font-weight:700; padding:3px 8px; border-radius:99px;">Publié</span>',
+        pending_review: '<span style="background:rgba(242,193,78,0.2); color:#F2C14E; font-size:10px; font-weight:700; padding:3px 8px; border-radius:99px;">En attente de validation</span>',
+        rejected:       '<span style="background:rgba(232,97,122,0.2); color:#E8617A; font-size:10px; font-weight:700; padding:3px 8px; border-radius:99px;">Refusé</span>',
+        draft:          '<span style="background:rgba(255,255,255,0.1); color:var(--mist); font-size:10px; font-weight:700; padding:3px 8px; border-radius:99px;">Brouillon</span>',
+      };
+      const statusBadge = badges[tip.status] || badges.draft;
+      const canSubmit = tip.status === 'draft' || tip.status === 'rejected';
+      card.innerHTML = `
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:6px;">
+          <div style="color:var(--paper); font-weight:700; font-size:14px;">${tip.title}</div>
+          ${statusBadge}
+        </div>
+        <div style="color:var(--mist); font-size:12px; margin-bottom:10px;">${tip.category} · ${tip.source_name}</div>
+        <div style="display:flex; gap:8px; flex-wrap:wrap;">
+          <button class="btn btn-ghost tip-edit-btn" style="font-size:12px; padding:6px 12px;" data-id="${tip.id}">Modifier</button>
+          ${canSubmit ? `<button class="btn btn-ghost tip-toggle-btn" style="font-size:12px; padding:6px 12px;" data-id="${tip.id}">Soumettre pour publication</button>` : ''}
+          ${tip.status === 'published' ? `<button class="btn btn-ghost tip-unpublish-btn" style="font-size:12px; padding:6px 12px;" data-id="${tip.id}">Retirer de la publication</button>` : ''}
+          <button class="btn btn-ghost tip-delete-btn" style="font-size:12px; padding:6px 12px; color:var(--rose);" data-id="${tip.id}">Supprimer</button>
+        </div>
+      `;
+      tipsList.appendChild(card);
+      card.querySelector('.tip-edit-btn').addEventListener('click', () => openEditForm(tip));
+      const toggleBtn = card.querySelector('.tip-toggle-btn');
+      if (toggleBtn) toggleBtn.addEventListener('click', async () => {
+        await supabase.rpc('set_tip_published', { p_id: tip.id, p_published: true });
+        loadMyTips();
+      });
+      const unpublishBtn = card.querySelector('.tip-unpublish-btn');
+      if (unpublishBtn) unpublishBtn.addEventListener('click', async () => {
+        await supabase.rpc('set_tip_published', { p_id: tip.id, p_published: false });
+        loadMyTips();
+      });
+      card.querySelector('.tip-delete-btn').addEventListener('click', async () => {
+        if (!confirm('Supprimer ce conseil définitivement ?')) return;
+        await supabase.rpc('delete_tip', { p_id: tip.id });
+        loadMyTips();
+      });
+    });
+  }
+
+  function openEditForm(tip) {
+    editingTipId = tip.id;
+    document.getElementById('tipTitle').value = tip.title;
+    document.getElementById('tipDescription').value = tip.description;
+    document.getElementById('tipCategory').value = tip.category;
+    document.getElementById('tipSourceName').value = tip.source_name;
+    document.getElementById('tipSourceUrl').value = tip.source_url;
+    updateThumbPreviews();
+    selectThumbStyle(tip.thumbnail_style || 'glow');
+    tipForm.style.display = '';
+    tipForm.scrollIntoView({ behavior:'smooth' });
+  }
+
+  function resetForm() {
+    editingTipId = null;
+    document.getElementById('tipTitle').value = '';
+    document.getElementById('tipDescription').value = '';
+    document.getElementById('tipCategory').value = 'budget';
+    document.getElementById('tipSourceName').value = '';
+    document.getElementById('tipSourceUrl').value = '';
+    updateThumbPreviews();
+    selectThumbStyle('glow');
+    tipForm.style.display = 'none';
+  }
+
+  document.getElementById('bloggerNewTipBtn').addEventListener('click', () => {
+    resetForm();
+    tipForm.style.display = '';
+    tipForm.scrollIntoView({ behavior:'smooth' });
+  });
+  document.getElementById('tipCancelBtn').addEventListener('click', resetForm);
+
+  async function saveTip(publish) {
+    const title       = document.getElementById('tipTitle').value.trim();
+    const description  = document.getElementById('tipDescription').value.trim();
+    const category     = document.getElementById('tipCategory').value;
+    const sourceName   = document.getElementById('tipSourceName').value.trim();
+    const sourceUrl    = document.getElementById('tipSourceUrl').value.trim();
+    if (!title || !description || !sourceName || !sourceUrl) { alert('Merci de remplir tous les champs.'); return; }
+
+    if (editingTipId) {
+      await supabase.rpc('update_tip', { p_id: editingTipId, p_title:title, p_description:description, p_category:category, p_source_name:sourceName, p_source_url:sourceUrl, p_thumbnail_style:selectedThumbStyle });
+      if (publish) await supabase.rpc('set_tip_published', { p_id: editingTipId, p_published: true });
+    } else {
+      await supabase.rpc('create_tip', { p_title:title, p_description:description, p_category:category, p_source_name:sourceName, p_source_url:sourceUrl, p_publish:publish, p_thumbnail_style:selectedThumbStyle });
+    }
+    resetForm();
+    loadMyTips();
+  }
+
+  document.getElementById('tipSaveDraftBtn').addEventListener('click', () => saveTip(false));
+  document.getElementById('tipPublishBtn').addEventListener('click', () => saveTip(true));
 })();
