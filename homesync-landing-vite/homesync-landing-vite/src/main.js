@@ -2176,6 +2176,19 @@ updateScrollHintVisibility();
     else { showAuthState('auth'); }
   }
 
+  document.getElementById('bloggerForgotPass').addEventListener('click', async (e) => {
+    e.preventDefault();
+    const email = document.getElementById('bloggerEmail').value.trim();
+    authError.style.display = 'none';
+    if (!email) { authError.textContent = "Entrez d'abord votre email ci-dessus."; authError.style.display = 'block'; return; }
+    const { error } = await supabase.auth.resetPasswordForEmail(email);
+    if (error) { authError.textContent = "Une erreur est survenue, réessayez."; authError.style.display = 'block'; return; }
+    authError.style.color = 'var(--mint)';
+    authError.textContent = "Un email de réinitialisation a été envoyé.";
+    authError.style.display = 'block';
+    setTimeout(() => { authError.style.color = ''; }, 4000);
+  });
+
   document.getElementById('bloggerLoginBtn').addEventListener('click', async () => {
     const email = document.getElementById('bloggerEmail').value.trim();
     const pass  = document.getElementById('bloggerPass').value;
