@@ -2212,6 +2212,8 @@ updateScrollHintVisibility();
 
   async function enterDashboard() {
     const { data: { user } } = await supabase.auth.getUser();
+    const isSiteAdmin = (user.email || '').toLowerCase() === 'part.kobbaz@outlook.fr'; // ⚠️ doit correspondre à is_site_admin() côté SQL
+    if (isSiteAdmin) { showAuthState('dash'); loadMyTips(); return; }
     const { data: blogger } = await supabase.from('blogger_accounts').select('status').eq('user_id', user.id).maybeSingle();
     if (!blogger) {
       authError.textContent = "Ce compte n'est pas inscrit comme blogueur.";
