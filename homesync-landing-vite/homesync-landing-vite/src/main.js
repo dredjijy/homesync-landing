@@ -1621,12 +1621,21 @@ updateScrollHintVisibility();
 
   async function callSelfServiceAction(payload) {
     const { data: { session } } = await supabase.auth.getSession();
-    const res = await fetch(`${SUPA_URL}/functions/v1/ambassador-self-service`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${session.access_token}` },
-      body: JSON.stringify(payload),
-    });
-    return res.json();
+    try {
+      const res = await fetch(`${SUPA_URL}/functions/v1/ambassador-self-service`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'apikey': SUPA_KEY, 'Authorization': `Bearer ${session.access_token}` },
+        body: JSON.stringify(payload),
+      });
+      if (!res.ok) {
+        console.error('ambassador-self-service — reponse non OK:', res.status, await res.text().catch(()=>'') );
+        return { ok: false, error: 'Erreur serveur (' + res.status + ')' };
+      }
+      return res.json();
+    } catch (e) {
+      console.error('ambassador-self-service — echec reseau:', e);
+      return { ok: false, error: 'Erreur reseau, reessayez.' };
+    }
   }
 
   document.getElementById('ambExportData').addEventListener('click', async (e) => {
@@ -1726,12 +1735,21 @@ updateScrollHintVisibility();
 
   async function callAdminAction(payload) {
     const { data: { session } } = await supabase.auth.getSession();
-    const res = await fetch(`${SUPA_URL}/functions/v1/admin-ambassador-actions`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${session.access_token}` },
-      body: JSON.stringify(payload),
-    });
-    return res.json();
+    try {
+      const res = await fetch(`${SUPA_URL}/functions/v1/admin-ambassador-actions`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'apikey': SUPA_KEY, 'Authorization': `Bearer ${session.access_token}` },
+        body: JSON.stringify(payload),
+      });
+      if (!res.ok) {
+        console.error('admin-ambassador-actions — reponse non OK:', res.status, await res.text().catch(()=>'') );
+        return { ok: false, error: 'Erreur serveur (' + res.status + ')' };
+      }
+      return res.json();
+    } catch (e) {
+      console.error('admin-ambassador-actions — echec reseau:', e);
+      return { ok: false, error: 'Erreur reseau, reessayez.' };
+    }
   }
 
   async function checkAdmin(user) {
