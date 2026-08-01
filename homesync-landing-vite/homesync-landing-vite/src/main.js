@@ -196,6 +196,7 @@ const TRANSLATIONS = {
     amb_err_pass: "Le mot de passe doit faire au moins 6 caractères.",
     amb_err_generic: "Un souci est survenu — réessayez dans un instant.",
     amb_signout: "Déconnexion",
+    amb_connected_as: "Connecté en tant que",
     amb_link_lbl: "Votre lien de parrainage",
     amb_code_lbl: "Ou juste votre code (à donner de vive voix)",
     amb_tab_dashboard: "📊 Tableau de bord",
@@ -551,6 +552,7 @@ const TRANSLATIONS = {
     amb_err_pass: "Password must be at least 6 characters.",
     amb_err_generic: "Something went wrong — try again in a moment.",
     amb_signout: "Log out",
+    amb_connected_as: "Connected as",
     amb_link_lbl: "Your referral link",
     amb_code_lbl: "Or just your code (to share out loud)",
     amb_tab_dashboard: "📊 Dashboard",
@@ -1473,6 +1475,7 @@ updateScrollHintVisibility();
     currentAmbassador = ambassador;
 
     dashName.textContent = ambassador.name.split(' ')[0];
+    document.getElementById('ambConnectedEmail').textContent = user.email || '';
     const statusLabels = { active: translate('amb_status_active'), pending: translate('amb_status_pending'), suspended: translate('amb_status_suspended') };
     statusBadge.textContent = (ambassador.status === 'active' ? '🟢 ' : ambassador.status === 'pending' ? '🟡 ' : '🔴 ') + (statusLabels[ambassador.status] || ambassador.status);
     statusBadge.className = 'amb-status ' + ambassador.status;
@@ -2287,6 +2290,7 @@ updateScrollHintVisibility();
 
   async function enterDashboard() {
     const { data: { user } } = await supabase.auth.getUser();
+    document.getElementById('bloggerConnectedEmail').textContent = user.email || '';
     const isSiteAdmin = (user.email || '').toLowerCase() === 'part.kobbaz@outlook.fr'; // ⚠️ doit correspondre à is_site_admin() côté SQL
     if (isSiteAdmin) { showAuthState('dash'); loadMyTips(); return; }
     const { data: blogger } = await supabase.from('blogger_accounts').select('status').eq('user_id', user.id).maybeSingle();
@@ -2390,8 +2394,9 @@ updateScrollHintVisibility();
     const description  = document.getElementById('tipDescription').value.trim();
     const category     = document.getElementById('tipCategory').value;
     const sourceName   = document.getElementById('tipSourceName').value.trim();
-    const sourceUrl    = document.getElementById('tipSourceUrl').value.trim();
-    if (!title || !description || !sourceName || !sourceUrl) { alert('Merci de remplir tous les champs.'); return; }
+    let sourceUrl    = document.getElementById('tipSourceUrl').value.trim();
+    if (sourceUrl && !/^https?:\/\//i.test(sourceUrl)) sourceUrl = 'https://' + sourceUrl;
+    if (!title || !description) { alert('Merci de remplir au moins le titre et la description.'); return; }
 
     if (editingTipId) {
       await supabase.rpc('update_tip', { p_id: editingTipId, p_title:title, p_description:description, p_category:category, p_source_name:sourceName, p_source_url:sourceUrl, p_thumbnail_style:selectedThumbStyle });
