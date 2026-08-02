@@ -2099,7 +2099,7 @@ updateScrollHintVisibility();
     // de sécurité sans dépendre d'un seul endroit. Jamais attendu avant
     // d'afficher la liste — même lent ou en échec, l'affichage ne doit
     // jamais en dépendre.
-    supabase.rpc('cleanup_old_tips').catch(()=>{});
+    (async () => { try { await supabase.rpc('cleanup_old_tips'); } catch {} })();
     const { data: tips, error } = await supabase.rpc('admin_list_pending_tips');
     if (error) { list.innerHTML = '<p style="color:var(--mist);">Impossible de charger.</p>'; return; }
     if (!tips || tips.length === 0) { list.innerHTML = '<p style="color:var(--mist);">Aucun conseil en attente.</p>'; return; }
@@ -2355,17 +2355,20 @@ updateScrollHintVisibility();
       card.querySelector('.tip-edit-btn').addEventListener('click', () => openEditForm(tip));
       const toggleBtn = card.querySelector('.tip-toggle-btn');
       if (toggleBtn) toggleBtn.addEventListener('click', async () => {
-        await supabase.rpc('set_tip_published', { p_id: tip.id, p_published: true });
+        const { data: result } = await supabase.rpc('set_tip_published', { p_id: tip.id, p_published: true });
+        if (!result || !result.ok) { alert(result?.error || 'Action impossible.'); return; }
         loadMyTips();
       });
       const unpublishBtn = card.querySelector('.tip-unpublish-btn');
       if (unpublishBtn) unpublishBtn.addEventListener('click', async () => {
-        await supabase.rpc('set_tip_published', { p_id: tip.id, p_published: false });
+        const { data: result } = await supabase.rpc('set_tip_published', { p_id: tip.id, p_published: false });
+        if (!result || !result.ok) { alert(result?.error || 'Action impossible.'); return; }
         loadMyTips();
       });
       card.querySelector('.tip-delete-btn').addEventListener('click', async () => {
         if (!confirm('Supprimer ce conseil définitivement ?')) return;
-        await supabase.rpc('delete_tip', { p_id: tip.id });
+        const { data: result } = await supabase.rpc('delete_tip', { p_id: tip.id });
+        if (!result || !result.ok) { alert(result?.error || 'Suppression impossible.'); return; }
         loadMyTips();
       });
     });
@@ -2413,10 +2416,15 @@ updateScrollHintVisibility();
     if (!title || !description) { alert('Merci de remplir au moins le titre et la description.'); return; }
 
     if (editingTipId) {
-      await supabase.rpc('update_tip', { p_id: editingTipId, p_title:title, p_description:description, p_category:category, p_source_name:sourceName, p_source_url:sourceUrl, p_thumbnail_style:selectedThumbStyle });
-      if (publish) await supabase.rpc('set_tip_published', { p_id: editingTipId, p_published: true });
+      const { data: r1 } = await supabase.rpc('update_tip', { p_id: editingTipId, p_title:title, p_description:description, p_category:category, p_source_name:sourceName, p_source_url:sourceUrl, p_thumbnail_style:selectedThumbStyle });
+      if (!r1 || !r1.ok) { alert(r1?.error || 'Enregistrement impossible.'); return; }
+      if (publish) {
+        const { data: r2 } = await supabase.rpc('set_tip_published', { p_id: editingTipId, p_published: true });
+        if (!r2 || !r2.ok) { alert(r2?.error || 'Action impossible.'); return; }
+      }
     } else {
-      await supabase.rpc('create_tip', { p_title:title, p_description:description, p_category:category, p_source_name:sourceName, p_source_url:sourceUrl, p_publish:publish, p_thumbnail_style:selectedThumbStyle });
+      const { data: r3 } = await supabase.rpc('create_tip', { p_title:title, p_description:description, p_category:category, p_source_name:sourceName, p_source_url:sourceUrl, p_publish:publish, p_thumbnail_style:selectedThumbStyle });
+      if (!r3 || !r3.ok) { alert(r3?.error || 'Création impossible.'); return; }
     }
     resetForm();
     loadMyTips();
