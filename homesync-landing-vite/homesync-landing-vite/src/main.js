@@ -317,8 +317,8 @@ const TRANSLATIONS = {
     pm_i_step2_t: "Choisissez \"Sur l'écran d'accueil\"", pm_i_step2_d: "Faites défiler la liste si besoin",
     pm_i_step3_t: "Appuyez sur \"Ajouter\"", pm_i_step3_d: "HomeSync s'ajoute à votre écran d'accueil",
     fb1_q: "On a déjà ça à la maison, non ?", fb1_title: "Ne rachetez plus ce que vous avez déjà.", fb1_text: "Consultez votre stock en temps réel et sachez immédiatement ce qu'il reste chez vous.",
-    fb2_q: "Combien vais-je payer à la caisse ?", fb2_title: "Connaissez le total avant d'arriver en caisse.", fb2_text: "Ajoutez les prix pendant vos courses et gardez votre budget sous contrôle.",
-    fb3_q: "Qui fait quoi cette semaine ?", fb3_title: "Toute la famille sait quoi faire.", fb3_text: "Rendez-vous, tâches et événements sont synchronisés automatiquement.",
+    fb2_q: "Besoin d'une idée ou d'un conseil ?", fb2_title: "Des astuces pensées pour votre quotidien.", fb2_text: "Budget, cuisine, organisation, parentalité — découvrez des conseils sélectionnés, directement dans l'app.",
+    fb3_q: "Le dernier biberon, c'était quand ?", fb3_title: "Toute la famille suit bébé, en temps réel.", fb3_text: "Biberons, couches, siestes — enregistrés en un geste, visibles par tous, sans jamais devoir demander.",
 
     forwho_bridge: "Si une de ces situations vous parle, HomeSync a été pensé pour vous.",
     forwho_title: "Ça, c'est peut-être vous",
@@ -677,8 +677,8 @@ const TRANSLATIONS = {
     pm_i_step2_t: "Choose \"Add to Home Screen\"", pm_i_step2_d: "Scroll the list if needed",
     pm_i_step3_t: "Tap \"Add\"", pm_i_step3_d: "HomeSync is added to your home screen",
     fb1_q: "Didn't we already have that?", fb1_title: "Stop buying what you already have.", fb1_text: "Check your stock in real time and know instantly what's left at home.",
-    fb2_q: "How much will I pay at checkout?", fb2_title: "Know the total before you reach the register.", fb2_text: "Add prices as you shop and keep your budget under control.",
-    fb3_q: "Who's doing what this week?", fb3_title: "The whole family knows what to do.", fb3_text: "Appointments, tasks and events sync automatically.",
+    fb2_q: "Need an idea or a tip?", fb2_title: "Tips designed for your everyday life.", fb2_text: "Budget, cooking, organization, parenting — discover curated tips, right inside the app.",
+    fb3_q: "When was the last bottle?", fb3_title: "The whole family tracks baby, in real time.", fb3_text: "Bottles, diapers, naps — logged in one tap, visible to everyone, without ever having to ask.",
 
     forwho_bridge: "If any of these sound like you, HomeSync was built with you in mind.",
     forwho_title: "This might be you",
@@ -2195,18 +2195,14 @@ updateScrollHintVisibility();
   let selectedThumbStyle = 'glow';
 
   const TIP_CAT_META = {
-    'budget':          { icon:'💰', color:'#4BBEAA' },
-    'economies':       { icon:'🪙', color:'#F2C14E' },
-    'courses':         { icon:'🛒', color:'#6EA8E8' },
-    'cuisine':         { icon:'🍳', color:'#F28C6B' },
-    'maison':          { icon:'🏠', color:'#B8A9E3' },
-    'organisation':    { icon:'📋', color:'#E8617A' },
-    'anti-gaspillage': { icon:'♻️', color:'#6EBE8A' },
-    'quotidien':       { icon:'✨', color:'#E8A8C8' },
+    'budget_eco':      { icon:'💰', color:'#4BBEAA', hint:"Gérer son argent, faire des économies, réduire ses dépenses." },
+    'cuisine_gaspi':   { icon:'🍳', color:'#F28C6B', hint:"Recettes, cuisine, astuces anti-gaspillage alimentaire." },
+    'maison_vie':      { icon:'🏡', color:'#B8A9E3', hint:"Ménage, rangement, organisation, vie quotidienne à la maison." },
+    'parents_enfants': { icon:'👶', color:'#E8A8C8', hint:"Parentalité, activités enfants, vie de famille au quotidien." },
   };
 
   function updateThumbPreviews() {
-    const cat = TIP_CAT_META[document.getElementById('tipCategory').value] || TIP_CAT_META['budget'];
+    const cat = TIP_CAT_META[document.getElementById('tipCategory').value] || TIP_CAT_META['budget_eco'];
     document.querySelectorAll('.thumb-style-opt').forEach(el => { el.style.background = `linear-gradient(135deg, ${cat.color}, ${cat.color}99)`; });
     ['Glow','Dots','Waves'].forEach(suffix => {
       const el = document.getElementById('thumbPreviewIcon' + suffix);
@@ -2218,6 +2214,11 @@ updateScrollHintVisibility();
         `<circle cx="${(i*37+10)%100}%" cy="${(i*53+15)%100}%" r="${2+(i%3)}" fill="#fff"/>`
       ).join('');
     }
+    // Texte d'aide — explique de quoi cette catégorie doit vraiment parler,
+    // pour éviter les mauvais choix (ex : un conseil sur le ménage tagué
+    // "Parents & Enfants" alors qu'il devrait être dans "Maison & Vie").
+    const hintEl = document.getElementById('tipCategoryHint');
+    if (hintEl) hintEl.textContent = cat.hint || '';
   }
   document.getElementById('tipCategory').addEventListener('change', updateThumbPreviews);
 
@@ -2391,7 +2392,7 @@ updateScrollHintVisibility();
     editingTipId = null;
     document.getElementById('tipTitle').value = '';
     document.getElementById('tipDescription').value = '';
-    document.getElementById('tipCategory').value = 'budget';
+    document.getElementById('tipCategory').value = 'budget_eco';
     document.getElementById('tipSourceName').value = '';
     document.getElementById('tipSourceUrl').value = '';
     updateThumbPreviews();
