@@ -256,7 +256,7 @@ const TRANSLATIONS = {
     blogger_rejected_sub: "Votre demande n'a pas été validée cette fois-ci.",
     amb_admin_tab_bloggers: "Blogueurs",
     amb_admin_tab_tips: "Conseils",
-    amb_admin_tab_promo: "Portes ouvertes",
+    amb_admin_tab_promo: "HomeDay",
     promo_field_label: "Nom de la période (interne)",
     promo_field_start: "Date de début",
     promo_field_end: "Date de fin",
@@ -274,6 +274,10 @@ const TRANSLATIONS = {
     cgu_4_body: "Les paiements sont traités de façon sécurisée par Stripe. Minzri ne stocke jamais vos coordonnées bancaires complètes.",
     cgu_5_title: "Résiliation",
     cgu_5_body: "Vous pouvez résilier votre abonnement à tout moment depuis l'application. L'accès reste actif jusqu'à la fin de la période déjà payée.",
+    cgu_6_title: "Évolution du prix",
+    cgu_6_body: "Le tarif de l'abonnement peut évoluer, notamment selon le nombre d'utilisateurs de l'application. Toute évolution sera annoncée à l'avance via un message publié dans l'onglet Découvertes de l'application.",
+    cgu_7_title: "Remboursements",
+    cgu_7_body: "Aucun remboursement ni compensation automatique n'est prévu, y compris si un abonnement débute peu avant une journée HomeDay ou toute autre offre promotionnelle. D'une manière générale, les remboursements ne sont pas automatiques : un abonnement peut être suspendu sur demande, et un éventuel remboursement reste à l'appréciation de Minzri, étudié au cas par cas.",
     privacy_1_title: "Données collectées",
     privacy_1_body: "Nom, email, et les données que vous saisissez dans l'application (courses, stock, budget, recettes, agenda) — uniquement pour faire fonctionner le service.",
     privacy_2_title: "Vos droits",
@@ -612,7 +616,7 @@ const TRANSLATIONS = {
     blogger_rejected_sub: "Your request wasn't approved this time.",
     amb_admin_tab_bloggers: "Bloggers",
     amb_admin_tab_tips: "Tips",
-    amb_admin_tab_promo: "Open house",
+    amb_admin_tab_promo: "HomeDay",
     promo_field_label: "Period name (internal)",
     promo_field_start: "Start date",
     promo_field_end: "End date",
@@ -630,6 +634,10 @@ const TRANSLATIONS = {
     cgu_4_body: "Payments are securely processed by Stripe. Minzri never stores your full banking details.",
     cgu_5_title: "Cancellation",
     cgu_5_body: "You can cancel your subscription at any time from the app. Access remains active until the end of the already-paid period.",
+    cgu_6_title: "Price changes",
+    cgu_6_body: "The subscription price may change, notably based on the app's number of users. Any change will be announced in advance via a message posted in the app's Discoveries tab.",
+    cgu_7_title: "Refunds",
+    cgu_7_body: "No automatic refund or compensation is provided, including if a subscription starts shortly before a HomeDay or any other promotional offer. In general, refunds are not automatic: a subscription can be suspended upon request, and any refund remains at Minzri's discretion, reviewed on a case-by-case basis.",
     privacy_1_title: "Data collected",
     privacy_1_body: "Name, email, and the data you enter in the app (shopping, stock, budget, recipes, calendar) — only to make the service work.",
     privacy_2_title: "Your rights",
@@ -2008,7 +2016,7 @@ updateScrollHintVisibility();
   adminTabTips.addEventListener('click', () => switchAdminTab('tips'));
   adminTabPromo.addEventListener('click', () => switchAdminTab('promo'));
 
-  // ── Journées "portes ouvertes" — créer/supprimer des périodes gratuites globales ──
+  // ── Journées "HomeDay" — créer/supprimer des périodes gratuites globales ──
   async function loadPromoPeriods() {
     const list = document.getElementById('promoPeriodsList');
     list.innerHTML = '<p style="color:var(--mist);">Chargement…</p>';
@@ -2086,6 +2094,10 @@ updateScrollHintVisibility();
   async function loadPendingTips() {
     const list = document.getElementById('ambAdminTipsList');
     list.innerHTML = '<p style="color:var(--mist);">Chargement…</p>';
+    // Nettoyage automatique des conseils publiés depuis plus d'1 mois — 2e
+    // point de déclenchement (en plus de celui côté app), pour un vrai filet
+    // de sécurité sans dépendre d'un seul endroit.
+    await supabase.rpc('cleanup_old_tips').catch(()=>{});
     const { data: tips, error } = await supabase.rpc('admin_list_pending_tips');
     if (error) { list.innerHTML = '<p style="color:var(--mist);">Impossible de charger.</p>'; return; }
     if (!tips || tips.length === 0) { list.innerHTML = '<p style="color:var(--mist);">Aucun conseil en attente.</p>'; return; }
