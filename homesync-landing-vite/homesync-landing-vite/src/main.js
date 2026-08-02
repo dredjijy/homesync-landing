@@ -2096,8 +2096,10 @@ updateScrollHintVisibility();
     list.innerHTML = '<p style="color:var(--mist);">Chargement…</p>';
     // Nettoyage automatique des conseils publiés depuis plus d'1 mois — 2e
     // point de déclenchement (en plus de celui côté app), pour un vrai filet
-    // de sécurité sans dépendre d'un seul endroit.
-    await supabase.rpc('cleanup_old_tips').catch(()=>{});
+    // de sécurité sans dépendre d'un seul endroit. Jamais attendu avant
+    // d'afficher la liste — même lent ou en échec, l'affichage ne doit
+    // jamais en dépendre.
+    supabase.rpc('cleanup_old_tips').catch(()=>{});
     const { data: tips, error } = await supabase.rpc('admin_list_pending_tips');
     if (error) { list.innerHTML = '<p style="color:var(--mist);">Impossible de charger.</p>'; return; }
     if (!tips || tips.length === 0) { list.innerHTML = '<p style="color:var(--mist);">Aucun conseil en attente.</p>'; return; }
