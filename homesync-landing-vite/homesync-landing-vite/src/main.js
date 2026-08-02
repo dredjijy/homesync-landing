@@ -316,18 +316,22 @@ const TRANSLATIONS = {
     pm_i_step1_t: "Appuyez sur Partager", pm_i_step1_d: "Le carré avec une flèche vers le haut, en bas de Safari",
     pm_i_step2_t: "Choisissez \"Sur l'écran d'accueil\"", pm_i_step2_d: "Faites défiler la liste si besoin",
     pm_i_step3_t: "Appuyez sur \"Ajouter\"", pm_i_step3_d: "HomeSync s'ajoute à votre écran d'accueil",
-    fb1_q: "On a déjà ça à la maison, non ?", fb1_title: "Ne rachetez plus ce que vous avez déjà.", fb1_text: "Consultez votre stock en temps réel et sachez immédiatement ce qu'il reste chez vous.",
+    fb1_q: "Le dernier biberon, c'était quand ?", fb1_title: "Toute la famille suit bébé, en temps réel.", fb1_text: "Biberons, couches, siestes — enregistrés en un geste, visibles par tous, sans jamais devoir demander.",
     fb2_q: "Besoin d'une idée ou d'un conseil ?", fb2_title: "Des astuces pensées pour votre quotidien.", fb2_text: "Budget, cuisine, organisation, parentalité — découvrez des conseils sélectionnés, directement dans l'app.",
-    fb3_q: "Le dernier biberon, c'était quand ?", fb3_title: "Toute la famille suit bébé, en temps réel.", fb3_text: "Biberons, couches, siestes — enregistrés en un geste, visibles par tous, sans jamais devoir demander.",
+    fb3_q: "Combien vont coûter ces vacances ?", fb3_title: "Un budget vacances clair, partagé par tous.", fb3_text: "Suivez les dépenses par participant et gardez une vue d'ensemble simple, du début à la fin du séjour.",
 
     forwho_bridge: "Si une de ces situations vous parle, HomeSync a été pensé pour vous.",
     forwho_title: "Ça, c'est peut-être vous",
+    forwho_hub_text: "Ça peut être vous ?",
     forwho1_title: "Parents qui jonglent",
     forwho1_text: "Entre le travail, les enfants et les courses de dernière minute — plus besoin de tout garder en tête.",
     forwho2_title: "Colocataires",
     forwho2_text: "Qui a payé quoi, qui doit acheter le sopalin — les charges partagées sans prise de tête.",
     forwho3_title: "Familles recomposées",
     forwho3_text: "Plusieurs foyers à coordonner, plusieurs plannings — un seul endroit pour tout suivre.",
+    forwho4_title: "Jeune maman",
+    forwho5_title: "En couple",
+    forwho6_title: "Autre situation",
 
     founder_quote: "On l'a créé parce qu'on en avait besoin nous-mêmes. On était mal organisés entre le travail de chacun, on faisait les courses en vitesse en oubliant la moitié, on rachetait en double des trucs qu'on avait déjà — et le budget était toujours serré à la fin du mois. HomeSync, c'est ce qu'on aurait voulu avoir depuis le début.",
     founder_sign: "— Minzri",
@@ -676,16 +680,20 @@ const TRANSLATIONS = {
     pm_i_step1_t: "Tap Share", pm_i_step1_d: "The square with an arrow pointing up, at the bottom of Safari",
     pm_i_step2_t: "Choose \"Add to Home Screen\"", pm_i_step2_d: "Scroll the list if needed",
     pm_i_step3_t: "Tap \"Add\"", pm_i_step3_d: "HomeSync is added to your home screen",
-    fb1_q: "Didn't we already have that?", fb1_title: "Stop buying what you already have.", fb1_text: "Check your stock in real time and know instantly what's left at home.",
+    fb1_q: "When was the last bottle?", fb1_title: "The whole family tracks baby, in real time.", fb1_text: "Bottles, diapers, naps — logged in one tap, visible to everyone, without ever having to ask.",
     fb2_q: "Need an idea or a tip?", fb2_title: "Tips designed for your everyday life.", fb2_text: "Budget, cooking, organization, parenting — discover curated tips, right inside the app.",
-    fb3_q: "When was the last bottle?", fb3_title: "The whole family tracks baby, in real time.", fb3_text: "Bottles, diapers, naps — logged in one tap, visible to everyone, without ever having to ask.",
+    fb3_q: "How much will this trip cost?", fb3_title: "A clear vacation budget, shared by all.", fb3_text: "Track expenses per participant and keep a simple overview, from start to finish of the trip.",
 
     forwho_bridge: "If any of these sound like you, HomeSync was built with you in mind.",
     forwho_title: "This might be you",
+    forwho_hub_text: "Could this be you?",
     forwho1_title: "Parents juggling it all",
     forwho1_text: "Between work, the kids, and last-minute grocery runs — no need to keep it all in your head anymore.",
     forwho2_title: "Roommates",
     forwho2_text: "Who paid for what, who's buying paper towels — shared expenses without the headache.",
+    forwho4_title: "New mom",
+    forwho5_title: "As a couple",
+    forwho6_title: "Something else",
     forwho3_title: "Blended families",
     forwho3_text: "Several households to coordinate, several schedules — one single place to track it all.",
 
@@ -1175,6 +1183,97 @@ window.addEventListener('scroll', updateScrollHintVisibility, { passive:true });
 window.addEventListener('scroll', updateNavBg, { passive:true });
 updateNavBg();
 updateScrollHintVisibility();
+
+// ── Roue "Ça peut être vous ?" — réponse personnalisée par profil ──
+(function initForwhoWheel() {
+  const FORWHO_CONTENT = {
+    parents: {
+      title: "Vous jonglez entre travail, enfants et logistique ?",
+      intro: "HomeSync centralise tout ce que vous devez retenir, pour que rien ne vous échappe.",
+      modules: [
+        "Vous <b>donnez des tâches</b> à vos enfants ? Ce module fait tourner automatiquement qui fait quoi chaque semaine.",
+        "<b>Agenda</b> — rendez-vous et activités, tout le monde voit la même chose, au même endroit.",
+        "<b>Courses</b> — personne n'oublie plus rien, même en dernière minute.",
+      ],
+    },
+    coloc: {
+      title: "Qui a payé quoi, encore ?",
+      intro: "Fini les calculs compliqués et les post-it sur le frigo.",
+      modules: [
+        "<b>Budget</b> — suivez les dépenses communes, sans prise de tête.",
+        "<b>Courses</b> — une liste partagée, à jour pour tout le monde.",
+        "<b>Stock</b> — le frigo commun, sans double achat.",
+      ],
+    },
+    recomposee: {
+      title: "Plusieurs foyers, plusieurs plannings ?",
+      intro: "Coordonnez plusieurs adultes autour des mêmes enfants, sans confusion.",
+      modules: [
+        "<b>Agenda</b> — un planning commun, visible par tous les adultes concernés.",
+        "<b>Droits par membre</b> — chacun voit exactement ce qui le concerne, rien de plus.",
+        "<b>Tâches</b> — qui s'occupe de quoi, même en alternance.",
+      ],
+    },
+    maman: {
+      title: "Un nouveau-né à la maison ?",
+      intro: "Le suivi du quotidien, partagé avec toute la famille, sans jamais devoir tout redire.",
+      modules: [
+        "<b>Bébé</b> — biberons, couches, siestes enregistrés en un geste, visibles par tous.",
+        "<b>Sac bébé</b> — une checklist toujours prête pour sortir sans rien oublier.",
+        "<b>Tâches</b> — déléguez facilement au reste de la famille.",
+      ],
+    },
+    couple: {
+      title: "Vous ne savez jamais quoi cuisiner ?",
+      intro: "HomeSync s'adapte à ce que vous avez déjà, pas à ce qu'il faudrait racheter.",
+      modules: [
+        "<b>Recettes</b> — des idées à partir de ce qu'il vous reste en stock.",
+        "<b>Budget</b> — suivez vos dépenses à deux, fixez des objectifs d'épargne ensemble.",
+        "<b>Vacances</b> — organisez vos voyages, budget compris, à deux.",
+      ],
+    },
+    autre: {
+      title: "Votre situation est différente ?",
+      intro: "HomeSync s'adapte à toutes les configurations de foyer — testez-le, vous verrez ce qui vous sert vraiment.",
+      modules: [
+        "Chaque module est <b>activable ou désactivable</b> selon vos besoins réels.",
+        "<b>Droits par membre</b> — gérez ce que chaque personne du foyer peut voir.",
+        "<b>Découvertes</b> — des astuces pour tirer le meilleur de votre organisation, quelle qu'elle soit.",
+      ],
+    },
+  };
+
+  const answerEl = document.getElementById('forwhoAnswer');
+  if (!answerEl) return;
+  const titleEl = document.getElementById('forwhoAnswerTitle');
+  const introEl = document.getElementById('forwhoAnswerIntro');
+  const modulesEl = document.getElementById('forwhoAnswerModules');
+  const closeBtn = document.getElementById('forwhoAnswerClose');
+  const spokes = document.querySelectorAll('.forwho-spoke');
+
+  function showPersona(key) {
+    const data = FORWHO_CONTENT[key];
+    if (!data) return;
+    spokes.forEach(s => s.classList.toggle('active', s.dataset.persona === key));
+    titleEl.textContent = data.title;
+    introEl.textContent = data.intro;
+    modulesEl.innerHTML = data.modules.map(text =>
+      `<div class="forwho-module-row"><span class="forwho-module-text">${text}</span></div>`
+    ).join('');
+    answerEl.classList.add('show');
+    requestAnimationFrame(() => answerEl.classList.add('in'));
+    answerEl.scrollIntoView({ behavior:'smooth', block:'nearest' });
+  }
+
+  spokes.forEach(spoke => {
+    spoke.addEventListener('click', () => showPersona(spoke.dataset.persona));
+  });
+  closeBtn.addEventListener('click', () => {
+    answerEl.classList.remove('in');
+    spokes.forEach(s => s.classList.remove('active'));
+    setTimeout(() => answerEl.classList.remove('show'), 350);
+  });
+})();
 
 // ── Galerie de captures d'écran — carrousel simple, sans dépendance ──
 (function initGallery() {
