@@ -118,6 +118,12 @@ const TRANSLATIONS = {
     amb_activity_empty: "Aucune donnée d'activité pour l'instant.",
     amb_activity_unknown: "Nom inconnu",
     amb_activity_landing_total: "Visiteurs uniques landing",
+    amb_activity_unique: "Visiteurs uniques",
+    amb_activity_family: "Famille active aujourd'hui",
+    amb_activity_new_signups: "Nouveaux comptes (aujourd'hui)",
+    amb_activity_concurrent: "Connectés en ce moment",
+    amb_activity_monthly_history_lbl: "Historique mensuel",
+    amb_activity_no_history: "Pas encore d'historique — revenez dans quelques jours.",
     amb_activity_landing_7d: "Landing — 7 derniers jours",
     amb_activity_app_total: "Visiteurs uniques app",
     amb_activity_app_7d: "App — 7 derniers jours",
@@ -482,6 +488,12 @@ const TRANSLATIONS = {
     amb_activity_empty: "No activity data yet.",
     amb_activity_unknown: "Unknown name",
     amb_activity_landing_total: "Unique landing visitors",
+    amb_activity_unique: "Unique visitors",
+    amb_activity_family: "Family active today",
+    amb_activity_new_signups: "New accounts (today)",
+    amb_activity_concurrent: "Connected right now",
+    amb_activity_monthly_history_lbl: "Monthly history",
+    amb_activity_no_history: "No history yet — check back in a few days.",
     amb_activity_landing_7d: "Landing — last 7 days",
     amb_activity_app_total: "Unique app visitors",
     amb_activity_app_7d: "App — last 7 days",
@@ -1978,31 +1990,51 @@ updateScrollHintVisibility();
   }
 
   async function loadAppActivity() {
-    const statsResult = await callAdminAction({ action: 'list_visitor_stats' });
-    const s = statsResult.stats || {};
     const list = document.getElementById('ambAdminActivityList');
+    // Filet de sécurité — si l'appel échoue (réseau instable, etc.), réessaie
+    // automatiquement 2 fois de plus avant d'afficher une vraie erreur, pour
+    // que le calcul se fasse vraiment plutôt que d'abandonner au 1er souci.
+    let s = null, error = null;
+    for (let attempt = 0; attempt < 3; attempt++) {
+      const result = await supabase.rpc('get_full_visitor_stats');
+      if (!result.error) { s = result.data; error = null; break; }
+      error = result.error;
+      if (attempt < 2) await new Promise(r => setTimeout(r, 800));
+    }
+    if (error) { list.innerHTML = '<p style="color:var(--mist);">Impossible de charger.</p>'; return; }
 
     const statsHtml = `
       <div class="amb-stat-grid" style="margin-bottom:16px;">
         <div class="amb-stat-card">
-          <div class="amb-stat-val">${s.landing?.total_unique ?? 0}</div>
-          <div class="amb-stat-lbl">${translate('amb_activity_landing_total')}</div>
+          <div class="amb-stat-val">${(s?.unique_landing??0) + (s?.unique_app??0)}</div>
+          <div class="amb-stat-lbl">${translate('amb_activity_unique')}</div>
         </div>
         <div class="amb-stat-card">
-          <div class="amb-stat-val">${s.landing?.last_7_days ?? 0}</div>
-          <div class="amb-stat-lbl">${translate('amb_activity_landing_7d')}</div>
+          <div class="amb-stat-val">${s?.family_today ?? 0}</div>
+          <div class="amb-stat-lbl">${translate('amb_activity_family')}</div>
         </div>
         <div class="amb-stat-card">
-          <div class="amb-stat-val">${s.app?.total_unique ?? 0}</div>
-          <div class="amb-stat-lbl">${translate('amb_activity_app_total')}</div>
+          <div class="amb-stat-val">${s?.new_signups_today ?? 0}</div>
+          <div class="amb-stat-lbl">${translate('amb_activity_new_signups')}</div>
         </div>
         <div class="amb-stat-card">
-          <div class="amb-stat-val">${s.app?.last_7_days ?? 0}</div>
-          <div class="amb-stat-lbl">${translate('amb_activity_app_7d')}</div>
+          <div class="amb-stat-val">${s?.concurrent_now ?? 0}</div>
+          <div class="amb-stat-lbl">${translate('amb_activity_concurrent')}</div>
         </div>
       </div>
+      <div class="amb-leaderboard-lbl">${translate('amb_activity_monthly_history_lbl')}</div>
+      <div id="ambMonthlyHistory"></div>
       <div class="amb-leaderboard-lbl">${translate('amb_activity_households_lbl')}</div>
     `;
+
+    // Historique mensuel — comparaison mois après mois
+    const { data: monthly } = await supabase.from('monthly_stats_history').select('*').order('month_key', { ascending: false }).limit(6);
+    const monthlyHtml = (monthly && monthly.length) ? monthly.map(m => `
+      <div class="amb-history-row">
+        <span>${m.month_key}</span>
+        <span style="color:var(--mint); font-weight:700;">${m.unique_landing + m.unique_app} ${translate('amb_activity_unique').toLowerCase()} · +${m.new_signups_count}</span>
+      </div>
+    `).join('') : `<p class="amb-empty">${translate('amb_activity_no_history')}</p>`;
 
     const result = await callAdminAction({ action: 'list_app_activity' });
     const items = result.activity || [];
@@ -2025,6 +2057,8 @@ updateScrollHintVisibility();
     }).join('') : `<p class="amb-empty">${translate('amb_activity_empty')}</p>`;
 
     list.innerHTML = statsHtml + householdsHtml;
+    const monthlyEl = document.getElementById('ambMonthlyHistory');
+    if (monthlyEl) monthlyEl.innerHTML = monthlyHtml;
   }
 
   async function loadPayouts() {
