@@ -1,0 +1,1841 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="apple-touch-icon" sizes="180x180" href="/favicon-180.png">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+<title>HomeSync by Minzri — L'application qui organise votre foyer, en famille</title>
+<meta name="description" content="Fini les 'on n'a plus de lait', les additions de courses qui explosent le budget et les rendez-vous oubliés. HomeSync synchronise stock, budget, recettes et agenda pour toute la famille, en temps réel. 3,99€/mois, sans engagement.">
+<meta name="keywords" content="application famille, gestion foyer, liste de courses partagée, budget familial, HomeSync, Minzri, organisation famille">
+<meta name="author" content="Minzri">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://minzri.com/">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="HomeSync by Minzri">
+<meta property="og:title" content="HomeSync by Minzri — L'application qui organise votre foyer, en famille">
+<meta property="og:description" content="Stock, budget, recettes et agenda, synchronisés en temps réel pour toute la famille. 3,99€/mois, sans engagement.">
+<meta property="og:image" content="https://minzri.com/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:url" content="https://minzri.com/">
+<meta property="og:locale" content="fr_FR">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="HomeSync by Minzri — L'application qui organise votre foyer, en famille">
+<meta name="twitter:description" content="Stock, budget, recettes et agenda, synchronisés en temps réel pour toute la famille.">
+<meta name="twitter:image" content="https://minzri.com/og-image.png">
+
+<!-- Données structurées -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "HomeSync",
+  "alternateName": "HomeSync by Minzri",
+  "applicationCategory": "LifestyleApplication",
+  "operatingSystem": "Web, iOS, Android",
+  "description": "Application de gestion de foyer en famille : stock, budget, recettes, courses et calendrier partagé, synchronisés en temps réel.",
+  "url": "https://minzri.com/",
+  "image": "https://minzri.com/og-image.png",
+  "author": { "@type": "Organization", "name": "Minzri" },
+  "offers": { "@type": "Offer", "price": "3.99", "priceCurrency": "EUR", "priceValidUntil": "2027-12-31" },
+  "inLanguage": "fr"
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,ital@9..144,300..900,0..1&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --ink:#08090E; --surface:#12141C; --surface-2:#191C27;
+  --line: rgba(245,243,238,0.09);
+  --ember:#FF7A45; --mint:#4BE3C4; --lilac:#B9A6F0;
+  --paper:#F5F3EE; --mist:#8B90A6;
+  --font-display:'Fraunces',serif; --font-body:'Plus Jakarta Sans',sans-serif; --font-mono:'Plus Jakarta Sans',sans-serif;
+}
+*,*::before,*::after{ box-sizing:border-box; margin:0; padding:0; }
+html{ background:var(--ink); overflow-x:hidden; width:100%; }
+body{ background:var(--ink); color:var(--paper); font-family:var(--font-body); overflow-x:hidden; -webkit-font-smoothing:antialiased; }
+a{ color:inherit; text-decoration:none; } button{ font-family:inherit; border:none; background:none; }
+::selection{ background:var(--ember); color:var(--ink); }
+a:focus-visible, button:focus-visible, [role="button"]:focus-visible{ outline:2px solid var(--mint); outline-offset:3px; border-radius:8px; }
+@media (prefers-reduced-motion: reduce){ *{ animation-duration:0.01ms !important; transition-duration:0.01ms !important; } }
+
+.btn{
+  display:inline-flex; align-items:center; gap:9px; font-weight:700; font-size:15px;
+  padding:16px 30px; border-radius:100px; cursor:pointer; white-space:nowrap;
+  transition:transform .35s cubic-bezier(.2,.9,.25,1), box-shadow .35s ease;
+}
+.btn-primary{ background:var(--ember); color:#160900; box-shadow:0 10px 30px -8px rgba(255,122,69,.55); }
+.btn-primary:hover{ transform:translateY(-2px); box-shadow:0 16px 38px -8px rgba(255,122,69,.7); }
+.btn-ghost{ background:var(--surface); border:1.5px solid var(--line); color:var(--paper); }
+.btn-ghost:hover{ border-color:var(--mint); transform:translateY(-1px); }
+.nav-ambassador{ font-size:12.5px !important; padding:9px 16px !important; position:relative; cursor:pointer; flex-shrink:0; white-space:nowrap; }
+@media (max-width:400px){ .nav-ambassador{ font-size:11.5px !important; padding:9px 12px !important; } }
+
+/* ── MODALE INSCRIPTION AMBASSADEUR ── */
+.amb-overlay{
+  position:fixed; inset:0; background:rgba(6,7,12,0.75); z-index:9998;
+  display:flex; align-items:center; justify-content:center; padding:24px;
+  opacity:0; pointer-events:none; transition:opacity .25s ease;
+}
+.amb-overlay.show{ opacity:1; pointer-events:auto; }
+.amb-card{
+  position:relative; background:var(--surface); border:1.5px solid var(--line);
+  border-radius:22px; padding:32px 28px; max-width:400px; width:100%; text-align:center;
+  max-height:88vh; overflow-y:auto; -webkit-overflow-scrolling:touch;
+}
+.amb-close{
+  position:absolute; top:14px; right:14px; width:32px; height:32px; border-radius:99px;
+  background:var(--surface-2); border:1.5px solid var(--line); color:var(--mist);
+  font-size:15px; cursor:pointer; display:flex; align-items:center; justify-content:center;
+}
+.amb-emoji{ font-size:36px; margin-bottom:10px; }
+.amb-title{ font-family:var(--font-display); font-weight:600; font-size:21px; color:var(--paper); margin-bottom:6px; }
+.amb-sub{ color:var(--mist); font-size:13px; line-height:1.5; margin-bottom:20px; }
+.amb-hint{ color:var(--mint); font-size:11.5px; line-height:1.5; margin:-12px 0 18px; opacity:0.9; }
+.amb-explain{ text-align:left; background:var(--ink); border:1.5px solid var(--line); border-radius:16px; padding:18px; margin-bottom:24px; }
+.amb-explain .amb-emoji, .amb-explain .amb-title, .amb-explain .amb-sub{ text-align:center; }
+.amb-explain-row{ display:flex; align-items:flex-start; gap:10px; font-size:12.5px; color:var(--mist); line-height:1.5; margin-bottom:10px; }
+.amb-presentation-intro{ color:var(--mist); font-size:12.5px; line-height:1.6; margin-bottom:22px; }
+.amb-pres-img{
+  display:block; width:100%; max-width:220px; margin:0 auto 12px; border-radius:16px;
+  border:1px solid var(--line); box-shadow:0 8px 24px rgba(0,0,0,0.35); cursor:zoom-in;
+}
+.amb-faq-list{ display:flex; flex-direction:column; gap:6px; }
+.amb-faq-item{ border-bottom:1px solid var(--line); }
+.amb-faq-item:last-child{ border-bottom:none; }
+.amb-faq-q{
+  width:100%; display:flex; justify-content:space-between; align-items:center;
+  background:none; border:none; padding:11px 2px; cursor:pointer; text-align:left;
+  color:var(--paper); font-size:13px; font-weight:700; font-family:var(--font-body);
+}
+.amb-faq-chev{ color:var(--mist); font-size:12px; transition:transform 0.2s ease; flex-shrink:0; margin-left:8px; }
+.amb-faq-item.open .amb-faq-chev{ transform:rotate(180deg); }
+.amb-faq-a{
+  max-height:0; overflow:hidden; opacity:0; transition:max-height 0.3s ease, opacity 0.25s ease, padding 0.3s ease;
+  font-size:12.5px; color:var(--mist); line-height:1.55; padding:0 2px;
+}
+.amb-faq-item.open .amb-faq-a{ max-height:820px; opacity:1; padding:0 2px 14px; }
+.amb-explain-row:last-child{ margin-bottom:0; }
+.amb-explain-row b{ color:var(--paper); }
+.amb-terms-row{ display:flex; align-items:flex-start; gap:8px; font-size:12px; color:var(--mist); cursor:pointer; text-align:left; }
+.amb-terms-row input{ margin-top:2px; flex-shrink:0; width:auto; }
+@media (max-width:360px){
+  .amb-card{ padding:26px 18px; }
+  .amb-dash{ padding:60px 12px 60px; }
+}
+.amb-field{ text-align:left; margin-bottom:12px; }
+.thumb-style-opt.selected{ border-color:var(--mint) !important; }
+.amb-field label{ display:block; font-size:12px; color:var(--mist); font-weight:600; margin-bottom:5px; }
+.amb-field input{
+  width:100%; padding:11px 13px; background:var(--ink); border:1.5px solid var(--line);
+  border-radius:11px; color:var(--paper); font-size:14px; outline:none; transition:border-color .15s ease;
+}
+.amb-field input:focus{ border-color:var(--mint); }
+.amb-error{ color:#E0566A; font-size:12px; margin-bottom:10px; min-height:1px; text-align:left; }
+.amb-switch{ margin-top:16px; font-size:12.5px; color:var(--mist); text-align:center; }
+.amb-switch span[id^="ambSwitch"], .amb-switch span#ambForgotPass{ color:var(--mint); font-weight:700; cursor:pointer; }
+
+/* ── TABLEAU DE BORD AMBASSADEUR ── */
+.amb-dash-overlay{
+  position:fixed; inset:0; background:var(--ink); z-index:9997;
+  overflow-y:auto; -webkit-overflow-scrolling:touch;
+  opacity:0; pointer-events:none; transition:opacity .25s ease;
+}
+.amb-dash-overlay.show{ opacity:1; pointer-events:auto; }
+.amb-dash{ max-width:640px; margin:0 auto; padding:60px 20px 60px; }
+.amb-dash-header{ display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; flex-wrap:wrap; gap:10px; }
+.amb-dash-hi{ font-family:var(--font-display); font-weight:600; font-size:24px; color:var(--paper); }
+.amb-status{ display:inline-flex; font-size:11px; font-weight:700; padding:5px 12px; border-radius:99px; margin-bottom:20px; }
+.amb-status.active{ background:rgba(75,190,170,0.12); color:var(--mint); border:1px solid rgba(75,190,170,0.3); }
+.amb-status.pending{ background:var(--gold-dim,rgba(200,151,30,0.14)); color:#C8971E; border:1px solid rgba(200,151,30,0.3); }
+.amb-status.suspended{ background:rgba(224,86,106,0.1); color:#E0566A; border:1px solid rgba(224,86,106,0.3); }
+.amb-accepted-banner{ background:rgba(75,190,170,0.12); border:1.5px solid rgba(75,190,170,0.35); border-radius:14px; padding:14px 16px; margin-bottom:18px; font-size:13px; color:var(--paper); line-height:1.5; }
+
+/* ── ONGLETS style Chrome — actif collé au contenu ── */
+.amb-tab{
+  padding:10px 14px; background:var(--surface); border:1.5px solid var(--line); border-bottom:none;
+  border-radius:12px 12px 0 0; color:var(--mist); font-size:12px; font-weight:600; cursor:pointer;
+  flex:1; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+}
+.amb-tab.active{ background:var(--ink); color:var(--paper); font-weight:700; border-bottom:1.5px solid var(--ink); margin-bottom:-1.5px; position:relative; z-index:2; }
+.amb-tab-content{ border:1.5px solid var(--line); border-top:none; border-radius:0 0 16px 16px; padding:18px 4px 4px; margin-bottom:20px; background:var(--ink); }
+.amb-link-card{ background:var(--surface); border:1.5px solid var(--line); border-radius:18px; padding:18px; margin-bottom:22px; }
+.amb-link-lbl{ color:var(--mist); font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; margin-bottom:10px; }
+.amb-link-row{ display:flex; gap:8px; flex-wrap:wrap; }
+.amb-link-box{ flex:1; min-width:120px; background:var(--ink); border:1.5px solid var(--line); border-radius:12px; padding:11px 13px; font-size:12.5px; color:var(--paper); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.amb-stat-grid{ display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:22px; }
+.amb-stat-card{ background:var(--surface); border:1.5px solid var(--line); border-radius:16px; padding:16px; }
+.amb-stat-val{ font-family:var(--font-display); font-weight:700; font-size:23px; color:var(--paper); }
+.amb-stat-lbl{ color:var(--mist); font-size:11px; margin-top:4px; }
+.amb-section{ background:var(--surface); border:1.5px solid var(--line); border-radius:18px; padding:20px; margin-bottom:16px; }
+.amb-section h4{ font-family:var(--font-body); font-size:14px; font-weight:700; color:var(--paper); margin-bottom:14px; }
+.amb-history-row{ display:flex; justify-content:space-between; align-items:center; padding:9px 0; border-bottom:1px solid var(--line); font-size:12.5px; color:var(--paper); }
+.amb-history-row:last-child{ border-bottom:none; }
+.amb-empty{ color:var(--mist); font-size:12.5px; text-align:center; padding:10px 0; }
+.amb-leaderboard-lbl{ color:var(--mist); font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; margin:16px 0 8px; }
+.amb-leaderboard-row{ display:flex; align-items:center; gap:10px; padding:8px 0; border-bottom:1px solid var(--line); font-size:13px; color:var(--paper); }
+.amb-leaderboard-row:last-child{ border-bottom:none; }
+.amb-lb-rank{ font-family:var(--font-display); font-weight:700; color:#C8971E; width:22px; flex-shrink:0; }
+.amb-lb-name{ flex:1; min-width:0; overflow-wrap:break-word; }
+.amb-lb-count{ color:var(--mist); font-size:12px; }
+.amb-news-card{ background:var(--ink); border:1.5px solid var(--line); border-radius:14px; padding:14px 16px; margin-bottom:10px; }
+.amb-news-title{ font-weight:700; color:var(--paper); font-size:13.5px; margin-bottom:4px; overflow-wrap:break-word; }
+.amb-news-body{ color:var(--mist); font-size:12.5px; line-height:1.5; overflow-wrap:break-word; }
+.amb-news-date{ color:var(--mist); font-size:10.5px; opacity:0.7; margin-top:6px; }
+.amb-admin-tabs{ display:flex; flex-wrap:wrap; gap:6px; margin-bottom:14px; }
+.amb-admin-tab{ flex:1 1 30%; min-width:88px; padding:8px 4px; background:var(--ink); border:1.5px solid var(--line); border-radius:10px; color:var(--mist); font-size:11px; font-weight:700; cursor:pointer; }
+.amb-admin-tab.active{ background:var(--mint); color:var(--ink); border-color:var(--mint); }
+.amb-admin-card{ background:var(--ink); border:1.5px solid var(--line); border-radius:14px; padding:14px; margin-bottom:10px; }
+.amb-admin-card-row{ display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; gap:8px; }
+.amb-admin-card-row > div:first-child{ min-width:0; flex:1; }
+.amb-admin-card-name{ font-weight:700; color:var(--paper); font-size:13.5px; overflow-wrap:break-word; }
+.amb-admin-card-email{ color:var(--mist); font-size:11.5px; overflow-wrap:break-word; }
+.amb-admin-actions{ display:flex; gap:8px; }
+.amb-admin-actions button{ flex:1; padding:8px; border-radius:9px; font-size:11.5px; font-weight:700; cursor:pointer; border:none; }
+.amb-btn-approve{ background:var(--mint); color:var(--ink); }
+.amb-btn-reject{ background:rgba(224,86,106,0.15); color:#E0566A; border:1px solid rgba(224,86,106,0.3) !important; }
+
+/* ── NAV — minimal, apparaît après l'intro ── */
+.nav{
+  position:fixed; top:0; left:0; right:0; z-index:200;
+  display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px 8px;
+  padding:calc(16px + env(safe-area-inset-top,0px)) clamp(16px,5vw,48px) 16px;
+  opacity:0; translate:0 -10px; transition:opacity .6s ease, translate .6s ease, background .3s ease, backdrop-filter .3s ease;
+  pointer-events:none;
+  background:transparent;
+}
+.nav.show{ opacity:1; translate:0 0; pointer-events:auto; }
+.nav.scrolled{ background:rgba(8,9,14,0.72); backdrop-filter:blur(14px) saturate(140%); -webkit-backdrop-filter:blur(14px) saturate(140%); border-bottom:1px solid var(--line); }
+.nav-logo{ font-family:var(--font-display); font-weight:700; font-size:19px; display:flex; align-items:center; gap:8px; }
+.nav-logo .dot{ width:8px; height:8px; border-radius:50%; background:var(--ember); box-shadow:0 0 12px 2px var(--ember); }
+.nav-by{ font-family:var(--font-display); font-style:italic; font-weight:600; font-size:15px; color:var(--mist); margin-left:2px; transform:rotate(-4deg); display:inline-block; }
+@media (max-width:480px){ .nav-by{ display:none; } }
+.lang-toggle{ display:flex; gap:2px; background:var(--surface); border:1px solid var(--line); border-radius:99px; padding:3px; }
+.lang-toggle button{
+  border:none; background:none; color:var(--mist); font-family:var(--font-body); font-size:11.5px; font-weight:600;
+  padding:6px 12px; border-radius:99px; cursor:pointer; transition:background .25s ease, color .25s ease;
+}
+.lang-toggle button.active{ background:var(--ember); color:#160900; }
+@media (max-width:520px){ .lang-toggle{ display:none; } }
+.nav .btn{ padding:10px 20px; font-size:13px; white-space:nowrap; flex-shrink:0; }
+@media (max-width:400px){ .nav .btn{ padding:8px 13px; font-size:12px; } }
+
+/* Mobile — HomeSync centré en haut, Rejoindre / Devenir ambassadeur sur une
+   même ligne en dessous (un à gauche, un à droite), fond noir plein. */
+@media (max-width:640px){
+  .nav{
+    display:grid; grid-template-columns:1fr 1fr; grid-template-areas:"logo logo" "amb join";
+    align-items:center; justify-items:stretch;
+    background:#0A0A0F !important; backdrop-filter:none !important; -webkit-backdrop-filter:none !important;
+    gap:12px;
+  }
+  .nav-logo{ grid-area:logo; justify-content:center; }
+  .lang-toggle{ display:none; }
+  .nav-ask{ display:none; }
+  .nav-ambassador{ grid-area:amb; justify-self:start; }
+  #ctaNav{ grid-area:join; justify-self:end; }
+}
+@media (max-width:360px){
+  .nav-ambassador .amb-btn-text{ display:none; }
+  .nav-ambassador{ padding:8px 11px; }
+}
+
+/* ══════════════════════════════════════════
+   INTRO — l'écran le plus important
+   ══════════════════════════════════════════ */
+.intro{
+  min-height:100svh; display:flex; align-items:center; justify-content:center; flex-direction:column;
+  position:relative; text-align:center; padding:110px 24px 60px; overflow-x:hidden;
+}
+.intro-glow{
+  position:absolute; width:900px; height:900px; border-radius:50%;
+  background:radial-gradient(circle, rgba(255,122,69,0.16), transparent 68%);
+  opacity:0; transition:opacity 1.4s ease; pointer-events:none;
+}
+.intro-glow.show{ opacity:1; }
+
+.search-stage{ position:absolute; top:50%; left:50%; translate:-50% -50%; width:min(720px, calc(100% - 48px)); text-align:center; }
+.typed-wrap{
+  display:inline-block; text-align:center;
+  font-family:var(--font-display); font-weight:500; font-style:italic; font-size:clamp(20px,3.6vw,34px); color:var(--paper);
+  white-space:normal; line-height:1.35;
+}
+.ti-cursor{
+  display:inline-block; width:2px; height:1em; background:var(--ember); margin-left:3px; vertical-align:-0.1em;
+  animation:tiBlink 0.9s step-end infinite;
+}
+@keyframes tiBlink{ 0%,100%{ opacity:1; } 50%{ opacity:0; } }
+
+.phone-wrap{ position:relative; margin-top:14px; }
+.phone{
+  width:min(220px,52vw); aspect-ratio:220/455; border-radius:38px;
+  background:linear-gradient(160deg,#1c202f,#0c0e16);
+  border:1px solid rgba(245,243,238,0.12);
+  box-shadow:0 50px 90px -30px rgba(0,0,0,.7);
+  padding:10px; position:relative;
+  opacity:0; scale:0.82; transition:opacity 1s cubic-bezier(.2,.8,.2,1), scale 1s cubic-bezier(.2,.8,.2,1);
+}
+.phone.show{ opacity:1; scale:1; }
+.phone::before{ content:""; position:absolute; top:10px; left:50%; translate:-50% 0; width:32%; height:16px; background:#0a0b10; border-radius:16px; z-index:5; }
+.phone-screen{ width:100%; height:100%; border-radius:28px; overflow:hidden; background:#F0EEE8; position:relative; }
+.sync-icons{ position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:12px; }
+.sync-ic{
+  width:42px; height:42px; border-radius:13px; background:#fff; display:flex; align-items:center; justify-content:center;
+  font-size:18px; box-shadow:0 4px 14px rgba(0,0,0,0.08); opacity:0; scale:0.6;
+  transition:opacity .5s ease, scale .5s cubic-bezier(.3,1.4,.4,1);
+}
+.sync-ic.show{ opacity:1; scale:1; }
+.sync-row{ display:flex; gap:10px; }
+
+.intro-answer{
+  margin-top:38px; font-family:var(--font-display); font-size:clamp(18px,2.6vw,26px); font-weight:500;
+  color:var(--paper); opacity:0; translate:0 12px; transition:opacity .8s ease, translate .8s ease;
+}
+.intro-answer.show{ opacity:1; translate:0 0; }
+.intro-by{
+  margin-top:8px; font-family:var(--font-display); font-style:italic; font-weight:700; font-size:20px;
+  color:var(--mist); transform:rotate(-4deg); opacity:0; translate:0 8px;
+  transition:opacity .7s ease, translate .7s ease;
+}
+.intro-by.show{ opacity:0.85; translate:0 0; }
+.intro-cta{ margin-top:30px; opacity:0; translate:0 12px; transition:opacity .8s ease, translate .8s ease; }
+.intro-cta.show{ opacity:1; translate:0 0; }
+
+.scroll-hint{
+  position:fixed; bottom:24px; left:50%; translate:-50% 0; opacity:0; transition:opacity 1s ease;
+  font-family:var(--font-body); font-size:11px; letter-spacing:0.12em; color:var(--mist);
+  display:flex; flex-direction:column; align-items:center; gap:8px; z-index:5; pointer-events:none;
+}
+.scroll-hint.show{ opacity:0.8; }
+.scroll-hint .chev{ width:14px; height:14px; border-right:1.5px solid var(--mist); border-bottom:1.5px solid var(--mist); transform:rotate(45deg); animation:bob 1.8s ease-in-out infinite; }
+@keyframes bob{ 0%,100%{ transform:rotate(45deg) translate(0,0);} 50%{ transform:rotate(45deg) translate(3px,3px);} }
+
+/* ══════════════════════════════════════════
+   MICRO-SECTIONS — une idée, une animation
+   ══════════════════════════════════════════ */
+.micro{
+  min-height:100svh; display:flex; flex-direction:column; align-items:center; justify-content:center;
+  gap:34px; padding:60px 24px; text-align:center;
+}
+.micro-cap{
+  font-family:var(--font-body); font-size:12px; letter-spacing:0.14em; color:var(--mist);
+  text-transform:uppercase;
+}
+.micro .phone{ opacity:1; scale:1; } /* visibles par défaut (sécurité), JS peut ajouter un effet d'entrée */
+.micro.rv .phone, .micro.rv .micro-cap{ opacity:0; translate:0 24px; transition:opacity .9s ease, translate .9s ease; }
+.micro.rv.in .phone, .micro.rv.in .micro-cap{ opacity:1; translate:0 0; }
+
+.m-row{ display:flex; align-items:center; gap:10px; background:#fff; border-radius:14px; padding:11px 13px; font-size:13px; color:#33363f; box-shadow:0 1px 0 rgba(0,0,0,.03); }
+.m-row .ic{ width:28px; height:28px; border-radius:9px; display:flex; align-items:center; justify-content:center; font-size:14px; flex-shrink:0; }
+.m-row .name{ flex:1; font-weight:600; text-align:left; }
+.m-row .val{ font-family:var(--font-body); font-size:11px; color:#9096AC; }
+.m-screen{ padding:26px 15px; display:flex; flex-direction:column; gap:8px; }
+
+/* ══════════════════════════════════════════
+   FEATURE SCROLL — téléphone sticky + contenu alterné
+   ══════════════════════════════════════════ */
+.feature-scroll{
+  display:grid; grid-template-columns:1fr 1fr; gap:clamp(24px,6vw,80px);
+  max-width:1100px; margin:0 auto; padding:0 24px;
+  min-width:0;
+}
+.feature-phone-col{ position:sticky; top:18vh; align-self:start; height:fit-content; display:flex; justify-content:center; min-width:0; }
+.feature-content-col{ display:flex; flex-direction:column; min-width:0; }
+.feature-block{
+  min-height:80vh; display:flex; flex-direction:column; justify-content:center; gap:14px;
+  padding:60px 0;
+}
+.fb-q{
+  font-family:var(--font-body); font-size:12.5px; font-weight:500; color:var(--ember);
+  text-transform:uppercase; letter-spacing:0.06em; margin-bottom:2px;
+}
+.fb-title{
+  font-family:var(--font-display); font-weight:600; font-size:clamp(24px,3.4vw,36px); color:var(--paper);
+  overflow-wrap:break-word;
+}
+.fb-text{
+  font-family:var(--font-body); font-size:15px; color:var(--mist); max-width:38ch; line-height:1.5;
+}
+.feat-screen{ position:absolute; inset:0; padding:26px 15px; display:flex; flex-direction:column; gap:8px; opacity:0; transition:opacity .5s ease; }
+.feat-screen.active{ opacity:1; }
+
+@media (max-width:860px){
+  .feature-scroll{ grid-template-columns:1fr; }
+  .feature-phone-col{ position:static; margin-bottom:0; padding-top:40px; }
+  .feature-block{ min-height:auto; padding:36px 0; text-align:center; align-items:center; }
+  .fb-title{ max-width:26ch; }
+  .fb-text{ max-width:32ch; }
+}
+
+/* ══════════════════════════════════════════
+   MODULES — grille des fonctionnalités de l'app
+   ══════════════════════════════════════════ */
+.modules{
+  padding:100px 24px; max-width:1120px; margin:0 auto;
+}
+.modules.rv{ opacity:0; translate:0 24px; transition:opacity .8s ease, translate .8s ease; }
+.modules.rv.in{ opacity:1; translate:0 0; }
+.modules-head{ text-align:center; margin-bottom:56px; }
+.modules-kicker{ font-family:var(--font-body); font-size:12.5px; color:var(--mint); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:10px; }
+.modules-title{ font-family:var(--font-display); font-weight:600; font-size:clamp(26px,3.6vw,40px); color:var(--paper); max-width:24ch; margin:0 auto; }
+.modules-grid{
+  display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line);
+  border:1px solid var(--line); border-radius:20px; overflow:hidden;
+}
+.module-card{
+  background:var(--surface); padding:34px 28px; cursor:pointer;
+  transition:background .3s ease;
+}
+.module-card:hover{ background:var(--surface-2); }
+.module-card.open{ background:var(--surface-2); grid-column:span 1; }
+@media (min-width:761px){
+  .module-card.open{ grid-column:span 3; }
+}
+.mc-tag{
+  font-family:var(--font-body); font-size:11px; color:var(--ember);
+  text-transform:uppercase; letter-spacing:0.07em; margin-bottom:14px;
+}
+.mc-q{
+  font-family:var(--font-display); font-weight:500; font-style:italic; font-size:20px; color:var(--paper);
+  line-height:1.35; margin-bottom:18px;
+}
+.mc-more{
+  font-family:var(--font-body); font-size:12.5px; color:var(--mist); font-weight:600;
+  display:flex; align-items:center; gap:6px;
+}
+.mc-more::after{ content:"→"; transition:translate .25s ease; }
+.module-card:hover .mc-more::after{ translate:3px 0; }
+.module-card.open .mc-more{ display:none; }
+.mc-panel{
+  max-height:0; overflow:hidden; opacity:0;
+  transition:max-height .5s cubic-bezier(.2,.8,.2,1), opacity .4s ease, margin-top .5s ease;
+}
+.module-card.open .mc-panel{ max-height:560px; opacity:1; margin-top:2px; padding-top:18px; border-top:1px solid var(--line); }
+.mc-panel p{
+  font-family:var(--font-body); font-size:15px; color:var(--mist); line-height:1.6; max-width:62ch;
+  margin-bottom:12px;
+}
+.mc-panel p:last-child{
+  margin-bottom:0; margin-top:16px; padding-top:14px; border-top:1px dashed var(--line);
+  font-family:var(--font-display); font-style:italic; color:var(--mint); font-size:14.5px;
+}
+.mc-panel p:last-child::before{ content:"\201C"; }
+.mc-panel p:last-child::after{ content:"\201D"; }
+
+@media (max-width:760px){
+  .modules{ padding:70px 20px; }
+  .modules-grid{ grid-template-columns:1fr; }
+  .module-card{ padding:26px 22px; }
+  .module-card.open{ grid-column:span 1; }
+}
+
+/* ══════════════════════════════════════════
+   GALERIE — captures d'écran
+   ══════════════════════════════════════════ */
+.section-title-alt{
+  font-family:var(--font-display); font-weight:600; font-size:clamp(24px,3.6vw,34px);
+  text-align:center; max-width:20ch; margin:0 auto 40px; color:var(--paper);
+}
+
+/* ── POUR QUI ── */
+.forwho{ padding:80px 24px; max-width:960px; margin:0 auto; }
+.forwho-bridge{ text-align:center; color:var(--mint); font-size:13px; font-weight:600; letter-spacing:0.02em; margin-bottom:14px; }
+.forwho-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+.forwho-card{
+  background:var(--surface); border:1.5px solid var(--line); border-radius:20px;
+  padding:28px 22px; text-align:center; transition:border-color .25s ease, transform .25s ease;
+}
+.forwho-card:hover{ border-color:rgba(75,190,170,0.35); transform:translateY(-3px); }
+.forwho-emoji{ font-size:34px; margin-bottom:14px; }
+.forwho-title{ font-family:var(--font-display); font-weight:700; font-size:16.5px; color:var(--paper); margin-bottom:8px; }
+.forwho-text{ color:var(--mist); font-size:13px; line-height:1.55; }
+
+/* ── Roue interactive "Ça peut être vous ?" ── */
+.forwho-wheel-wrap{ display:flex; justify-content:center; padding:40px 0 10px; }
+.forwho-wheel{ position:relative; width:340px; height:340px; }
+.forwho-hub{
+  position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+  width:130px; height:130px; border-radius:50%;
+  background:linear-gradient(135deg, rgba(75,190,170,0.18), rgba(75,190,170,0.06));
+  border:1.5px solid rgba(75,190,170,0.35);
+  display:flex; align-items:center; justify-content:center; text-align:center;
+  font-family:var(--font-display); font-weight:700; font-size:15px; color:var(--paper);
+  padding:14px; box-sizing:border-box; z-index:2;
+}
+.forwho-spoke{
+  position:absolute; top:50%; left:50%; width:100px; height:100px;
+  transform:rotate(var(--angle)) translate(150px) rotate(calc(-1 * var(--angle)));
+  margin:-50px 0 0 -50px;
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px;
+  border-radius:50%; background:rgba(255,255,255,0.04); border:1.5px solid var(--line);
+  color:var(--paper); font-size:11px; font-weight:600; text-align:center; padding:8px;
+  cursor:pointer; box-sizing:border-box; transition:all .25s ease; font-family:inherit;
+}
+.forwho-spoke:hover, .forwho-spoke.active{ border-color:var(--mint); background:rgba(75,190,170,0.14); transform:rotate(var(--angle)) translate(150px) rotate(calc(-1 * var(--angle))) scale(1.06); }
+.forwho-spoke-emoji{ font-size:22px; }
+
+.forwho-answer{
+  max-width:640px; margin:24px auto 0; padding:28px 26px; border-radius:22px;
+  background:rgba(255,255,255,0.03); border:1.5px solid rgba(75,190,170,0.3);
+  position:relative; display:none; opacity:0; translate:0 12px;
+  transition:opacity .35s ease, translate .35s ease;
+}
+.forwho-answer.show{ display:block; }
+.forwho-answer.in{ opacity:1; translate:0 0; }
+.forwho-answer-close{
+  position:absolute; top:14px; right:14px; width:28px; height:28px; border-radius:50%;
+  background:rgba(255,255,255,0.06); border:none; color:var(--mist); cursor:pointer; font-size:13px;
+}
+.forwho-answer-emoji{ font-size:36px; margin-bottom:10px; }
+.forwho-answer-title{ font-family:var(--font-display); font-weight:700; font-size:20px; color:var(--paper); margin:0 0 8px; }
+.forwho-answer-intro{ color:var(--mist); font-size:14px; line-height:1.6; margin:0 0 18px; }
+.forwho-answer-modules{ display:flex; flex-direction:column; gap:10px; }
+.forwho-module-row{ display:flex; gap:10px; align-items:flex-start; padding:12px 14px; background:rgba(255,255,255,0.03); border-radius:14px; }
+.forwho-module-icon{ font-size:18px; flex-shrink:0; }
+.forwho-module-text{ font-size:13px; color:var(--paper); line-height:1.5; }
+.forwho-module-text b{ color:var(--mint); }
+
+@media (max-width:480px){
+  .forwho-wheel{ width:280px; height:280px; }
+  .forwho-hub{ width:104px; height:104px; font-size:12.5px; padding:10px; }
+  .forwho-spoke{ width:82px; height:82px; margin:-41px 0 0 -41px; transform:rotate(var(--angle)) translate(118px) rotate(calc(-1 * var(--angle))); font-size:9.5px; }
+  .forwho-spoke:hover, .forwho-spoke.active{ transform:rotate(var(--angle)) translate(118px) rotate(calc(-1 * var(--angle))) scale(1.06); }
+  .forwho-spoke-emoji{ font-size:18px; }
+}
+
+@media (max-width:720px){ .forwho-grid{ grid-template-columns:1fr; } }
+
+/* ── VOIX DU FONDATEUR ── */
+.founder{ padding:70px 24px; max-width:680px; margin:0 auto; }
+.founder-card{
+  background:linear-gradient(160deg,var(--surface),var(--surface-2)); border:1.5px solid var(--line);
+  border-radius:24px; padding:40px 32px; text-align:center; position:relative;
+}
+.founder-quote-mark{
+  font-family:var(--font-display); font-size:64px; color:rgba(75,190,170,0.25); line-height:1;
+  margin-bottom:-10px;
+}
+.founder-quote{
+  font-family:var(--font-display); font-style:italic; font-weight:500; font-size:17px;
+  color:var(--paper); line-height:1.6; max-width:52ch; margin:0 auto 18px;
+}
+.founder-sign{
+  font-family:var(--font-display); font-style:italic; font-weight:600; font-size:14px; color:var(--mint);
+  transform:rotate(-2deg); display:inline-block;
+}
+
+/* ── FAQ ── */
+.faq{ padding:80px 24px; max-width:680px; margin:0 auto; }
+.faq-list{ display:flex; flex-direction:column; gap:10px; }
+.faq-item{ background:var(--surface); border:1.5px solid var(--line); border-radius:16px; overflow:hidden; }
+.faq-q{
+  width:100%; display:flex; justify-content:space-between; align-items:center; gap:12px;
+  padding:18px 20px; background:none; border:none; cursor:pointer; text-align:left;
+  color:var(--paper); font-family:var(--font-body); font-weight:600; font-size:14.5px;
+}
+.faq-toggle{ font-size:20px; color:var(--mint); flex-shrink:0; transition:transform .25s ease; }
+.faq-item.open .faq-toggle{ transform:rotate(45deg); }
+.faq-a{ max-height:0; overflow:hidden; transition:max-height .3s ease; }
+.faq-item.open .faq-a{ max-height:200px; }
+.faq-a p{ padding:0 20px 18px; color:var(--mist); font-size:13.5px; line-height:1.6; }
+
+.gallery{
+  display:flex; flex-direction:column; align-items:center; padding:80px 24px; text-align:center;
+}
+.gallery.rv > *{ opacity:0; translate:0 20px; transition:opacity .7s ease, translate .7s ease; }
+.gallery.rv.in > *{ opacity:1; translate:0 0; }
+.gallery.rv.in > *:nth-child(2){ transition-delay:.1s; }
+.gallery.rv.in > *:nth-child(3){ transition-delay:.2s; }
+.gallery.rv.in > *:nth-child(4){ transition-delay:.3s; }
+.gallery.rv.in > *:nth-child(5){ transition-delay:.4s; }
+
+.forwho.rv > *{ opacity:0; translate:0 20px; transition:opacity .7s ease, translate .7s ease; }
+.forwho.rv.in > *{ opacity:1; translate:0 0; }
+.forwho.rv.in > *:nth-child(2){ transition-delay:.15s; }
+
+.founder.rv{ opacity:0; translate:0 20px; transition:opacity .8s ease, translate .8s ease; }
+.founder.rv.in{ opacity:1; translate:0 0; }
+
+.faq.rv > *{ opacity:0; translate:0 20px; transition:opacity .7s ease, translate .7s ease; }
+.faq.rv.in > *{ opacity:1; translate:0 0; }
+.faq.rv.in > *:nth-child(2){ transition-delay:.15s; }
+.gallery-title{
+  font-family:var(--font-display); font-weight:700; font-size:clamp(26px,4vw,42px); color:var(--paper); margin:0 0 8px;
+}
+.gallery-sub{
+  color:var(--mist); font-family:var(--font-body); font-size:13px; margin:0 0 36px; max-width:36ch;
+}
+.gallery-frame{
+  display:flex; align-items:center; gap:12px; width:100%; max-width:920px;
+}
+.gallery-track{
+  flex:1; overflow:hidden; border-radius:20px; position:relative;
+  background:var(--surface-2); border:1.5px solid var(--line);
+  height:640px;
+}
+.gallery-slide{
+  display:none; flex-direction:column; align-items:center; justify-content:center;
+  padding:20px 20px 26px; animation:fadeIn .35s ease; height:100%; box-sizing:border-box;
+  overflow-y:auto;
+}
+.gallery-slide.active{ display:flex; }
+.gallery-slide img{
+  width:auto; height:auto; max-width:280px; max-height:100%; object-fit:contain;
+  border-radius:16px; border:1.5px solid var(--line);
+  box-shadow:0 12px 40px rgba(0,0,0,0.35); display:block; cursor:zoom-in; flex-shrink:0;
+  transition:transform .2s ease, border-color .2s ease;
+}
+.gallery-slide img:hover{ transform:translateY(-2px); border-color:rgba(75,190,170,0.4); }
+
+.lightbox{
+  position:fixed; inset:0; background:rgba(6,7,12,0.92); z-index:10000;
+  display:flex; align-items:center; justify-content:center; padding:30px;
+  opacity:0; pointer-events:none; transition:opacity .25s ease;
+}
+.lightbox.show{ opacity:1; pointer-events:auto; }
+.lightbox img{
+  max-width:min(90vw,420px); max-height:85vh; border-radius:14px; border:1.5px solid var(--line);
+  box-shadow:0 20px 60px rgba(0,0,0,0.5);
+}
+.lightbox-close{
+  position:absolute; top:22px; right:22px; width:40px; height:40px; border-radius:99px;
+  background:var(--surface-2); border:1.5px solid var(--line); color:var(--paper); font-size:20px;
+  cursor:pointer; display:flex; align-items:center; justify-content:center;
+}
+.gallery-caption{ margin-top:20px; max-width:38ch; }
+.gc-title{
+  font-family:var(--font-display); font-weight:700; font-size:18px; color:var(--paper); margin-bottom:6px;
+}
+.gc-text{ color:var(--mist); font-family:var(--font-body); font-size:12.5px; line-height:1.5; }
+.gallery-arrow{
+  flex-shrink:0; width:40px; height:40px; border-radius:99px; border:1.5px solid var(--line); background:var(--surface-2);
+  color:var(--paper); font-size:20px; cursor:pointer; display:flex; align-items:center; justify-content:center;
+  transition:border-color .2s ease, transform .2s ease;
+}
+.gallery-arrow:hover{ border-color:var(--mint); transform:translateY(-1px); }
+.gallery-dots{ display:flex; gap:8px; margin-top:20px; }
+.gallery-dot{
+  width:8px; height:8px; border-radius:99px; background:var(--line); border:none; cursor:pointer; padding:0;
+  transition:background .2s ease, width .2s ease;
+}
+.gallery-dot.active{ background:var(--mint); width:22px; }
+.gallery-disclaimer{
+  margin-top:22px; color:var(--mist); opacity:0.7; font-family:var(--font-body); font-size:11px; max-width:44ch;
+}
+@keyframes fadeIn{ from{opacity:0} to{opacity:1} }
+@media (max-width:520px){
+  .gallery-arrow{ width:34px; height:34px; font-size:17px; }
+  .gallery-slide img{ max-width:220px; }
+  .gallery-track{ min-height:560px; }
+}
+
+/* ══════════════════════════════════════════
+   FINAL — prix
+   ══════════════════════════════════════════ */
+.final{
+  min-height:100svh; display:flex; flex-direction:column; align-items:center; justify-content:center;
+  text-align:center; padding:60px 24px; position:relative;
+}
+.final-hook{
+  font-family:var(--font-display); font-style:italic; font-weight:500; font-size:clamp(20px,2.8vw,30px);
+  color:var(--paper); max-width:32ch; line-height:1.35;
+}
+.trial-badge{
+  display:inline-flex; align-items:center; gap:6px; background:rgba(75,191,166,0.12); border:1.5px solid rgba(75,191,166,0.35);
+  border-radius:99px; padding:7px 16px; color:var(--mint); font-family:var(--font-body); font-size:12.5px; font-weight:700;
+  margin-top:22px;
+}
+.final .price{ font-family:var(--font-display); font-weight:700; font-size:clamp(48px,8vw,80px); margin-top:10px; }
+.final .per{ font-family:var(--font-body); font-size:15px; color:var(--mist); }
+.final .l1{ color:var(--paper); font-size:15px; max-width:32ch; margin-top:24px; }
+.l2-pills{ display:flex; flex-direction:column; gap:6px; align-items:center; margin-top:12px; }
+.l2-pills span{ color:var(--mist); font-size:13px; font-family:var(--font-body); }
+.final-trust{ display:flex; flex-direction:column; gap:5px; align-items:center; margin-top:18px; max-width:36ch; }
+.final-trust span{ color:var(--mist); opacity:0.75; font-size:11.5px; line-height:1.5; }
+.final-trust span:first-child{ opacity:0.9; font-weight:600; }
+.final .btn{ margin-top:28px; }
+.intro-trust{
+  margin-top:10px; color:var(--mist); font-family:var(--font-body); font-size:11.5px;
+  opacity:0.8; text-align:center;
+}
+.landing-amb-code-link{
+  margin-top:14px; background:none; border:none; color:var(--mint); font-family:var(--font-body);
+  font-size:12px; font-weight:600; text-decoration:underline; cursor:pointer; padding:2px 0;
+}
+.landing-amb-code-wrap{ max-width:280px; margin:10px auto 0; }
+.landing-amb-code-wrap input{
+  width:100%; box-sizing:border-box; background:var(--surface-2); border:1.5px solid var(--line);
+  border-radius:10px; padding:10px 12px; color:var(--paper); font-family:var(--font-body);
+  font-size:14px; text-align:center; text-transform:uppercase; outline:none;
+}
+.landing-amb-code-saved{ color:var(--mint); font-size:11.5px; margin-top:6px; }
+.ask-question{
+  margin-top:2px; color:var(--mist); font-family:var(--font-body); font-size:12px;
+  text-decoration:none; border-bottom:1px solid transparent; transition:border-color .25s ease, color .25s ease;
+  background:none; border-top:none; border-left:none; border-right:none; padding:2px 0; cursor:pointer;
+}
+.ask-question:hover{ color:var(--paper); border-color:var(--mist); }
+.nav-ask{ font-size:12.5px; white-space:nowrap; }
+@media (max-width:680px){ .nav-ask{ display:none; } }
+
+.site-footer{
+  display:flex; flex-wrap:wrap; align-items:center; justify-content:center;
+  gap:8px; padding:36px 24px 40px; max-width:720px; margin:0 auto;
+}
+.site-footer button{
+  background:none; border:none; color:var(--mist); font-family:var(--font-body);
+  font-size:12px; cursor:pointer; padding:4px 2px; white-space:nowrap;
+}
+.site-footer button:hover{ color:var(--paper); }
+.footer-sep{ color:var(--line); font-size:12px; }
+@media (max-width:480px){
+  .site-footer{ gap:6px 4px; }
+  .site-footer button{ font-size:11.5px; }
+}
+.final.rv > *{ opacity:0; translate:0 20px; transition:opacity .8s ease, translate .8s ease; }
+.final.rv.in > *{ opacity:1; translate:0 0; }
+.final.rv.in > *:nth-child(2){ transition-delay:.15s; }
+.final.rv.in > *:nth-child(3){ transition-delay:.30s; }
+.final.rv.in > *:nth-child(4){ transition-delay:.45s; }
+.final.rv.in > *:nth-child(5){ transition-delay:.60s; }
+
+/* ══════════════════════════════════════════
+   MODALE — choix plateforme + étapes d'installation
+   ══════════════════════════════════════════ */
+.pm-overlay{
+  position:fixed; inset:0; z-index:500; background:rgba(8,9,14,0.75); backdrop-filter:blur(6px);
+  display:flex; align-items:center; justify-content:center;
+  padding:calc(20px + env(safe-area-inset-top,0px)) 20px calc(20px + env(safe-area-inset-bottom,0px));
+  opacity:0; pointer-events:none; transition:opacity .3s ease;
+}
+.pm-overlay.show{ opacity:1; pointer-events:auto; }
+.pm-card{
+  background:var(--surface); border:1px solid var(--line); border-radius:24px;
+  width:100%; max-width:420px; padding:28px 24px; text-align:center;
+  transform:translateY(16px) scale(0.97); transition:transform .35s cubic-bezier(.2,.8,.2,1);
+}
+.pm-overlay.show .pm-card{ transform:translateY(0) scale(1); }
+.pm-title{ font-family:var(--font-display); font-weight:700; font-size:20px; color:var(--paper); margin-bottom:6px; }
+.pm-sub{ font-family:var(--font-body); font-size:13px; color:var(--mist); margin-bottom:22px; }
+.pm-choices{ display:flex; gap:12px; margin-bottom:8px; }
+.pm-choice{
+  flex:1; padding:16px 8px; border-radius:16px; background:var(--surface-2); border:1.5px solid var(--line);
+  cursor:pointer; transition:border-color .25s ease, transform .25s ease; text-align:center;
+}
+.pm-choice:hover{ border-color:var(--mint); transform:translateY(-2px); }
+.pm-choice .ic{ font-size:28px; margin-bottom:6px; }
+.pm-choice .lbl{ font-family:var(--font-body); font-weight:700; font-size:12px; color:var(--paper); }
+.pm-skip{ margin-top:16px; font-size:12px; color:var(--mist); font-family:var(--font-body); cursor:pointer; text-decoration:underline; }
+.pm-direct-hint{ margin-top:8px; font-size:11px; color:var(--mist); opacity:0.75; text-align:center; }
+.pm-desktop-note{ font-size:11.5px; color:var(--mist); opacity:0.8; line-height:1.5; margin:14px 0 6px; }
+
+.pm-steps{ display:none; text-align:left; }
+.pm-steps.show{ display:block; }
+.pm-step{ display:flex; gap:12px; margin-bottom:16px; align-items:flex-start; }
+.pm-step .n{ width:26px; height:26px; border-radius:50%; background:var(--ember); color:#160900; font-weight:800; font-size:12px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.pm-step .t{ font-weight:700; font-size:14px; color:var(--paper); font-family:var(--font-body); }
+.pm-step .d{ font-size:12.5px; color:var(--mist); margin-top:2px; line-height:1.4; }
+.pm-back{ font-size:12px; color:var(--mist); font-family:var(--font-body); cursor:pointer; margin-bottom:16px; display:inline-block; }
+</style>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+</head>
+<body>
+
+<nav class="nav" id="nav" aria-label="Navigation principale">
+  <div class="nav-logo"><span class="dot"></span>HomeSync<span class="nav-by">by Minzri</span></div>
+  <div class="lang-toggle" role="group" aria-label="Choix de la langue">
+    <button data-lang="fr" aria-label="Français">FR</button>
+    <button data-lang="en" aria-label="English">EN</button>
+  </div>
+  <button type="button" id="askBtnNav" class="ask-question nav-ask" data-i18n="ask_question_short">Une question ?</button>
+  <button type="button" class="btn btn-ghost nav-ambassador" id="ctaAmbassador">🤝 <span class="amb-btn-text" data-i18n="nav_ambassador">Devenir ambassadeur</span></button>
+  <a href="#" class="btn btn-primary" id="ctaNav" role="button" aria-label="Rejoindre HomeSync" data-i18n="cta_nav">Rejoindre</a>
+</nav>
+
+<main>
+
+  <!-- ══════ INTRO ══════ -->
+  <section class="intro" id="intro">
+    <div class="intro-glow" id="introGlow"></div>
+
+    <div class="search-stage" id="searchStage">
+      <span class="typed-wrap"><span id="typedText"></span><span class="ti-cursor"></span></span>
+    </div>
+
+    <div class="phone-wrap">
+      <div class="phone" id="introPhone">
+        <div class="phone-screen">
+          <div class="sync-icons" id="syncIcons">
+            <div class="sync-row">
+              <div class="sync-ic" data-i="0" aria-hidden="true">📦</div>
+              <div class="sync-ic" data-i="1" aria-hidden="true">💰</div>
+            </div>
+            <div class="sync-row">
+              <div class="sync-ic" data-i="2" aria-hidden="true">🛒</div>
+              <div class="sync-ic" data-i="3" aria-hidden="true">📅</div>
+              <div class="sync-ic" data-i="4" aria-hidden="true">👥</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p class="intro-answer" id="introAnswer" data-i18n="intro_answer">HomeSync répond à toutes ces questions.</p>
+    <div class="intro-by" id="introBy">by Minzri</div>
+    <a href="#" class="btn btn-primary intro-cta" id="introCta" role="button" aria-label="Rejoindre HomeSync" data-i18n="cta">Rejoindre HomeSync</a>
+    <p class="intro-trust" data-i18n="intro_trust">🎁 7 jours d'essai gratuit · Sans engagement · Résiliable à tout moment</p>
+
+    <button type="button" id="landingAmbCodeLink" class="landing-amb-code-link" data-i18n="landing_amb_code_link">🤝 Vous avez un code ambassadeur ?</button>
+    <div id="landingAmbCodeWrap" class="landing-amb-code-wrap" style="display:none;">
+      <input type="text" id="landingAmbCode" data-i18n-placeholder="landing_amb_code_ph" placeholder="Ex : PRENOM1234"/>
+      <div id="landingAmbCodeSaved" class="landing-amb-code-saved" style="display:none;" data-i18n="landing_amb_code_saved">✓ Code enregistré — il s'appliquera à votre abonnement.</div>
+    </div>
+
+    <div class="scroll-hint" id="scrollHint"><span data-i18n="scroll_hint">CONTINUER</span><span class="chev" aria-hidden="true"></span></div>
+  </section>
+
+  <!-- ══════ POUR QUI — roue interactive, réponse personnalisée au clic ══════ -->
+  <section class="forwho rv" id="forwhoSection">
+    <p class="forwho-bridge" data-i18n="forwho_bridge">Si une de ces situations vous parle, HomeSync a été pensé pour vous.</p>
+    <h2 class="section-title-alt" data-i18n="forwho_title">Ça, c'est peut-être vous</h2>
+
+    <div class="forwho-wheel-wrap">
+      <div class="forwho-wheel" id="forwhoWheel">
+        <div class="forwho-hub">
+          <span data-i18n="forwho_hub_text">Ça peut être vous ?</span>
+        </div>
+        <button class="forwho-spoke" data-persona="parents" style="--angle:0deg;">
+          <span data-i18n="forwho1_title">Parents qui jonglent</span>
+        </button>
+        <button class="forwho-spoke" data-persona="coloc" style="--angle:60deg;">
+          <span data-i18n="forwho2_title">Colocataires</span>
+        </button>
+        <button class="forwho-spoke" data-persona="recomposee" style="--angle:120deg;">
+          <span data-i18n="forwho3_title">Familles recomposées</span>
+        </button>
+        <button class="forwho-spoke" data-persona="maman" style="--angle:180deg;">
+          <span data-i18n="forwho4_title">Jeune maman</span>
+        </button>
+        <button class="forwho-spoke" data-persona="couple" style="--angle:240deg;">
+          <span data-i18n="forwho5_title">En couple</span>
+        </button>
+        <button class="forwho-spoke" data-persona="autre" style="--angle:300deg;">
+          <span data-i18n="forwho6_title">Autre situation</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="forwho-answer" id="forwhoAnswer">
+      <button class="forwho-answer-close" id="forwhoAnswerClose" aria-label="Fermer">✕</button>
+      <h3 class="forwho-answer-title" id="forwhoAnswerTitle"></h3>
+      <p class="forwho-answer-intro" id="forwhoAnswerIntro"></p>
+      <div class="forwho-answer-modules" id="forwhoAnswerModules"></div>
+    </div>
+  </section>
+
+  <!-- ══════ FEATURES — téléphone sticky, contenu alterné ══════ -->
+  <section class="feature-scroll" id="features">
+    <div class="feature-phone-col">
+      <div class="phone show" id="featPhone" style="position:relative;">
+        <div class="phone-screen">
+          <div class="feat-screen active" id="featScreenStock">
+            <div class="m-row"><div class="ic" style="background:#EAF2FF;">🥛</div><div class="name">Lait</div><div class="val" id="stockVal">1 L</div></div>
+            <div class="m-row"><div class="ic" style="background:#FFF3D6;">🍞</div><div class="name">Pain</div><div class="val">½</div></div>
+            <div class="m-row"><div class="ic" style="background:#EAF9EE;">🥚</div><div class="name">Œufs</div><div class="val">4</div></div>
+          </div>
+          <div class="feat-screen" id="featScreenBudget">
+            <div class="m-row"><div class="ic" style="background:#EAF2FF;">🍅</div><div class="name">Tomates</div><div class="val">2,40€</div></div>
+            <div class="m-row"><div class="ic" style="background:#FFF3D6;">🧀</div><div class="name">Fromage</div><div class="val">4,90€</div></div>
+            <div style="margin-top:6px;padding-top:10px;border-top:1px dashed #D8D5CC;display:flex;justify-content:space-between;font-family:var(--font-body);font-size:12px;color:#33363f;">
+              <span>Total</span><span id="budgetTotal" style="font-weight:700;color:#33363f;">7,30€</span>
+            </div>
+          </div>
+          <div class="feat-screen" id="featScreenFamille">
+            <div class="m-row" id="famRow"><div class="ic" style="background:#EDE7FB;">📅</div><div class="name">Foot</div><div class="val">18h</div></div>
+            <div class="m-row"><div class="ic" style="background:#FFF3D6;">📅</div><div class="name">Rdv médecin</div><div class="val">Mer.</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="feature-content-col">
+      <div class="feature-block" data-dir="right" id="fb1">
+        <div class="fb-q" data-i18n="fb1_q">Le dernier biberon, c'était quand ?</div>
+        <div class="fb-title" data-i18n="fb1_title">Toute la famille suit bébé, en temps réel.</div>
+        <div class="fb-text" data-i18n="fb1_text">Biberons, couches, siestes — enregistrés en un geste, visibles par tous, sans jamais devoir demander.</div>
+      </div>
+      <div class="feature-block" data-dir="left" id="fb2">
+        <div class="fb-q" data-i18n="fb2_q">Besoin d'une idée ou d'un conseil ?</div>
+        <div class="fb-title" data-i18n="fb2_title">Des astuces pensées pour votre quotidien.</div>
+        <div class="fb-text" data-i18n="fb2_text">Budget, cuisine, organisation, parentalité — découvrez des conseils sélectionnés, directement dans l'app.</div>
+      </div>
+      <div class="feature-block" data-dir="right" id="fb3">
+        <div class="fb-q" data-i18n="fb3_q">Combien vont coûter ces vacances ?</div>
+        <div class="fb-title" data-i18n="fb3_title">Un budget vacances clair, partagé par tous.</div>
+        <div class="fb-text" data-i18n="fb3_text">Suivez les dépenses par participant et gardez une vue d'ensemble simple, du début à la fin du séjour.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════ POUR QUI — situations concrètes, pas abstraites ══════ -->
+  <!-- ══════ MODULES — une question par module, sans fioritures ══════ -->
+  <section class="modules rv" id="modulesSection">
+    <div class="modules-head">
+      <div class="modules-kicker" data-i18n="modules_kicker">Une seule application</div>
+      <div class="modules-title" data-i18n="modules_title">Ce qui change vraiment, au quotidien.</div>
+    </div>
+    <div class="modules-grid">
+      <div class="module-card" data-mod="stock">
+        <div class="mc-tag" data-i18n="mc_stock_tag">Stock</div>
+        <div class="mc-q" data-i18n="mc_stock_q">Qu'est-ce qu'il me reste à la maison ?</div>
+        <div class="mc-more" data-i18n="mc_more">En savoir plus</div>
+        <div class="mc-panel">
+          <div class="mc-panel-inner" data-mc="stock"></div>
+        </div>
+      </div>
+      <div class="module-card" data-mod="courses">
+        <div class="mc-tag" data-i18n="mc_courses_tag">Courses</div>
+        <div class="mc-q" data-i18n="mc_courses_q">Qu'est-ce qu'il faut racheter ?</div>
+        <div class="mc-more" data-i18n="mc_more">En savoir plus</div>
+        <div class="mc-panel">
+          <div class="mc-panel-inner" data-mc="courses"></div>
+        </div>
+      </div>
+      <div class="module-card" data-mod="budget">
+        <div class="mc-tag" data-i18n="mc_budget_tag">Budget</div>
+        <div class="mc-q" data-i18n="mc_budget_q">Combien vais-je dépenser ce mois-ci ?</div>
+        <div class="mc-more" data-i18n="mc_more">En savoir plus</div>
+        <div class="mc-panel">
+          <div class="mc-panel-inner" data-mc="budget"></div>
+        </div>
+      </div>
+      <div class="module-card" data-mod="recettes">
+        <div class="mc-tag" data-i18n="mc_recettes_tag">Recettes</div>
+        <div class="mc-q" data-i18n="mc_recettes_q">Qu'est-ce qu'on mange ce soir ?</div>
+        <div class="mc-more" data-i18n="mc_more">En savoir plus</div>
+        <div class="mc-panel">
+          <div class="mc-panel-inner" data-mc="recettes"></div>
+        </div>
+      </div>
+      <div class="module-card" data-mod="agenda">
+        <div class="mc-tag" data-i18n="mc_agenda_tag">Agenda</div>
+        <div class="mc-q" data-i18n="mc_agenda_q">Qui fait quoi, et quand ?</div>
+        <div class="mc-more" data-i18n="mc_more">En savoir plus</div>
+        <div class="mc-panel">
+          <div class="mc-panel-inner" data-mc="agenda"></div>
+        </div>
+      </div>
+      <div class="module-card" data-mod="membres">
+        <div class="mc-tag" data-i18n="mc_membres_tag">Membres</div>
+        <div class="mc-q" data-i18n="mc_membres_q">Comment toute la famille reste connectée ?</div>
+        <div class="mc-more" data-i18n="mc_more">En savoir plus</div>
+        <div class="mc-panel">
+          <div class="mc-panel-inner" data-mc="membres"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════ GALERIE — captures d'écran de l'app ══════ -->
+  <section class="gallery rv" id="gallerySection">
+    <h2 class="gallery-title" data-i18n="gallery_title">HomeSync, en vrai</h2>
+    <p class="gallery-sub" data-i18n="gallery_sub">Un aperçu réel de l'application, telle qu'elle est aujourd'hui.</p>
+    <div class="gallery-frame">
+      <button class="gallery-arrow gallery-prev" id="galleryPrev" aria-label="Précédent">‹</button>
+      <div class="gallery-track" id="galleryTrack">
+        <div class="gallery-slide active" data-slide="0">
+          <img src="/shot-home.png" alt="Accueil HomeSync" loading="lazy"/>
+          <div class="gallery-caption">
+            <div class="gc-title" data-i18n="gallery_home_title">Un coup d'œil, toute la situation</div>
+            <div class="gc-text" data-i18n="gallery_home_text">Budget du mois, courses en attente, produits qui périment bientôt — tout est là dès l'ouverture.</div>
+          </div>
+        </div>
+        <div class="gallery-slide" data-slide="1">
+          <img src="/shot-stock.png" alt="Stock HomeSync" loading="lazy"/>
+          <div class="gallery-caption">
+            <div class="gc-title" data-i18n="gallery_stock_title">Le stock, jamais de surprise</div>
+            <div class="gc-text" data-i18n="gallery_stock_text">Fini le lait qui manque au petit-déjeuner — chaque produit est suivi, avec alerte avant la rupture.</div>
+          </div>
+        </div>
+        <div class="gallery-slide" data-slide="2">
+          <img src="/shot-shopping.png" alt="Liste de courses HomeSync" loading="lazy"/>
+          <div class="gallery-caption">
+            <div class="gc-title" data-i18n="gallery_shopping_title">Les courses, partagées en temps réel</div>
+            <div class="gc-text" data-i18n="gallery_shopping_text">Chacun coche ce qu'il a acheté, le prix se calcule automatiquement, tout le monde voit la même liste.</div>
+          </div>
+        </div>
+        <div class="gallery-slide" data-slide="3">
+          <img src="/shot-budget.png" alt="Budget HomeSync" loading="lazy"/>
+          <div class="gallery-caption">
+            <div class="gc-title" data-i18n="gallery_budget_title">Le budget, sans tableur</div>
+            <div class="gc-text" data-i18n="gallery_budget_text">Qui a dépensé quoi, combien il reste, les charges fixes du mois — clair en un coup d'œil.</div>
+          </div>
+        </div>
+        <div class="gallery-slide" data-slide="4">
+          <img src="/shot-recipes.png" alt="Recettes HomeSync" loading="lazy"/>
+          <div class="gallery-caption">
+            <div class="gc-title" data-i18n="gallery_recipes_title">Les repas de la semaine, planifiés</div>
+            <div class="gc-text" data-i18n="gallery_recipes_text">Un menu par jour, et la liste de courses se remplit automatiquement avec ce qui manque.</div>
+          </div>
+        </div>
+        <div class="gallery-slide" data-slide="5">
+          <img src="/shot-tasks.png" alt="Tâches HomeSync" loading="lazy"/>
+          <div class="gallery-caption">
+            <div class="gc-title" data-i18n="gallery_tasks_title">Les tâches, réparties équitablement</div>
+            <div class="gc-text" data-i18n="gallery_tasks_text">Qui sort les poubelles cette semaine ? Attribuez une tâche, et faites-la tourner automatiquement si besoin.</div>
+          </div>
+        </div>
+      </div>
+      <button class="gallery-arrow gallery-next" id="galleryNext" aria-label="Suivant">›</button>
+    </div>
+    <div class="gallery-dots" id="galleryDots"></div>
+    <p class="gallery-disclaimer" data-i18n="gallery_disclaimer">Les captures d'écran peuvent différer de la version actuelle de l'application, qui évolue régulièrement.</p>
+  </section>
+
+  <!-- ══════ LIGHTBOX — zoom sur les captures d'écran ══════ -->
+  <div class="lightbox" id="lightbox">
+    <button class="lightbox-close" id="lightboxClose" aria-label="Fermer">✕</button>
+    <img id="lightboxImg" src="" alt=""/>
+  </div>
+
+  <!-- ══════ AUTH AMBASSADEUR — connexion / inscription réelle ══════ -->
+  <div class="amb-overlay" id="ambOverlay">
+    <div class="amb-card">
+      <button class="amb-close" id="ambClose" aria-label="Fermer">✕</button>
+
+      <div class="amb-explain">
+        <div class="amb-emoji" aria-hidden="true">🎉</div>
+        <h3 class="amb-title" data-i18n="amb_welcome_title">Bienvenue, futur ambassadeur !</h3>
+        <p class="amb-sub" style="margin-bottom:0;" data-i18n="amb_welcome_sub">Partagez votre lien HomeSync, et gagnez un revenu récurrent — simplement.</p>
+      </div>
+
+      <div id="ambAuthWrap">
+        <div class="amb-emoji" aria-hidden="true">🤝</div>
+        <h3 class="amb-title" id="ambAuthTitle" data-i18n="amb_login_title">Espace ambassadeur</h3>
+        <p class="amb-sub" id="ambAuthSub" data-i18n="amb_login_sub">Connectez-vous pour accéder à votre tableau de bord.</p>
+        <p class="amb-hint" id="ambAppUserHint" data-i18n="amb_app_user_hint">Déjà un compte HomeSync ? Connectez-vous directement avec — votre profil ambassadeur se crée automatiquement.</p>
+        <div class="amb-field" id="ambNameField" style="display:none;">
+          <label data-i18n="amb_name_lbl">Nom</label>
+          <input type="text" id="ambName" placeholder="Camille Dupont"/>
+        </div>
+        <div class="amb-field" id="ambAgeField" style="display:none;">
+          <label data-i18n="amb_age_lbl">Votre âge</label>
+          <input type="number" id="ambAge" min="1" max="120" placeholder="25"/>
+        </div>
+        <div class="amb-field">
+          <label data-i18n="amb_email_lbl">Email</label>
+          <input type="email" id="ambEmail" placeholder="vous@exemple.com"/>
+        </div>
+        <div class="amb-field">
+          <label data-i18n="amb_pass_lbl">Mot de passe</label>
+          <input type="password" id="ambPass" placeholder="••••••••"/>
+        </div>
+        <div class="amb-field" id="ambTermsField" style="display:none;">
+          <label class="amb-terms-row">
+            <input type="checkbox" id="ambTerms"/>
+            <span><span data-i18n="amb_terms_label_1">Je certifie avoir 18 ans ou plus et j'accepte les</span> <span id="ambTermsLink" style="color:var(--mint); text-decoration:underline; cursor:pointer;" data-i18n="amb_terms_label_link">conditions du programme Ambassadeur</span>.</span>
+          </label>
+        </div>
+        <div class="amb-error" id="ambError"></div>
+        <button class="btn btn-primary" id="ambSubmit" style="width:100%; justify-content:center;" data-i18n="amb_login_submit">Se connecter</button>
+        <p class="amb-switch" id="ambForgotWrap">
+          <span id="ambForgotPass" data-i18n="amb_forgot_pass">Mot de passe oublié ?</span>
+        </p>
+        <p class="amb-switch">
+          <span id="ambSwitchToRegister" data-i18n="amb_switch_to_register">Pas encore ambassadeur ? S'inscrire</span>
+          <span id="ambSwitchToLogin" style="display:none;" data-i18n="amb_switch_to_login">Déjà inscrit ? Se connecter</span>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════ NOUVEAU MOT DE PASSE — après clic sur le lien reçu par email ══════ -->
+  <div class="amb-overlay" id="ambNewPassOverlay">
+    <div class="amb-card">
+      <div class="amb-emoji" aria-hidden="true">🔑</div>
+      <h3 class="amb-title" data-i18n="amb_newpass_title">Nouveau mot de passe</h3>
+      <p class="amb-sub" data-i18n="amb_newpass_sub">Choisissez un nouveau mot de passe pour votre compte.</p>
+      <div class="amb-field">
+        <label data-i18n="amb_pass_lbl">Mot de passe</label>
+        <input type="password" id="ambNewPass" placeholder="••••••••"/>
+      </div>
+      <div class="amb-error" id="ambNewPassError"></div>
+      <button class="btn btn-primary" id="ambNewPassSubmit" style="width:100%; justify-content:center;" data-i18n="amb_newpass_submit">Enregistrer le nouveau mot de passe</button>
+    </div>
+  </div>
+
+  <!-- ══════ QR CODE — pour montrer ou partager le lien de parrainage ══════ -->
+  <!-- ══════ COMPLÉTER LE PROFIL — pour un compte HomeSync existant qui n'a pas encore de profil ambassadeur ══════ -->
+  <div class="amb-overlay" id="ambCompleteOverlay">
+    <div class="amb-card">
+      <div class="amb-emoji" aria-hidden="true">🤝</div>
+      <h3 class="amb-title" data-i18n="amb_complete_title">Encore une étape</h3>
+      <p class="amb-sub" data-i18n="amb_complete_sub">Avant de créer votre profil ambassadeur, confirmez ces 2 points.</p>
+      <div class="amb-field">
+        <label data-i18n="amb_age_lbl">Votre âge</label>
+        <input type="number" id="ambCompleteAge" min="1" max="120" placeholder="25"/>
+      </div>
+      <div class="amb-field">
+        <label class="amb-terms-row">
+          <input type="checkbox" id="ambCompleteTerms"/>
+          <span><span data-i18n="amb_terms_label_1">Je certifie avoir 18 ans ou plus et j'accepte les</span> <span id="ambTermsLink2" style="color:var(--mint); text-decoration:underline; cursor:pointer;" data-i18n="amb_terms_label_link">conditions du programme Ambassadeur</span>.</span>
+        </label>
+      </div>
+      <div class="amb-error" id="ambCompleteError"></div>
+      <button class="btn btn-primary" id="ambCompleteSubmit" style="width:100%; justify-content:center;" data-i18n="amb_complete_submit">Continuer</button>
+    </div>
+  </div>
+
+  <!-- ══════ CONDITIONS GÉNÉRALES DU PROGRAMME AMBASSADEUR ══════ -->
+  <div class="amb-overlay" id="ambTermsOverlay">
+    <div class="amb-card" style="text-align:left; max-width:520px;">
+      <button class="amb-close" id="ambTermsClose" aria-label="Fermer">✕</button>
+      <h3 class="amb-title" style="text-align:center;" data-i18n="amb_terms_page_title">Conditions du programme Ambassadeur</h3>
+      <div style="font-size:12.5px; color:var(--mist); line-height:1.7; margin-top:16px;">
+        <p style="margin-bottom:14px;"><b style="color:var(--paper);" data-i18n="amb_terms_1_title">Âge minimum</b><br/>
+          <span data-i18n="amb_terms_1_body">Le programme Ambassadeur Minzri est réservé aux personnes âgées de 18 ans ou plus. En vous inscrivant, vous certifiez avoir au moins 18 ans à la date de votre inscription.</span></p>
+        <p style="margin-bottom:14px;"><b style="color:var(--paper);" data-i18n="amb_terms_2_title">Commission</b><br/>
+          <span data-i18n="amb_terms_2_body">Vous recevez 0,50 € pour chaque paiement Stripe réussi d'une personne que vous avez parrainée, tant qu'elle reste abonnée à HomeSync.</span></p>
+        <p style="margin-bottom:14px;"><b style="color:var(--paper);" data-i18n="amb_terms_3_title">Versement</b><br/>
+          <span data-i18n="amb_terms_3_body">Les commissions en attente sont calculées le 5 de chaque mois. Un versement est déclenché dès que votre solde atteint 15 € ; en dessous, il est reporté au mois suivant. Le virement bancaire est effectué manuellement par notre équipe, sous quelques jours.</span></p>
+        <p style="margin-bottom:14px;"><b style="color:var(--paper);" data-i18n="amb_terms_4_title">Un client, un ambassadeur</b><br/>
+          <span data-i18n="amb_terms_4_body">Chaque client ne peut être rattaché qu'à un seul ambassadeur, définitivement fixé à sa toute première souscription — un désabonnement puis réabonnement ne change jamais l'ambassadeur d'origine.</span></p>
+        <p style="margin-bottom:14px;"><b style="color:var(--paper);" data-i18n="amb_terms_5_title">Validation du compte</b><br/>
+          <span data-i18n="amb_terms_5_body">Votre candidature est examinée manuellement avant validation. Minzri se réserve le droit d'accepter, de refuser, ou de suspendre un compte ambassadeur à tout moment, notamment en cas de fraude ou d'abus constaté.</span></p>
+        <p style="margin-bottom:0;"><b style="color:var(--paper);" data-i18n="amb_terms_6_title">Auto-parrainage interdit</b><br/>
+          <span data-i18n="amb_terms_6_body">Un ambassadeur ne peut pas utiliser son propre lien pour s'abonner lui-même — ces cas sont automatiquement détectés et bloqués.</span></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="amb-overlay" id="ambQrOverlay">
+    <div class="amb-card">
+      <button class="amb-close" id="ambQrClose" aria-label="Fermer">✕</button>
+      <div class="amb-emoji" aria-hidden="true">📱</div>
+      <h3 class="amb-title" data-i18n="amb_qr_title">Votre QR code</h3>
+      <p class="amb-sub" data-i18n="amb_qr_sub">Montrez-le ou téléchargez-le pour le partager.</p>
+      <img id="ambQrImg" src="" alt="QR code" style="width:220px; height:220px; margin:0 auto 16px; display:block; border-radius:14px; background:#fff; padding:12px; box-sizing:border-box;"/>
+      <div class="amb-link-box" id="ambQrCodeText" style="margin-bottom:14px;">—</div>
+      <button class="btn btn-primary" id="ambQrDownload" style="width:100%; justify-content:center;" data-i18n="amb_qr_download">⬇️ Télécharger l'image</button>
+    </div>
+  </div>
+
+  <!-- ══════ TABLEAU DE BORD AMBASSADEUR ══════ -->
+  <div class="amb-dash-overlay" id="ambDashOverlay">
+    <div class="amb-dash">
+      <div class="amb-dash-header">
+        <div class="amb-dash-hi"><span id="ambDashName">—</span> 👋</div>
+        <div style="display:flex; gap:8px;">
+          <button class="btn btn-ghost" id="ambDashClose" aria-label="Fermer" style="padding:9px 14px;">✕</button>
+          <button class="btn btn-ghost" id="ambSignOut" data-i18n="amb_signout">Déconnexion</button>
+        </div>
+      </div>
+      <div style="display:flex; align-items:center; gap:6px; margin-bottom:6px;">
+        <span style="width:8px; height:8px; border-radius:50%; background:#6EBE8A; display:inline-block;"></span>
+        <span style="color:var(--mist); font-size:12px;" data-i18n="amb_connected_as">Connecté en tant que</span>
+        <span id="ambConnectedEmail" style="color:var(--paper); font-size:12px; font-weight:700;"></span>
+      </div>
+      <span class="amb-status" id="ambStatusBadge"></span>
+      <div class="amb-accepted-banner" id="ambAcceptedBanner" style="display:none;">
+        🎉 <span data-i18n="amb_accepted_banner">Bonne nouvelle — votre candidature a été acceptée ! Votre lien est actif, les commissions commencent à s'enregistrer.</span>
+      </div>
+
+      <!-- ── ONGLETS style Chrome ── -->
+      <div style="display:flex; gap:3px; margin-top:14px;">
+        <button class="amb-tab active" id="ambTabDash" data-i18n="amb_tab_dashboard">📊 Tableau de bord</button>
+        <button class="amb-tab" id="ambTabNews" data-i18n="amb_tab_news">📢 Actualités</button>
+        <button class="amb-tab" id="ambTabManage" data-i18n="amb_tab_manage">⚙️ Gestion</button>
+      </div>
+
+      <div class="amb-tab-content" id="ambPanelDash">
+        <div class="amb-link-card">
+          <div class="amb-link-lbl" data-i18n="amb_link_lbl">Votre lien de parrainage</div>
+          <div class="amb-link-row">
+            <div class="amb-link-box" id="ambLinkBox">—</div>
+            <button class="btn btn-ghost" id="ambCopyLink">📋 <span data-i18n="amb_copy_btn">Copier</span></button>
+            <button class="btn btn-ghost" id="ambShowQr">📱 <span data-i18n="amb_qr_btn">QR code</span></button>
+            <button class="btn btn-primary" id="ambShareLink" data-i18n="amb_share_btn">Partager</button>
+          </div>
+          <div class="amb-link-lbl" style="margin-top:14px;" data-i18n="amb_code_lbl">Ou juste votre code (à donner de vive voix)</div>
+          <div class="amb-link-row">
+            <div class="amb-link-box" id="ambCodeBox" style="font-weight:800; letter-spacing:0.05em; text-align:center;">—</div>
+            <button class="btn btn-ghost" id="ambCopyCode">📋 <span data-i18n="amb_copy_btn">Copier</span></button>
+          </div>
+        </div>
+
+        <div class="amb-stat-grid">
+          <div class="amb-stat-card">
+            <div class="amb-stat-val" id="ambStatPending" style="color:var(--mint);">—</div>
+            <div class="amb-stat-lbl" data-i18n="amb_stat_pending">Commissions en attente</div>
+          </div>
+          <div class="amb-stat-card">
+            <div class="amb-stat-val" id="ambStatActive">—</div>
+            <div class="amb-stat-lbl" data-i18n="amb_stat_active">Abonnés actifs</div>
+          </div>
+          <div class="amb-stat-card">
+            <div class="amb-stat-val" id="ambStatTotal">—</div>
+            <div class="amb-stat-lbl" data-i18n="amb_stat_total">Clients apportés</div>
+          </div>
+          <div class="amb-stat-card">
+            <div class="amb-stat-val" id="ambStatEarned">—</div>
+            <div class="amb-stat-lbl" data-i18n="amb_stat_earned">Gagné au total</div>
+          </div>
+          <div class="amb-stat-card">
+            <div class="amb-stat-val" id="ambStatClicks">—</div>
+            <div class="amb-stat-lbl" data-i18n="amb_stat_clicks">Clics sur votre lien</div>
+          </div>
+        </div>
+
+        <div class="amb-section">
+          <h4 data-i18n="amb_history_title">🧾 Historique des commissions</h4>
+          <div id="ambHistoryList"><p class="amb-empty" data-i18n="amb_history_empty">Aucune commission pour l'instant.</p></div>
+        </div>
+      </div>
+
+      <div class="amb-tab-content" id="ambPanelNews" style="display:none;">
+        <div class="amb-section">
+          <h4 data-i18n="amb_community_title">📢 Actualités</h4>
+          <div id="ambNewsList"></div>
+          <div class="amb-leaderboard-lbl" data-i18n="amb_leaderboard_lbl">Votre position</div>
+          <div id="ambLeaderboard"><p class="amb-empty" data-i18n="amb_leaderboard_empty">Pas encore de classement disponible.</p></div>
+        </div>
+
+        <div class="amb-section">
+          <h4 data-i18n="amb_presentation_title">📱 Présenter l'application</h4>
+          <p class="amb-presentation-intro" data-i18n="amb_presentation_intro">Appuyez sur un module pour voir un argumentaire détaillé, avec des exemples concrets et à qui ça peut parler.</p>
+
+          <div class="amb-faq-list">
+
+            <div class="amb-faq-item">
+              <button class="amb-faq-q" data-faq="p1">
+                <span>🏠 <span data-i18n="amb_pres_what_title">C'est quoi, HomeSync ?</span></span><span class="amb-faq-chev">▾</span>
+              </button>
+              <div class="amb-faq-a">
+                <img src="/shot-home.png" alt="HomeSync" loading="lazy" class="amb-pres-img"/>
+                <span data-i18n="amb_pres_what_text">Une application pour gérer sa maison en famille. Fini les post-it, les listes oubliées, ou les messages "tu as pensé à..." — tout est au même endroit, partagé par tout le monde.</span>
+                <p style="margin-top:8px;"><b data-i18n="amb_pres_who_lbl">👉 Ça peut plaire à :</b> <span data-i18n="amb_pres_what_who">toute personne qui gère un foyer, seule ou à plusieurs — familles, couples, colocataires.</span></p>
+                <p style="margin-top:6px;"><b data-i18n="amb_pres_ex_lbl">💬 Exemple :</b> <span data-i18n="amb_pres_what_ex">"Tu sais quand tu dois répéter 3 fois la même chose à toute la famille ? Avec HomeSync, tout le monde voit la même info, plus besoin de répéter."</span></p>
+              </div>
+            </div>
+
+            <div class="amb-faq-item">
+              <button class="amb-faq-q" data-faq="p2">
+                <span>📦 <span data-i18n="amb_pres_stock_title">Le stock de la maison</span></span><span class="amb-faq-chev">▾</span>
+              </button>
+              <div class="amb-faq-a">
+                <img src="/shot-stock.png" alt="Stock HomeSync" loading="lazy" class="amb-pres-img"/>
+                <span data-i18n="amb_pres_stock_text">On sait toujours ce qu'il reste à la maison, sans avoir à ouvrir le frigo pour vérifier. Cuisiner une recette met le stock à jour tout seul.</span>
+                <p style="margin-top:8px;"><b data-i18n="amb_pres_who_lbl">👉 Ça peut plaire à :</b> <span data-i18n="amb_pres_stock_who">ceux qui rachètent souvent en double, ou qui font les courses "à l'aveugle" sans savoir ce qu'il reste.</span></p>
+                <p style="margin-top:6px;"><b data-i18n="amb_pres_ex_lbl">💬 Exemple :</b> <span data-i18n="amb_pres_stock_ex">"Tu te souviens la dernière fois où t'as racheté du riz alors qu'il y en avait déjà un paquet ? Ça n'arrive plus."</span></p>
+              </div>
+            </div>
+
+            <div class="amb-faq-item">
+              <button class="amb-faq-q" data-faq="p3">
+                <span>🛒 <span data-i18n="amb_pres_shopping_title">La liste de courses</span></span><span class="amb-faq-chev">▾</span>
+              </button>
+              <div class="amb-faq-a">
+                <img src="/shot-shopping.png" alt="Liste de courses HomeSync" loading="lazy" class="amb-pres-img"/>
+                <span data-i18n="amb_pres_shopping_text">Toute la famille voit et modifie la même liste, en temps réel. Plus besoin de demander "t'as pris le lait ?".</span>
+                <p style="margin-top:8px;"><b data-i18n="amb_pres_who_lbl">👉 Ça peut plaire à :</b> <span data-i18n="amb_pres_shopping_who">les couples ou colocataires où chacun fait les courses de son côté, ou les parents qui envoient un ado faire une course.</span></p>
+                <p style="margin-top:6px;"><b data-i18n="amb_pres_ex_lbl">💬 Exemple :</b> <span data-i18n="amb_pres_shopping_ex">"Ton conjoint est au magasin et toi tu penses à un truc à ajouter ? Tu l'ajoutes depuis ton canapé, ça apparaît direct sur son téléphone."</span></p>
+              </div>
+            </div>
+
+            <div class="amb-faq-item">
+              <button class="amb-faq-q" data-faq="p4">
+                <span>💰 <span data-i18n="amb_pres_budget_title">Le budget</span></span><span class="amb-faq-chev">▾</span>
+              </button>
+              <div class="amb-faq-a">
+                <img src="/shot-budget.png" alt="Budget HomeSync" loading="lazy" class="amb-pres-img"/>
+                <span data-i18n="amb_pres_budget_text">On voit combien on a dépensé ce mois-ci, sans attendre la fin du mois pour le découvrir.</span>
+                <p style="margin-top:8px;"><b data-i18n="amb_pres_who_lbl">👉 Ça peut plaire à :</b> <span data-i18n="amb_pres_budget_who">ceux qui veulent mieux suivre leurs dépenses du quotidien, sans utiliser un tableur compliqué.</span></p>
+                <p style="margin-top:6px;"><b data-i18n="amb_pres_ex_lbl">💬 Exemple :</b> <span data-i18n="amb_pres_budget_ex">"Fini la surprise le 30 du mois — tu vois en direct combien il reste sur ton budget courses."</span></p>
+              </div>
+            </div>
+
+            <div class="amb-faq-item">
+              <button class="amb-faq-q" data-faq="p5">
+                <span>🍳 <span data-i18n="amb_pres_recipes_title">Les recettes</span></span><span class="amb-faq-chev">▾</span>
+              </button>
+              <div class="amb-faq-a">
+                <img src="/shot-recipes.png" alt="Recettes HomeSync" loading="lazy" class="amb-pres-img"/>
+                <span data-i18n="amb_pres_recipes_text">On enregistre ses recettes, on planifie les repas de la semaine, et l'appli propose même une idée au hasard les soirs sans inspiration.</span>
+                <p style="margin-top:8px;"><b data-i18n="amb_pres_who_lbl">👉 Ça peut plaire à :</b> <span data-i18n="amb_pres_recipes_who">ceux qui galèrent chaque soir à trouver une idée de repas, ou qui veulent mieux organiser leurs menus de la semaine.</span></p>
+                <p style="margin-top:6px;"><b data-i18n="amb_pres_ex_lbl">💬 Exemple :</b> <span data-i18n="amb_pres_recipes_ex">"Le fameux 'on mange quoi ce soir ?' — un bouton te propose une recette au hasard, et ajoute direct ce qu'il manque à ta liste de courses."</span></p>
+              </div>
+            </div>
+
+            <div class="amb-faq-item">
+              <button class="amb-faq-q" data-faq="p6">
+                <span>📅 <span data-i18n="amb_pres_calendar_title">L'agenda familial</span></span><span class="amb-faq-chev">▾</span>
+              </button>
+              <div class="amb-faq-a">
+                <img src="/shot-tasks.png" alt="Agenda et tâches HomeSync" loading="lazy" class="amb-pres-img"/>
+                <span data-i18n="amb_pres_calendar_text">Rendez-vous, tâches de la maison réparties entre tout le monde — chacun voit le même calendrier.</span>
+                <p style="margin-top:8px;"><b data-i18n="amb_pres_who_lbl">👉 Ça peut plaire à :</b> <span data-i18n="amb_pres_calendar_who">les familles avec enfants (rendez-vous, activités), ou les foyers qui veulent répartir équitablement les tâches ménagères.</span></p>
+                <p style="margin-top:6px;"><b data-i18n="amb_pres_ex_lbl">💬 Exemple :</b> <span data-i18n="amb_pres_calendar_ex">"Qui sort les poubelles cette semaine ? La tâche tourne automatiquement entre les membres de la famille, plus besoin d'y penser."</span></p>
+              </div>
+            </div>
+
+            <div class="amb-faq-item">
+              <button class="amb-faq-q" data-faq="p7">
+                <span>🏖️ <span data-i18n="amb_pres_vacation_title">Les vacances</span></span><span class="amb-faq-chev">▾</span>
+              </button>
+              <div class="amb-faq-a">
+                <span data-i18n="amb_pres_vacation_text">Un budget dédié pour préparer un voyage, avec les dépenses partagées entre participants et qui doit combien à qui.</span>
+                <p style="margin-top:8px;"><b data-i18n="amb_pres_who_lbl">👉 Ça peut plaire à :</b> <span data-i18n="amb_pres_vacation_who">les groupes d'amis ou familles qui partent ensemble et qui galèrent toujours à calculer qui doit combien après.</span></p>
+                <p style="margin-top:6px;"><b data-i18n="amb_pres_ex_lbl">💬 Exemple :</b> <span data-i18n="amb_pres_vacation_ex">"Fini la calculette à la fin du voyage entre amis — l'app dit exactement qui doit rembourser qui."</span></p>
+              </div>
+            </div>
+
+            <div class="amb-faq-item">
+              <button class="amb-faq-q" data-faq="p8">
+                <span>👥 <span data-i18n="amb_pres_members_title">Les membres</span></span><span class="amb-faq-chev">▾</span>
+              </button>
+              <div class="amb-faq-a">
+                <span data-i18n="amb_pres_members_text">Chaque personne du foyer a son propre accès, depuis son téléphone — tout ce que l'un ajoute, les autres le voient à l'instant.</span>
+                <p style="margin-top:8px;"><b data-i18n="amb_pres_who_lbl">👉 Ça peut plaire à :</b> <span data-i18n="amb_pres_members_who">les familles jusqu'à 6 personnes, où chacun veut son propre accès sans dépendre du téléphone d'un seul.</span></p>
+                <p style="margin-top:6px;"><b data-i18n="amb_pres_ex_lbl">💬 Exemple :</b> <span data-i18n="amb_pres_members_ex">"Chaque membre de la famille se connecte depuis son propre téléphone, avec son propre nom — pas besoin de partager un seul compte."</span></p>
+              </div>
+            </div>
+
+            <div class="amb-faq-item">
+              <button class="amb-faq-q" data-faq="p9">
+                <span>🎨 <span data-i18n="amb_pres_theme_title">L'apparence</span></span><span class="amb-faq-chev">▾</span>
+              </button>
+              <div class="amb-faq-a">
+                <span data-i18n="amb_pres_theme_text">Plusieurs thèmes de couleur au choix, pour personnaliser l'application à son goût.</span>
+                <p style="margin-top:8px;"><b data-i18n="amb_pres_who_lbl">👉 Ça peut plaire à :</b> <span data-i18n="amb_pres_theme_who">ceux qui aiment personnaliser leurs apps, ou simplement changer d'ambiance visuelle.</span></p>
+                <p style="margin-top:6px;"><b data-i18n="amb_pres_ex_lbl">💬 Exemple :</b> <span data-i18n="amb_pres_theme_ex">"Chacun peut choisir son thème préféré, ça reste propre à chaque personne, pas imposé à toute la famille."</span></p>
+              </div>
+            </div>
+
+            <div class="amb-faq-item">
+              <button class="amb-faq-q" data-faq="p10">
+                <span>❓ <span data-i18n="amb_pres_help_title">Le centre d'aide</span></span><span class="amb-faq-chev">▾</span>
+              </button>
+              <div class="amb-faq-a">
+                <span data-i18n="amb_pres_help_text">Des réponses simples directement dans l'app pour chaque fonctionnalité, en cas de doute.</span>
+                <p style="margin-top:8px;"><b data-i18n="amb_pres_who_lbl">👉 Ça peut plaire à :</b> <span data-i18n="amb_pres_help_who">ceux qui hésitent à essayer une nouvelle app par peur de ne pas savoir s'en servir.</span></p>
+                <p style="margin-top:6px;"><b data-i18n="amb_pres_ex_lbl">💬 Exemple :</b> <span data-i18n="amb_pres_help_ex">"Un doute sur une fonctionnalité ? La réponse est directement dans l'app, pas besoin de chercher ailleurs."</span></p>
+              </div>
+            </div>
+
+            <div class="amb-faq-item">
+              <button class="amb-faq-q" data-faq="p11">
+                <span>💶 <span data-i18n="amb_pres_price_title">Le prix</span></span><span class="amb-faq-chev">▾</span>
+              </button>
+              <div class="amb-faq-a">
+                <span data-i18n="amb_pres_price_text">3,99€ par mois, pour toute la famille jusqu'à 6 personnes — pas un prix par personne. 7 jours d'essai gratuit, résiliable en un clic, sans engagement.</span>
+                <p style="margin-top:8px;"><b data-i18n="amb_pres_who_lbl">👉 Ça peut plaire à :</b> <span data-i18n="amb_pres_price_who">tout le monde — c'est justement l'argument qui rassure ceux qui hésitent sur le prix des abonnements en général.</span></p>
+                <p style="margin-top:6px;"><b data-i18n="amb_pres_ex_lbl">💬 Exemple :</b> <span data-i18n="amb_pres_price_ex">"Ça revient à moins de 70 centimes par personne et par mois si vous êtes 6 — et tu peux tester gratuitement avant de payer quoi que ce soit."</span></p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="amb-section">
+          <h4 data-i18n="amb_faq_title">❓ Comment ça marche</h4>
+          <div class="amb-faq-list">
+            <div class="amb-faq-item">
+              <button class="amb-faq-q" data-faq="1">
+                <span>💰 <span data-i18n="amb_faq_q1">Combien je gagne ?</span></span><span class="amb-faq-chev">▾</span>
+              </button>
+              <div class="amb-faq-a" id="ambFaqA1">
+                <span><b>0,50 €</b> <span data-i18n="amb_explain_commission">à chaque paiement Stripe réussi d'une personne que vous avez parrainée — tant qu'elle reste abonnée.</span></span>
+              </div>
+            </div>
+            <div class="amb-faq-item">
+              <button class="amb-faq-q" data-faq="2">
+                <span>📅 <span data-i18n="amb_faq_q2">Quand je suis payé ?</span></span><span class="amb-faq-chev">▾</span>
+              </button>
+              <div class="amb-faq-a" id="ambFaqA2">
+                <span><b data-i18n="amb_explain_payout_when">Versé chaque mois (le 5)</b>, <span data-i18n="amb_explain_payout">dès que votre solde atteint 15 €. En dessous, il s'accumule simplement au mois suivant.</span></span>
+                <p style="margin-top:8px;" data-i18n="amb_explain_payout_cutoff">Le 5 est une photo à un instant précis : seules les commissions déjà enregistrées à cette date sont comptées. Si un filleul s'abonne juste avant ou après le 5, sa commission peut apparaître un mois plus tard que prévu — rien n'est jamais perdu, elle attend juste le calcul suivant.</p>
+              </div>
+            </div>
+            <div class="amb-faq-item">
+              <button class="amb-faq-q" data-faq="3">
+                <span>🏦 <span data-i18n="amb_faq_q3">C'est automatique ?</span></span><span class="amb-faq-chev">▾</span>
+              </button>
+              <div class="amb-faq-a" id="ambFaqA3">
+                <span data-i18n="amb_explain_transfer">Le virement est fait à la main par notre équipe une fois le calcul effectué — comptez quelques jours après le 5 pour recevoir l'argent sur votre compte.</span>
+              </div>
+            </div>
+            <div class="amb-faq-item">
+              <button class="amb-faq-q" data-faq="4">
+                <span>🕐 <span data-i18n="amb_faq_q4">Pourquoi "en attente" ?</span></span><span class="amb-faq-chev">▾</span>
+              </button>
+              <div class="amb-faq-a" id="ambFaqA4">
+                <span data-i18n="amb_explain_pending">Un compte "en attente" est en cours de vérification — votre lien fonctionne déjà, les commissions s'activent dès la validation.</span>
+              </div>
+            </div>
+            <div class="amb-faq-item">
+              <button class="amb-faq-q" data-faq="5">
+                <span>💳 <span data-i18n="amb_faq_q5">Comment je suis payé ?</span></span><span class="amb-faq-chev">▾</span>
+              </button>
+              <div class="amb-faq-a" id="ambFaqA5">
+                <span data-i18n="amb_explain_iban">Pour recevoir vos commissions, renseignez votre IBAN dans l'onglet "Gestion" — sans lui, impossible de vous verser l'argent.</span>
+              </div>
+            </div>
+            <div class="amb-faq-item">
+              <button class="amb-faq-q" data-faq="6">
+                <span>🔗 <span data-i18n="amb_faq_q6">Lien ou QR code ?</span></span><span class="amb-faq-chev">▾</span>
+              </button>
+              <div class="amb-faq-a" id="ambFaqA6">
+                <span data-i18n="amb_explain_link_qr">Vous avez 2 façons de partager : le lien (à coller dans un message ou une story), ou le QR code (à montrer directement à quelqu'un pour qu'il scanne avec son téléphone). Les deux mènent au même endroit.</span>
+              </div>
+            </div>
+            <div class="amb-faq-item">
+              <button class="amb-faq-q" data-faq="7">
+                <span>🔒 <span data-i18n="amb_faq_q7">Et s'il annule et se réabonne ?</span></span><span class="amb-faq-chev">▾</span>
+              </button>
+              <div class="amb-faq-a" id="ambFaqA7">
+                <span data-i18n="amb_explain_onetime">Un client ne peut être crédité qu'une seule fois, à sa toute première souscription — s'il annule puis se réabonne avec un autre lien, ça ne change jamais l'ambassadeur d'origine.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="amb-tab-content" id="ambPanelManage" style="display:none;">
+        <div class="amb-section">
+          <h4 data-i18n="amb_bank_title">💳 Coordonnées bancaires</h4>
+          <div class="amb-field">
+            <label data-i18n="amb_iban_lbl">IBAN</label>
+            <input type="text" id="ambIban" placeholder="FR76 XXXX XXXX XXXX XXXX XXXX XXX"/>
+          </div>
+          <div class="amb-field">
+            <label data-i18n="amb_iban_holder_lbl">Nom du titulaire</label>
+            <input type="text" id="ambIbanHolder" placeholder=""/>
+          </div>
+          <button class="btn btn-primary" id="ambSaveBank" style="width:100%; justify-content:center;" data-i18n="amb_bank_save">Enregistrer</button>
+        </div>
+
+        <button class="btn btn-ghost" id="ambContactBtn" style="width:100%; justify-content:center; margin-bottom:16px;" data-i18n="amb_contact_btn">📨 Nous contacter</button>
+
+        <div class="amb-section">
+          <h4 data-i18n="amb_privacy_title">🔒 Mes données</h4>
+          <button class="btn btn-ghost" id="ambExportData" style="width:100%; justify-content:center; margin-bottom:10px;" data-i18n="amb_export_btn">📤 Exporter mes données</button>
+          <button class="btn" id="ambDeleteAccount" style="width:100%; justify-content:center; background:rgba(224,86,106,0.1); color:#E0566A; border:1.5px solid rgba(224,86,106,0.3);" data-i18n="amb_delete_btn">🗑️ Supprimer mon compte</button>
+        </div>
+      </div>
+
+      <div class="amb-section" id="ambAdminSection" style="display:none;">
+        <h4>🛠️ Administration</h4>
+        <div class="amb-admin-tabs">
+          <button class="amb-admin-tab active" id="ambAdminTabPending" data-i18n="amb_admin_tab_pending">En attente</button>
+          <button class="amb-admin-tab" id="ambAdminTabAll" data-i18n="amb_admin_tab_all">Tous</button>
+          <button class="amb-admin-tab" id="ambAdminTabRank" data-i18n="amb_admin_tab_rank">Classement</button>
+          <button class="amb-admin-tab" id="ambAdminTabPayouts" data-i18n="amb_admin_tab_payouts">Versements</button>
+          <button class="amb-admin-tab" id="ambAdminTabPost" data-i18n="amb_admin_tab_post">Publier</button>
+          <button class="amb-admin-tab" id="ambAdminTabActivity" data-i18n="amb_admin_tab_activity">Activité app</button>
+          <button class="amb-admin-tab" id="ambAdminTabBloggers" data-i18n="amb_admin_tab_bloggers">Blogueurs</button>
+          <button class="amb-admin-tab" id="ambAdminTabTips" data-i18n="amb_admin_tab_tips">Conseils</button>
+          <button class="amb-admin-tab" id="ambAdminTabPromo" data-i18n="amb_admin_tab_promo">HomeDay</button>
+        </div>
+        <div class="amb-field" id="ambAdminSearchWrap" style="margin-top:14px; margin-bottom:0;">
+          <input type="text" id="ambAdminSearch" data-i18n-placeholder="amb_admin_search_ph" placeholder="Rechercher un nom ou un email…"/>
+        </div>
+        <div id="ambAdminPendingList"></div>
+        <div id="ambAdminAllList" style="display:none;"></div>
+        <div id="ambAdminRankList" style="display:none;"></div>
+        <div id="ambAdminPayoutsList" style="display:none;"></div>
+        <div id="ambAdminPostForm" style="display:none;">
+          <div class="amb-leaderboard-lbl" data-i18n="amb_admin_existing_posts_lbl">Actualités publiées</div>
+          <div id="ambAdminExistingPosts" style="margin-bottom:20px;"></div>
+          <div class="amb-leaderboard-lbl" data-i18n="amb_admin_new_post_lbl">Nouvelle actualité</div>
+          <div class="amb-field">
+            <label data-i18n="amb_admin_post_title_lbl">Titre</label>
+            <input type="text" id="ambAdminPostTitle" placeholder=""/>
+          </div>
+          <div class="amb-field">
+            <label data-i18n="amb_admin_post_body_lbl">Message</label>
+            <textarea id="ambAdminPostBody" rows="4" style="width:100%; box-sizing:border-box; background:var(--ink); border:1.5px solid var(--line); border-radius:11px; padding:11px 13px; color:var(--paper); font-family:var(--font-body); font-size:14px; resize:vertical;"></textarea>
+          </div>
+          <div class="amb-field">
+            <label data-i18n="amb_admin_post_image_lbl">Photo (optionnelle)</label>
+            <input type="file" id="ambAdminPostImage" accept="image/png,image/jpeg"/>
+            <img id="ambAdminPostImagePreview" style="display:none; max-width:100%; border-radius:10px; margin-top:8px;"/>
+          </div>
+          <button class="btn btn-primary" id="ambAdminPostSubmit" style="width:100%; justify-content:center;" data-i18n="amb_admin_post_submit">Publier l'actualité</button>
+        </div>
+        <div id="ambAdminActivityList" style="display:none;"></div>
+        <div id="ambAdminBloggersList" style="display:none;"></div>
+        <div id="ambAdminTipsList" style="display:none;"></div>
+        <div id="ambAdminPromoList" style="display:none;">
+          <div class="amb-field">
+            <label data-i18n="promo_field_label">Nom de la période (interne)</label>
+            <input type="text" id="promoLabel" placeholder="Ex : HomeDay Noël"/>
+          </div>
+          <div style="display:flex; gap:10px;">
+            <div class="amb-field" style="flex:1;">
+              <label data-i18n="promo_field_start">Date de début</label>
+              <input type="date" id="promoStartDate"/>
+            </div>
+            <div class="amb-field" style="flex:1;">
+              <label data-i18n="promo_field_end">Date de fin</label>
+              <input type="date" id="promoEndDate"/>
+            </div>
+          </div>
+          <button type="button" class="btn btn-primary" id="promoCreateBtn" style="width:100%; margin-bottom:18px;" data-i18n="promo_create_btn">+ Créer cette période gratuite</button>
+          <div id="promoPeriodsList"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════ FINAL — PRIX ══════ -->
+  <!-- ══════ VOIX DU FONDATEUR — pourquoi HomeSync existe ══════ -->
+  <section class="founder rv" id="founderSection">
+    <div class="founder-card">
+      <div class="founder-quote-mark" aria-hidden="true">"</div>
+      <p class="founder-quote" data-i18n="founder_quote">On l'a créé parce qu'on en avait besoin nous-mêmes. On était mal organisés entre le travail de chacun, on faisait les courses en vitesse en oubliant la moitié, on rachetait en double des trucs qu'on avait déjà — et le budget était toujours serré à la fin du mois. HomeSync, c'est ce qu'on aurait voulu avoir depuis le début.</p>
+      <div class="founder-sign" data-i18n="founder_sign">— Minzri</div>
+    </div>
+  </section>
+
+  <!-- ══════ FAQ — lever les derniers freins avant la décision ══════ -->
+  <section class="faq rv" id="faqSection">
+    <h2 class="section-title-alt" data-i18n="faq_title">Encore une question ?</h2>
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          <span data-i18n="faq1_q">Mes données sont-elles vraiment privées ?</span>
+          <span class="faq-toggle" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-a"><p data-i18n="faq1_a">Oui. Vos données ne sont jamais vendues ni partagées. Vous pouvez les exporter ou supprimer votre compte à tout moment, directement depuis l'application.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          <span data-i18n="faq2_q">C'est facile d'annuler ?</span>
+          <span class="faq-toggle" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-a"><p data-i18n="faq2_a">En un clic, depuis l'application, à tout moment. Aucun engagement, aucun frais caché, aucun appel à passer.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          <span data-i18n="faq3_q">Combien de personnes peuvent rejoindre le foyer ?</span>
+          <span class="faq-toggle" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-a"><p data-i18n="faq3_a">Jusqu'à 6 membres, avec un seul abonnement — pas de prix par personne.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          <span data-i18n="faq4_q">Un enfant peut avoir son propre accès ?</span>
+          <span class="faq-toggle" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-a"><p data-i18n="faq4_a">Oui, chaque membre du foyer a son propre compte et se connecte depuis son propre appareil.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="final rv" id="finalSection">
+    <p class="final-hook" data-i18n="final_hook">Arrêtez de gérer votre foyer dans votre tête.</p>
+    <div class="trial-badge" data-i18n="trial_badge">🎁 7 jours d'essai gratuit</div>
+    <div class="price" id="priceDisplay">3,99€ <span class="per">/ mois</span></div>
+    <p class="l1" data-i18n="final_l1">Un seul abonnement pour toute la famille, jusqu'à 6 membres — pas un prix par personne.</p>
+    <div class="l2-pills">
+      <span data-i18n="final_l2a">Sans engagement, ni frais cachés</span>
+      <span data-i18n="final_l2b">Résiliable en un clic, à tout moment</span>
+    </div>
+    <div class="final-trust">
+      <span data-i18n="final_trust_a">🔒 Paiement sécurisé par Stripe</span>
+      <span data-i18n="final_trust_b">Vos données restent privées, exportables et supprimables à tout moment</span>
+    </div>
+
+    <a href="#" class="btn btn-primary" id="ctaFinal" role="button" aria-label="Essayer gratuitement 7 jours" data-i18n="cta_final">Essayer gratuitement 7 jours</a>
+    <button type="button" id="askBtnFinal" class="ask-question" data-i18n="ask_question">Posez-nous vos questions →</button>
+  </section>
+
+  <!-- ══════ PIED DE PAGE ══════ -->
+  <footer class="site-footer">
+    <button type="button" id="footerCgu" data-i18n="footer_cgu">Conditions générales</button>
+    <span class="footer-sep">·</span>
+    <button type="button" id="footerContact" data-i18n="footer_contact">Contact</button>
+    <span class="footer-sep">·</span>
+    <button type="button" id="footerPrivacy" data-i18n="footer_privacy">Politique de confidentialité</button>
+    <span class="footer-sep">·</span>
+    <button type="button" id="footerAmbassador" data-i18n="footer_ambassador">Devenir ambassadeur</button>
+    <button type="button" id="footerBlogger" data-i18n="footer_blogger">Espace blogueur</button>
+  </footer>
+
+
+<!-- ══════ MODALE — choix plateforme + étapes d'installation ══════ -->
+<div class="pm-overlay" id="pmOverlay">
+  <div class="pm-card">
+
+    <div id="pmChoiceScreen">
+      <div class="trial-badge" style="margin:0 auto 14px;" data-i18n="trial_badge">🎁 7 jours d'essai gratuit</div>
+      <div class="pm-title" data-i18n="pm_title">Sur quel appareil ?</div>
+      <div class="pm-sub" data-i18n="pm_sub">Choisissez votre appareil pour l'installer en quelques secondes</div>
+      <a href="#" class="btn btn-primary" id="pmShowDownload" style="width:100%; justify-content:center; margin-bottom:10px;" data-i18n="pm_download_btn">📥 Télécharger l'application</a>
+      <a href="#" class="btn btn-ghost" id="pmDirectLogin" style="width:100%; justify-content:center;" data-i18n="pm_direct_login">Commencer mon abonnement</a>
+      <p class="pm-direct-hint" data-i18n="pm_direct_hint">Déjà décidé ? Passez directement à l'app, sans les étapes d'installation.</p>
+    </div>
+
+    <div id="pmDownloadScreen" style="display:none;">
+      <span class="pm-back" id="pmBackDownload" data-i18n="pm_back">← Retour</span>
+      <div class="pm-title" data-i18n="pm_download_lbl">Installer l'application</div>
+      <div class="pm-sub" data-i18n="pm_download_sub">Choisissez votre appareil</div>
+      <div class="pm-choices">
+        <div class="pm-choice" id="pmAndroid" role="button" tabindex="0" aria-label="Installer sur Android">
+          <div class="ic" aria-hidden="true">🤖</div>
+          <div class="lbl" data-i18n="pm_android_lbl">Android</div>
+        </div>
+        <div class="pm-choice" id="pmIphone" role="button" tabindex="0" aria-label="Installer sur iPhone">
+          <div class="ic" aria-hidden="true">🍎</div>
+          <div class="lbl" data-i18n="pm_iphone_lbl">iPhone</div>
+        </div>
+        <div class="pm-choice" id="pmSkip" role="button" tabindex="0" aria-label="Continuer sur ordinateur">
+          <div class="ic" aria-hidden="true">💻</div>
+          <div class="lbl" data-i18n="pm_pc_lbl">Ordinateur</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pm-steps" id="pmStepsAndroid">
+      <span class="pm-back" id="pmBack1" data-i18n="pm_back">← Retour</span>
+      <div class="pm-title" style="text-align:left;" data-i18n="pm_android_title">Installer sur Android</div>
+      <div class="pm-sub" style="text-align:left;" data-i18n="pm_android_sub">3 étapes, moins de 10 secondes</div>
+      <div class="pm-step"><div class="n">1</div><div><div class="t" data-i18n="pm_a_step1_t">Appuyez sur "Continuer" ci-dessous</div><div class="d" data-i18n="pm_a_step1_d">Vous arrivez directement sur HomeSync</div></div></div>
+      <div class="pm-step"><div class="n">2</div><div><div class="t" data-i18n="pm_a_step2_t">Ouvrez le menu ⋮ de Chrome</div><div class="d" data-i18n="pm_a_step2_d">En haut à droite de l'écran</div></div></div>
+      <div class="pm-step"><div class="n">3</div><div><div class="t" data-i18n="pm_a_step3_t">Appuyez sur "Installer"</div><div class="d" data-i18n="pm_a_step3_d">HomeSync s'ajoute à votre écran d'accueil</div></div></div>
+      <a href="#" class="btn btn-primary" id="pmGoAndroid" style="width:100%; justify-content:center; margin-top:6px;" data-i18n="pm_continue">Continuer vers HomeSync</a>
+    </div>
+
+    <div class="pm-steps" id="pmStepsIphone">
+      <span class="pm-back" id="pmBack2" data-i18n="pm_back">← Retour</span>
+      <div class="pm-title" style="text-align:left;" data-i18n="pm_iphone_title">Installer sur iPhone</div>
+      <div class="pm-sub" style="text-align:left;" data-i18n="pm_iphone_sub">Ouvrez bien le lien dans Safari</div>
+      <div class="pm-step"><div class="n">1</div><div><div class="t" data-i18n="pm_i_step1_t">Appuyez sur Partager</div><div class="d" data-i18n="pm_i_step1_d">Le carré avec une flèche vers le haut, en bas de Safari</div></div></div>
+      <div class="pm-step"><div class="n">2</div><div><div class="t" data-i18n="pm_i_step2_t">Choisissez "Sur l'écran d'accueil"</div><div class="d" data-i18n="pm_i_step2_d">Faites défiler la liste si besoin</div></div></div>
+      <div class="pm-step"><div class="n">3</div><div><div class="t" data-i18n="pm_i_step3_t">Appuyez sur "Ajouter"</div><div class="d" data-i18n="pm_i_step3_d">HomeSync s'ajoute à votre écran d'accueil</div></div></div>
+      <a href="#" class="btn btn-primary" id="pmGoIphone" style="width:100%; justify-content:center; margin-top:6px;" data-i18n="pm_continue">Continuer vers HomeSync</a>
+    </div>
+
+    <div class="pm-steps" id="pmStepsDesktop">
+      <span class="pm-back" id="pmBack3" data-i18n="pm_back">← Retour</span>
+      <div class="pm-title" style="text-align:left;" data-i18n="pm_desktop_title">Installer sur ordinateur</div>
+      <div class="pm-sub" style="text-align:left;" data-i18n="pm_desktop_sub">Chrome, Edge, Opera, Brave...</div>
+      <div class="pm-step"><div class="n">1</div><div><div class="t" data-i18n="pm_d_step1_t">Appuyez sur "Continuer" ci-dessous</div><div class="d" data-i18n="pm_d_step1_d">Vous arrivez directement sur HomeSync</div></div></div>
+      <div class="pm-step"><div class="n">2</div><div><div class="t" data-i18n="pm_d_step2_t">Repérez l'icône d'installation</div><div class="d" data-i18n="pm_d_step2_d">Dans la barre d'adresse, à droite — une icône ⊕ ou un écran avec une flèche</div></div></div>
+      <div class="pm-step"><div class="n">3</div><div><div class="t" data-i18n="pm_d_step3_t">Cliquez dessus, confirmez</div><div class="d" data-i18n="pm_d_step3_d">HomeSync s'installe comme une vraie application</div></div></div>
+      <p class="pm-desktop-note" data-i18n="pm_desktop_note">Sur Firefox ou Safari (Mac), l'installation n'est pas proposée — vous pouvez utiliser HomeSync directement dans le navigateur, sans rien installer.</p>
+      <a href="#" class="btn btn-primary" id="pmGoDesktop" style="width:100%; justify-content:center; margin-top:6px;" data-i18n="pm_continue">Continuer vers HomeSync</a>
+    </div>
+
+  </div>
+</div>
+
+</main>
+
+<script src="/vendor/gsap.min.js"></script>
+<script src="/vendor/ScrollTrigger.min.js"></script>
+<script type="module" src="/src/main.js"></script>
+<!-- ══════ MODALE — formulaire "Posez-nous vos questions" ══════ -->
+<div class="pm-overlay" id="askOverlay">
+  <div class="pm-card" style="text-align:left; max-width:440px;">
+    <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:4px;">
+      <div class="pm-title" data-i18n="ask_form_title" style="margin-bottom:0;">Une question ?</div>
+      <button type="button" id="askClose" aria-label="Fermer" style="background:none; border:none; color:var(--mist); font-size:20px; cursor:pointer; line-height:1; padding:0;">✕</button>
+    </div>
+    <p class="pm-sub" data-i18n="ask_form_sub" style="text-align:left;">On vous répond rapidement, directement par email.</p>
+
+    <form id="askForm">
+      <label style="display:block; font-family:var(--font-body); font-size:11px; color:var(--mist); margin-bottom:6px;" data-i18n="ask_form_subject_label">Sujet</label>
+      <input type="text" id="askSubject" required maxlength="120" data-i18n-placeholder="ask_form_subject_ph"
+        style="width:100%; box-sizing:border-box; background:var(--surface-2); border:1.5px solid var(--line); border-radius:10px; padding:10px 12px; color:var(--paper); font-family:var(--font-body); font-size:14px; margin-bottom:14px;"/>
+
+      <label style="display:block; font-family:var(--font-body); font-size:11px; color:var(--mist); margin-bottom:6px;" data-i18n="ask_form_message_label">Votre message</label>
+      <textarea id="askMessage" required rows="4" maxlength="2000" data-i18n-placeholder="ask_form_message_ph"
+        style="width:100%; box-sizing:border-box; background:var(--surface-2); border:1.5px solid var(--line); border-radius:10px; padding:10px 12px; color:var(--paper); font-family:var(--font-body); font-size:14px; resize:vertical; margin-bottom:18px;"></textarea>
+
+      <button type="submit" class="btn btn-primary" style="width:100%; justify-content:center;" data-i18n="ask_form_send">Envoyer</button>
+    </form>
+    <p style="font-family:var(--font-body); font-size:11px; color:var(--mist); margin-top:12px; text-align:center;" data-i18n="ask_form_hint">Ouvre votre application email, avec tout déjà rempli.</p>
+  </div>
+</div>
+
+<!-- ══════ CONDITIONS GÉNÉRALES DU SITE ══════ -->
+<div class="pm-overlay" id="cguOverlay">
+  <div class="pm-card" style="text-align:left; max-width:520px; max-height:80vh; overflow-y:auto;">
+    <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:14px;">
+      <div class="pm-title" data-i18n="footer_cgu" style="margin-bottom:0;">Conditions générales</div>
+      <button type="button" id="cguClose" aria-label="Fermer" style="background:none; border:none; color:var(--mist); font-size:20px; cursor:pointer; line-height:1; padding:0;">✕</button>
+    </div>
+    <div style="font-size:12.5px; color:var(--mist); line-height:1.7;">
+      <p style="margin-bottom:14px;"><b style="color:var(--paper);" data-i18n="cgu_1_title">Le service</b><br/>
+        <span data-i18n="cgu_1_body">HomeSync est une application de gestion du foyer (courses, stock, budget, recettes, agenda) éditée par Minzri, accessible par abonnement.</span></p>
+      <p style="margin-bottom:14px;"><b style="color:var(--paper);" data-i18n="cgu_2_title">Abonnement et essai gratuit</b><br/>
+        <span data-i18n="cgu_2_body">L'abonnement inclut 7 jours d'essai gratuit (14 jours via un lien d'ambassadeur), puis 3,99€/mois, résiliable à tout moment en un clic depuis l'application, sans engagement ni frais cachés.</span></p>
+      <p style="margin-bottom:14px;"><b style="color:var(--paper);" data-i18n="cgu_3_title">Un abonnement, plusieurs membres</b><br/>
+        <span data-i18n="cgu_3_body">Un seul abonnement couvre jusqu'à 6 membres d'un même foyer, sans coût additionnel par personne.</span></p>
+      <p style="margin-bottom:14px;"><b style="color:var(--paper);" data-i18n="cgu_4_title">Paiement</b><br/>
+        <span data-i18n="cgu_4_body">Les paiements sont traités de façon sécurisée par Stripe. Minzri ne stocke jamais vos coordonnées bancaires complètes.</span></p>
+      <p style="margin-bottom:14px;"><b style="color:var(--paper);" data-i18n="cgu_5_title">Résiliation</b><br/>
+        <span data-i18n="cgu_5_body">Vous pouvez résilier votre abonnement à tout moment depuis l'application. L'accès reste actif jusqu'à la fin de la période déjà payée.</span></p>
+      <p style="margin-bottom:14px;"><b style="color:var(--paper);" data-i18n="cgu_6_title">Évolution du prix</b><br/>
+        <span data-i18n="cgu_6_body">Le tarif de l'abonnement peut évoluer, notamment selon le nombre d'utilisateurs de l'application. Toute évolution sera annoncée à l'avance via un message publié dans l'onglet Découvertes de l'application.</span></p>
+      <p style="margin-bottom:0;"><b style="color:var(--paper);" data-i18n="cgu_7_title">Remboursements</b><br/>
+        <span data-i18n="cgu_7_body">Aucun remboursement ni compensation automatique n'est prévu, y compris si un abonnement débute peu avant une journée HomeDay ou toute autre offre promotionnelle. D'une manière générale, les remboursements ne sont pas automatiques : un abonnement peut être suspendu sur demande, et un éventuel remboursement reste à l'appréciation de Minzri, étudié au cas par cas.</span></p>
+    </div>
+  </div>
+</div>
+
+<!-- ══════ POLITIQUE DE CONFIDENTIALITÉ ══════ -->
+<div class="pm-overlay" id="privacyOverlay">
+  <div class="pm-card" style="text-align:left; max-width:520px; max-height:80vh; overflow-y:auto;">
+    <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:14px;">
+      <div class="pm-title" data-i18n="footer_privacy" style="margin-bottom:0;">Politique de confidentialité</div>
+      <button type="button" id="privacyClose" aria-label="Fermer" style="background:none; border:none; color:var(--mist); font-size:20px; cursor:pointer; line-height:1; padding:0;">✕</button>
+    </div>
+    <div style="font-size:12.5px; color:var(--mist); line-height:1.7;">
+      <p style="margin-bottom:14px;"><b style="color:var(--paper);" data-i18n="privacy_1_title">Données collectées</b><br/>
+        <span data-i18n="privacy_1_body">Nom, email, et les données que vous saisissez dans l'application (courses, stock, budget, recettes, agenda) — uniquement pour faire fonctionner le service.</span></p>
+      <p style="margin-bottom:14px;"><b style="color:var(--paper);" data-i18n="privacy_2_title">Vos droits</b><br/>
+        <span data-i18n="privacy_2_body">Vous pouvez exporter ou supprimer l'ensemble de vos données à tout moment, directement depuis les paramètres de l'application.</span></p>
+      <p style="margin-bottom:14px;"><b style="color:var(--paper);" data-i18n="privacy_3_title">Partage des données</b><br/>
+        <span data-i18n="privacy_3_body">Vos données ne sont jamais vendues. Elles sont uniquement partagées avec les prestataires techniques nécessaires au fonctionnement du service (hébergement, paiement).</span></p>
+      <p style="margin-bottom:0;"><b style="color:var(--paper);" data-i18n="privacy_4_title">Contact</b><br/>
+        <span data-i18n="privacy_4_body">Pour toute question sur vos données, utilisez le bouton Contact en bas de page.</span></p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     ESPACE BLOGUEUR — gestion des Conseils & Astuces
+     Réutilise les mêmes classes visuelles que l'espace ambassadeur,
+     pour une intégration cohérente au reste du site.
+     ═══════════════════════════════════════════════════════════════ -->
+<div class="amb-overlay" id="bloggerOverlay">
+  <div class="amb-card">
+    <button class="amb-close" id="bloggerClose" aria-label="Fermer">✕</button>
+
+    <div id="bloggerAuthWrap">
+      <h3 class="amb-title" id="bloggerAuthTitle" data-i18n="blogger_login_title">Espace blogueur</h3>
+      <p class="amb-sub" id="bloggerAuthSub" data-i18n="blogger_login_sub">Connectez-vous pour gérer les Conseils & Astuces.</p>
+      <div class="amb-field" id="bloggerNameField" style="display:none;">
+        <label data-i18n="amb_name_lbl">Nom</label>
+        <input type="text" id="bloggerName" placeholder="Camille Dupont"/>
+      </div>
+      <div class="amb-field">
+        <label data-i18n="amb_email_label">Email</label>
+        <input type="email" id="bloggerEmail" placeholder="vous@exemple.com"/>
+      </div>
+      <div class="amb-field">
+        <label data-i18n="amb_pass_label">Mot de passe</label>
+        <input type="password" id="bloggerPass" placeholder="••••••••"/>
+      </div>
+      <button type="button" class="btn btn-primary" id="bloggerLoginBtn" style="width:100%;" data-i18n="blogger_login_btn">Se connecter</button>
+      <p style="margin-top:10px; font-size:13px;">
+        <a href="#" id="bloggerForgotPass" style="color:var(--mint); text-decoration:underline;" data-i18n="amb_forgot_pass">Mot de passe oublié ?</a>
+      </p>
+      <p id="bloggerAuthError" style="color:var(--rose); font-size:13px; margin-top:10px; display:none;"></p>
+      <p style="margin-top:16px; font-size:13px;">
+        <span id="bloggerToggleText" data-i18n="blogger_toggle_to_signup">Pas encore de compte blogueur ?</span>
+        <a href="#" id="bloggerToggleMode" style="color:var(--mint); text-decoration:underline;" data-i18n="blogger_toggle_link_signup">S'inscrire</a>
+      </p>
+    </div>
+
+    <div id="bloggerPendingWrap" style="display:none; text-align:center;">
+      <div style="font-size:36px; margin-bottom:10px;">⏳</div>
+      <h3 class="amb-title" data-i18n="blogger_pending_title">Demande envoyée</h3>
+      <p class="amb-sub" data-i18n="blogger_pending_sub">Votre inscription est en attente de validation par l'administrateur. Revenez un peu plus tard.</p>
+    </div>
+
+    <div id="bloggerRejectedWrap" style="display:none; text-align:center;">
+      <div style="font-size:36px; margin-bottom:10px;">😕</div>
+      <h3 class="amb-title" data-i18n="blogger_rejected_title">Demande non retenue</h3>
+      <p class="amb-sub" data-i18n="blogger_rejected_sub">Votre demande n'a pas été validée cette fois-ci.</p>
+    </div>
+
+    <div id="bloggerDashWrap" style="display:none;">
+      <h3 class="amb-title" data-i18n="blogger_dash_title">Conseils & Astuces</h3>
+      <div style="display:flex; align-items:center; gap:6px; margin-bottom:16px;">
+        <span style="width:8px; height:8px; border-radius:50%; background:#6EBE8A; display:inline-block;"></span>
+        <span style="color:var(--mist); font-size:12px;" data-i18n="amb_connected_as">Connecté en tant que</span>
+        <span id="bloggerConnectedEmail" style="color:var(--paper); font-size:12px; font-weight:700;"></span>
+      </div>
+
+      <button type="button" class="btn btn-primary" id="bloggerNewTipBtn" style="width:100%; margin-bottom:18px;" data-i18n="blogger_new_tip_btn">+ Nouveau conseil</button>
+
+      <div id="bloggerTipForm" style="display:none; background:rgba(255,255,255,0.03); border-radius:16px; padding:16px; margin-bottom:18px;">
+        <div class="amb-field">
+          <label data-i18n="blogger_field_title">Titre *</label>
+          <input type="text" id="tipTitle" placeholder="5 astuces pour réduire sa facture d'énergie"/>
+        </div>
+        <div class="amb-field">
+          <label data-i18n="blogger_field_desc">Description courte *</label>
+          <textarea id="tipDescription" rows="3" placeholder="Une courte description qui donne envie de cliquer…" style="width:100%; padding:12px; border-radius:12px; border:1px solid var(--line); background:rgba(255,255,255,0.04); color:var(--paper); font-family:inherit; font-size:14px; box-sizing:border-box; resize:vertical;"></textarea>
+        </div>
+        <div class="amb-field">
+          <label data-i18n="blogger_field_category">Catégorie *</label>
+          <select id="tipCategory" style="width:100%; padding:12px; border-radius:12px; border:1px solid var(--line); background:rgba(255,255,255,0.04); color:var(--paper); font-family:inherit; font-size:14px; box-sizing:border-box;">
+            <option value="budget_eco" style="background:#1a1a1a; color:#fff;">Budget &amp; Économies</option>
+            <option value="cuisine_gaspi" style="background:#1a1a1a; color:#fff;">Cuisine &amp; Anti-gaspillage</option>
+            <option value="maison_vie" style="background:#1a1a1a; color:#fff;">Maison &amp; Vie</option>
+            <option value="parents_enfants" style="background:#1a1a1a; color:#fff;">Parents &amp; Enfants</option>
+          </select>
+          <p id="tipCategoryHint" style="color:var(--mist); font-size:11px; margin:6px 0 0;"></p>
+        </div>
+        <div class="amb-field">
+          <label data-i18n="blogger_field_source_name">Nom du créateur / de la source (facultatif)</label>
+          <input type="text" id="tipSourceName" placeholder="Ex : @MaChaineYoutube"/>
+        </div>
+        <div class="amb-field">
+          <label data-i18n="blogger_field_source_url">Lien — YouTube, TikTok, Instagram, article… (facultatif)</label>
+          <input type="url" id="tipSourceUrl" placeholder="https://…"/>
+        </div>
+        <div class="amb-field">
+          <p style="color:var(--mist); font-size:11px; margin:0 0 12px;">* champs obligatoires</p>
+        </div>
+        <div class="amb-field">
+          <label data-i18n="blogger_field_thumbnail">Style de miniature</label>
+          <div id="thumbStylePicker" style="display:flex; gap:10px;">
+            <div class="thumb-style-opt" data-style="glow" style="flex:1; height:70px; border-radius:12px; cursor:pointer; border:2px solid transparent; position:relative; overflow:hidden; display:flex; align-items:center; justify-content:center;">
+              <div style="position:absolute; inset:-10px; background:radial-gradient(circle, rgba(255,255,255,0.35), transparent 65%);"></div>
+              <span style="font-size:24px; position:relative;" id="thumbPreviewIconGlow">💰</span>
+              <img id="thumbPreviewPhotoGlow" style="display:none; position:absolute; inset:0; width:100%; height:100%; object-fit:cover;" alt=""/>
+            </div>
+            <div class="thumb-style-opt" data-style="dots" style="flex:1; height:70px; border-radius:12px; cursor:pointer; border:2px solid transparent; position:relative; overflow:hidden; display:flex; align-items:center; justify-content:center;">
+              <svg width="100%" height="100%" style="position:absolute; inset:0; opacity:0.35;" id="thumbPreviewDots"></svg>
+              <span style="font-size:24px; position:relative;" id="thumbPreviewIconDots">💰</span>
+              <img id="thumbPreviewPhotoDots" style="display:none; position:absolute; inset:0; width:100%; height:100%; object-fit:cover;" alt=""/>
+            </div>
+            <div class="thumb-style-opt" data-style="waves" style="flex:1; height:70px; border-radius:12px; cursor:pointer; border:2px solid transparent; position:relative; overflow:hidden; display:flex; align-items:center; justify-content:center;">
+              <svg viewBox="0 0 200 70" preserveAspectRatio="none" style="position:absolute; inset:0; width:100%; height:100%; opacity:0.25;">
+                <path d="M0,50 Q50,35 100,50 T200,50 V70 H0 Z" fill="#fff"/>
+                <path d="M0,60 Q50,50 100,60 T200,60 V70 H0 Z" fill="#fff" opacity="0.6"/>
+              </svg>
+              <span style="font-size:24px; position:relative;" id="thumbPreviewIconWaves">💰</span>
+              <img id="thumbPreviewPhotoWaves" style="display:none; position:absolute; inset:0; width:100%; height:100%; object-fit:cover;" alt=""/>
+            </div>
+          </div>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:10px; margin-top:14px;">
+          <button type="button" class="btn btn-primary" id="tipPublishBtn" style="width:100%;" data-i18n="blogger_submit_review">Soumettre pour publication</button>
+          <button type="button" class="btn btn-ghost" id="tipSaveDraftBtn" style="width:100%;" data-i18n="blogger_save_draft">Enregistrer en brouillon</button>
+        </div>
+        <button type="button" id="tipCancelBtn" style="width:100%; margin-top:10px; background:none; border:none; color:var(--mist); font-size:13px; cursor:pointer;" data-i18n="budget_cancel">Annuler</button>
+      </div>
+
+      <div id="bloggerTipsList"></div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
