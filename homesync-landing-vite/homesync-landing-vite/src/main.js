@@ -27,6 +27,7 @@ const TRANSLATIONS = {
     ask_question: "Posez-nous vos questions →",
     ask_question_short: "Une question ?",
     nav_ambassador: "Devenir ambassadeur",
+    nav_partners: "Espace partenaires",
     amb_login_title: "Espace ambassadeur",
     amb_welcome_title: "Bienvenue, futur ambassadeur !",
     amb_welcome_sub: "Partagez votre lien HomeSync, et gagnez un revenu récurrent — simplement.",
@@ -397,6 +398,7 @@ const TRANSLATIONS = {
     ask_question: "Ask us your questions →",
     ask_question_short: "Got a question?",
     nav_ambassador: "Become an ambassador",
+    nav_partners: "Partners space",
     amb_login_title: "Ambassador space",
     amb_welcome_title: "Welcome, future ambassador!",
     amb_welcome_sub: "Share your HomeSync link, and earn a recurring income — simply.",
@@ -965,10 +967,32 @@ const CONTACT_EMAIL = 'part.kobbaz@outlook.fr';
 
 function askOpen() { askOverlay.classList.add('show'); document.getElementById('askSubject').focus(); }
 
+// ── Menu "Espace partenaires" — regroupe Ambassadeur et Blogueur sous un
+// seul point d'entrée cohérent, plutôt que 2 boutons séparés qui se
+// disputaient la visibilité dans la barre de navigation.
+const ctaPartners = document.getElementById('ctaPartners');
+const partnersMenu = document.getElementById('partnersMenu');
+if (ctaPartners && partnersMenu) {
+  ctaPartners.addEventListener('click', (e) => {
+    e.stopPropagation();
+    partnersMenu.classList.toggle('show');
+  });
+  document.addEventListener('click', (e) => {
+    if (!partnersMenu.contains(e.target) && e.target !== ctaPartners) partnersMenu.classList.remove('show');
+  });
+  document.getElementById('partnersAmbassadorChoice').addEventListener('click', () => {
+    partnersMenu.classList.remove('show');
+  });
+  document.getElementById('partnersBloggerChoice').addEventListener('click', () => {
+    partnersMenu.classList.remove('show');
+    document.getElementById('footerBlogger').click();
+  });
+}
+
 // ── Pied de page — CGU / Contact / Politique / Devenir ambassadeur ──
 document.getElementById('footerContact').addEventListener('click', askOpen);
 document.getElementById('footerAmbassador').addEventListener('click', () => {
-  document.getElementById('ctaAmbassador').click();
+  document.getElementById('partnersAmbassadorChoice').click();
 });
 const cguOverlay = document.getElementById('cguOverlay');
 document.getElementById('footerCgu').addEventListener('click', () => cguOverlay.classList.add('show'));
@@ -1356,7 +1380,7 @@ updateScrollHintVisibility();
 
 // ── Espace ambassadeur — connexion/inscription réelle + tableau de bord ──
 (function initAmbassadorSpace() {
-  const openBtn = document.getElementById('ctaAmbassador');
+  const openBtn = document.getElementById('partnersAmbassadorChoice');
   const overlay = document.getElementById('ambOverlay');
   const closeBtn = document.getElementById('ambClose');
   const dashOverlay = document.getElementById('ambDashOverlay');
