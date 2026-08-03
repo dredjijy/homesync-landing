@@ -2300,8 +2300,25 @@ updateScrollHintVisibility();
     'parents_enfants': { icon:'👶', color:'#E8A8C8', hint:"Parentalité, activités enfants, vie de famille au quotidien." },
   };
 
+  // Vraies photos fournies pour Budget & Cuisine — mêmes URLs que celles
+  // utilisées côté app, pour que l'aperçu ici corresponde exactement à ce
+  // que verra l'utilisateur final.
+  const TIP_REAL_PHOTOS = {
+    budget_eco: {
+      glow:  "https://jkiofmoqwvcgbabmqosn.supabase.co/storage/v1/object/public/tip-images/tip-budget-1.jpg",
+      dots:  "https://jkiofmoqwvcgbabmqosn.supabase.co/storage/v1/object/public/tip-images/tip-budget-2.jpg",
+      waves: "https://jkiofmoqwvcgbabmqosn.supabase.co/storage/v1/object/public/tip-images/tip-budget-3.jpg",
+    },
+    cuisine_gaspi: {
+      glow:  "https://jkiofmoqwvcgbabmqosn.supabase.co/storage/v1/object/public/tip-images/tip-cuisine-1.jpg",
+      dots:  "https://jkiofmoqwvcgbabmqosn.supabase.co/storage/v1/object/public/tip-images/tip-cuisine-2.jpg",
+      waves: "https://jkiofmoqwvcgbabmqosn.supabase.co/storage/v1/object/public/tip-images/tip-cuisine-3.jpg",
+    },
+  };
+
   function updateThumbPreviews() {
-    const cat = TIP_CAT_META[document.getElementById('tipCategory').value] || TIP_CAT_META['budget_eco'];
+    const catKey = document.getElementById('tipCategory').value;
+    const cat = TIP_CAT_META[catKey] || TIP_CAT_META['budget_eco'];
     document.querySelectorAll('.thumb-style-opt').forEach(el => { el.style.background = `linear-gradient(135deg, ${cat.color}, ${cat.color}99)`; });
     ['Glow','Dots','Waves'].forEach(suffix => {
       const el = document.getElementById('thumbPreviewIcon' + suffix);
@@ -2313,6 +2330,18 @@ updateScrollHintVisibility();
         `<circle cx="${(i*37+10)%100}%" cy="${(i*53+15)%100}%" r="${2+(i%3)}" fill="#fff"/>`
       ).join('');
     }
+    // Vraies photos — si cette catégorie en a pour le style courant, on les
+    // affiche par-dessus (recouvrant le motif abstrait), pour que l'aperçu
+    // corresponde exactement à ce que l'utilisateur final verra dans l'app.
+    const realPhotos = TIP_REAL_PHOTOS[catKey];
+    ['glow','dots','waves'].forEach(style => {
+      const suffix = style.charAt(0).toUpperCase() + style.slice(1);
+      const img = document.getElementById('thumbPreviewPhoto' + suffix);
+      if (!img) return;
+      const url = realPhotos && realPhotos[style];
+      if (url) { img.src = url; img.style.display = 'block'; }
+      else { img.style.display = 'none'; }
+    });
     // Texte d'aide — explique de quoi cette catégorie doit vraiment parler,
     // pour éviter les mauvais choix (ex : un conseil sur le ménage tagué
     // "Parents & Enfants" alors qu'il devrait être dans "Maison & Vie").
