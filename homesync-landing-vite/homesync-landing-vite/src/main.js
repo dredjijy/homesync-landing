@@ -363,7 +363,6 @@ const TRANSLATIONS = {
 
     founder_quote: "On l'a créé parce qu'on en avait besoin nous-mêmes. On était mal organisés entre le travail de chacun, on faisait les courses en vitesse en oubliant la moitié, on rachetait en double des trucs qu'on avait déjà — et le budget était toujours serré à la fin du mois. HomeSync, c'est ce qu'on aurait voulu avoir depuis le début.",
     founder_sign: "— Minzri",
-    reviews_title: "Ce qu'ils en disent",
 
     faq_title: "Encore une question ?",
     faq1_q: "Mes données sont-elles vraiment privées ?",
@@ -756,7 +755,6 @@ const TRANSLATIONS = {
 
     founder_quote: "We built this because we needed it ourselves. We were poorly organized between everyone's work schedules, we'd rush through grocery shopping and forget half of it, we'd buy duplicates of things we already had — and the budget was always tight by the end of the month. HomeSync is what we wish we'd had from the start.",
     founder_sign: "— Minzri",
-    reviews_title: "What they say",
 
     faq_title: "Still have a question?",
     faq1_q: "Is my data really private?",
