@@ -8,7 +8,25 @@ const ScrollTrigger = window.ScrollTrigger;
 // ═══════════════════════════════════════════════════════════════
 const TRANSLATIONS = {
   fr: {
-    cta: "Rejoindre HomeSync",
+    cta: "Essayer gratuitement",
+    hero_title: "Votre famille, enfin synchronisée.",
+    hero_subtitle: "Plus de listes de courses oubliées. Plus de « qu'est-ce qu'on mange ce soir ? ». Plus de tâches qui reposent toujours sur la même personne.",
+    problem1: "Vous oubliez toujours quelque chose en faisant les courses ?",
+    problem2: "Vous cherchez chaque soir quoi cuisiner ?",
+    problem3: "Les tâches reposent toujours sur la même personne ?",
+    problem_answer: "HomeSync est là pour simplifier tout ça.",
+    howit_title: "Trois étapes. C'est tout.",
+    howit1_title: "Installez",
+    howit1_text: "En quelques secondes, sur Android, iPhone ou directement dans votre navigateur.",
+    howit2_title: "Invitez votre foyer",
+    howit2_text: "Chacun rejoint le même espace partagé — conjoint, enfants, colocataires.",
+    howit3_title: "Tout se synchronise",
+    howit3_text: "Courses, budget, tâches, agenda — la même information, au même moment, pour tout le monde.",
+    benefit1: "Passez moins de temps à organiser votre quotidien.",
+    benefit2: "Toute votre famille synchronisée, au même endroit.",
+    benefit3: "Ne demandez plus « qu'est-ce qu'on mange ce soir ? ».",
+    benefit4: "Plus de listes de courses perdues.",
+    benefit5: "Plus de tâches oubliées.",
     cta_nav: "Rejoindre",
     intro_answer: "HomeSync répond à toutes ces questions.",
     scroll_hint: "CONTINUER",
@@ -190,6 +208,9 @@ const TRANSLATIONS = {
     amb_login_sub: "Connectez-vous pour accéder à votre tableau de bord.",
     amb_app_user_hint: "Déjà un compte HomeSync ? Connectez-vous directement avec — votre profil ambassadeur se crée automatiquement.",
     amb_login_submit: "Se connecter",
+    amb_email_label: "Email",
+    amb_pass_label: "Mot de passe",
+    budget_cancel: "Annuler",
     amb_register_title: "Devenir ambassadeur",
     amb_register_sub: "Créez votre compte pour recevoir votre lien de parrainage.",
     amb_register_submit: "Créer mon compte",
@@ -342,6 +363,7 @@ const TRANSLATIONS = {
 
     founder_quote: "On l'a créé parce qu'on en avait besoin nous-mêmes. On était mal organisés entre le travail de chacun, on faisait les courses en vitesse en oubliant la moitié, on rachetait en double des trucs qu'on avait déjà — et le budget était toujours serré à la fin du mois. HomeSync, c'est ce qu'on aurait voulu avoir depuis le début.",
     founder_sign: "— Minzri",
+    reviews_title: "Ce qu'ils en disent",
 
     faq_title: "Encore une question ?",
     faq1_q: "Mes données sont-elles vraiment privées ?",
@@ -379,7 +401,25 @@ const TRANSLATIONS = {
     questions: ["Qu'est-ce qu'il reste à la maison… et quand ça périme ?", "Avant de passer en caisse… combien vais-je payer ?", "Qui fait quoi cette semaine ?"],
   },
   en: {
-    cta: "Join HomeSync",
+    cta: "Try it free",
+    hero_title: "Your family, finally in sync.",
+    hero_subtitle: "No more forgotten grocery lists. No more \"what's for dinner tonight?\". No more chores that always fall on the same person.",
+    problem1: "Do you always forget something when shopping?",
+    problem2: "Do you scramble every night to figure out what to cook?",
+    problem3: "Do chores always fall on the same person?",
+    problem_answer: "HomeSync is here to make all of that simple.",
+    howit_title: "Three steps. That's it.",
+    howit1_title: "Install",
+    howit1_text: "In a few seconds, on Android, iPhone, or right in your browser.",
+    howit2_title: "Invite your household",
+    howit2_text: "Everyone joins the same shared space — partner, kids, roommates.",
+    howit3_title: "Everything syncs",
+    howit3_text: "Shopping, budget, chores, calendar — the same information, at the same time, for everyone.",
+    benefit1: "Spend less time organizing your everyday life.",
+    benefit2: "Your whole family, in sync, in one place.",
+    benefit3: "Stop asking \"what's for dinner tonight?\".",
+    benefit4: "No more lost shopping lists.",
+    benefit5: "No more forgotten chores.",
     cta_nav: "Join",
     intro_answer: "HomeSync answers all these questions.",
     scroll_hint: "CONTINUE",
@@ -561,6 +601,9 @@ const TRANSLATIONS = {
     amb_login_sub: "Log in to access your dashboard.",
     amb_app_user_hint: "Already have a HomeSync account? Log in directly with it — your ambassador profile is created automatically.",
     amb_login_submit: "Log in",
+    amb_email_label: "Email",
+    amb_pass_label: "Password",
+    budget_cancel: "Cancel",
     amb_register_title: "Become an ambassador",
     amb_register_sub: "Create your account to get your referral link.",
     amb_register_submit: "Create my account",
@@ -713,6 +756,7 @@ const TRANSLATIONS = {
 
     founder_quote: "We built this because we needed it ourselves. We were poorly organized between everyone's work schedules, we'd rush through grocery shopping and forget half of it, we'd buy duplicates of things we already had — and the budget was always tight by the end of the month. HomeSync is what we wish we'd had from the start.",
     founder_sign: "— Minzri",
+    reviews_title: "What they say",
 
     faq_title: "Still have a question?",
     faq1_q: "Is my data really private?",
@@ -773,9 +817,9 @@ function applyLang(lang) {
     const key = el.getAttribute('data-i18n-placeholder');
     if (dict[key] !== undefined) el.setAttribute('placeholder', dict[key]);
   });
-  // Panneaux de modules — chaque phrase de la réponse sur sa propre ligne, aérée
-  document.querySelectorAll('.mc-panel-inner[data-mc]').forEach(el => {
-    const mod = el.getAttribute('data-mc');
+  // Modules — chaque phrase de la réponse sur sa propre ligne, aérée
+  document.querySelectorAll('.modstory-a[data-mc-story]').forEach(el => {
+    const mod = el.getAttribute('data-mc-story');
     const sentences = dict[`mc_${mod}_a`];
     if (Array.isArray(sentences)) {
       el.innerHTML = sentences.map(s => `<p>${s}</p>`).join('');
@@ -798,33 +842,10 @@ function applyLang(lang) {
   document.querySelectorAll('.lang-toggle button').forEach(b => {
     b.classList.toggle('active', b.dataset.lang === lang);
   });
-  // Les libellés d'accessibilité des modules dépendent du texte traduit
-  document.querySelectorAll('.module-card').forEach(card => {
-    const q = card.querySelector('.mc-q');
-    if (q) card.setAttribute('aria-label', (lang==='en'?'See the answer: ':'Voir la réponse : ') + q.textContent);
-  });
 }
 applyLang(currentLang);
 document.querySelectorAll('.lang-toggle button').forEach(btn => {
   btn.addEventListener('click', () => applyLang(btn.dataset.lang));
-});
-
-// ── Modules cliquables : ouvre/ferme le détail au clic, un seul ouvert à la fois ──
-document.querySelectorAll('.module-card').forEach(card => {
-  card.setAttribute('role', 'button');
-  card.setAttribute('tabindex', '0');
-  card.setAttribute('aria-expanded', 'false');
-  const q = card.querySelector('.mc-q');
-  if (q) card.setAttribute('aria-label', 'Voir la réponse : ' + q.textContent);
-
-  const toggle = () => {
-    const wasOpen = card.classList.contains('open');
-    document.querySelectorAll('.module-card.open').forEach(c => { c.classList.remove('open'); c.setAttribute('aria-expanded', 'false'); });
-    if (!wasOpen) { card.classList.add('open'); card.setAttribute('aria-expanded', 'true'); }
-    if (window.ScrollTrigger) setTimeout(() => ScrollTrigger.refresh(), 500);
-  };
-  card.addEventListener('click', toggle);
-  card.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); } });
 });
 
 const APP_URL = "https://home-sync-beta.vercel.app";
@@ -881,7 +902,9 @@ const APP_URL = "https://home-sync-beta.vercel.app";
         'Authorization': 'Bearer sb_publishable_wB-lYIAitkLuo6ARwX6tKw_ZY3ZmLRT',
       },
       body: JSON.stringify({ p_visitor_id: visitorId, p_page: 'landing' }),
-    }).catch(() => {});
+    }).then(async (res) => {
+      if (!res.ok) console.error('log_visit a échoué:', res.status, await res.text());
+    }).catch((e) => console.error('log_visit — erreur réseau:', e));
   } catch {}
 })();
 
@@ -1046,7 +1069,7 @@ document.getElementById('pmSkip').addEventListener('click', () => {
 // Accessibilité clavier pour tous les éléments agissant comme des boutons (role="button")
 document.querySelectorAll('[role="button"]').forEach(el => {
   el.addEventListener('keydown', e => {
-    if ((e.key === 'Enter' || e.key === ' ') && !el.classList.contains('module-card')) {
+    if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
       el.click();
     }
@@ -1068,22 +1091,7 @@ if (gsapReady && !reduced) {
   gsap.registerPlugin(ScrollTrigger);
 
   /* ── séquence d'ouverture (autoplay, indépendante du scroll) ── */
-  const QUESTIONS = TRANSLATIONS[currentLang].questions;
-  const typedEl = document.getElementById('typedText');
   const wait = (ms) => new Promise(r => setTimeout(r, ms));
-
-  async function typeQuestion(text) {
-    for (let i = 0; i <= text.length; i++) {
-      typedEl.textContent = text.slice(0, i);
-      await wait(32);
-    }
-    await wait(2000); // reste affichée ~2s
-    for (let i = text.length; i >= 0; i--) {
-      typedEl.textContent = text.slice(0, i);
-      await wait(16);
-    }
-    await wait(250); // petite pause avant la question suivante
-  }
 
   async function runIntroSequence() {
     // La barre de navigation (avec le bouton ambassadeur) n'a aucune raison
@@ -1094,25 +1102,21 @@ if (gsapReady && !reduced) {
     document.getElementById('nav').classList.add('show');
 
     gsap.to('#introGlow', { opacity:1, duration:1.2 });
-    await wait(300);
-    for (const q of QUESTIONS) await typeQuestion(q);
-
-    // La barre de recherche a fini son rôle — elle s'efface avant que le téléphone arrive
-    await gsap.to('#searchStage', { opacity:0, duration:0.5, ease:'power1.in' });
-
     await wait(200);
-    document.getElementById('introPhone').classList.add('show');
-    await wait(600);
-    document.querySelectorAll('.sync-ic').forEach((el,i)=>{
-      gsap.delayedCall(i*0.16, ()=> el.classList.add('show'));
-    });
-    await wait(600 + 5*160 + 200);
-    document.getElementById('introAnswer').classList.add('show');
-    await wait(450);
-    document.getElementById('introBy').classList.add('show');
-    await wait(350);
+    document.getElementById('heroTitle').classList.add('show');
+    await wait(300);
+    document.getElementById('heroSubtitle').classList.add('show');
+    await wait(300);
     document.getElementById('introCta').classList.add('show');
+    await wait(250);
+    document.querySelector('.intro-trust').classList.add('show');
+    await wait(300);
+    document.getElementById('introPhone').classList.add('show');
     await wait(400);
+    document.querySelectorAll('.sync-ic').forEach((el,i)=>{
+      gsap.delayedCall(i*0.14, ()=> el.classList.add('show'));
+    });
+    await wait(400 + 5*140 + 200);
     document.getElementById('scrollHint').classList.add('show');
   }
   runIntroSequence();
@@ -1189,12 +1193,12 @@ if (gsapReady && !reduced) {
 
 } else {
   /* GSAP indisponible ou reduced-motion : tout reste visible statiquement, rien de caché */
-  document.getElementById('typedText').textContent = "Qu'est-ce qu'il reste à la maison ?";
+  document.getElementById('heroTitle').classList.add('show');
+  document.getElementById('heroSubtitle').classList.add('show');
   document.getElementById('introPhone').classList.add('show');
   document.querySelectorAll('.sync-ic').forEach(el=> el.classList.add('show'));
-  document.getElementById('introAnswer').classList.add('show');
-  document.getElementById('introBy').classList.add('show');
   document.getElementById('introCta').classList.add('show');
+  document.querySelector('.intro-trust').classList.add('show');
   document.getElementById('nav').classList.add('show');
   document.querySelectorAll('.rv').forEach(el=> el.classList.add('in'));
 }
