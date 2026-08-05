@@ -906,42 +906,6 @@ const APP_URL = "https://home-sync-beta.vercel.app";
   } catch {}
 })();
 
-(function initLandingAmbCode() {
-  const toggle = document.getElementById('landingAmbCodeLink');
-  const wrap = document.getElementById('landingAmbCodeWrap');
-  const input = document.getElementById('landingAmbCode');
-  const savedEl = document.getElementById('landingAmbCodeSaved');
-  if (!toggle || !wrap || !input) return;
-
-  toggle.addEventListener('click', () => {
-    wrap.style.display = wrap.style.display === 'none' ? '' : 'none';
-    if (wrap.style.display !== 'none') input.focus();
-  });
-
-  input.addEventListener('input', () => {
-    const code = input.value.trim().toUpperCase();
-    input.value = code;
-    if (!code) { savedEl.style.display = 'none'; return; }
-
-    localStorage.setItem('homesync_ref_code', code);
-    localStorage.setItem('homesync_ref_captured_at', String(Date.now()));
-    savedEl.style.display = '';
-
-    const alreadyLogged = sessionStorage.getItem('homesync_ref_click_logged_' + code);
-    if (!alreadyLogged) {
-      fetch('https://jkiofmoqwvcgbabmqosn.supabase.co/rest/v1/rpc/log_referral_click', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'apikey': 'sb_publishable_wB-lYIAitkLuo6ARwX6tKw_ZY3ZmLRT',
-          'Authorization': 'Bearer sb_publishable_wB-lYIAitkLuo6ARwX6tKw_ZY3ZmLRT',
-        },
-        body: JSON.stringify({ p_code: code }),
-      }).catch(() => {});
-      sessionStorage.setItem('homesync_ref_click_logged_' + code, '1');
-    }
-  });
-})();
 function getAppUrlWithRef(baseParams = '') {
   let ref = '';
   try {
@@ -2027,7 +1991,7 @@ updateScrollHintVisibility();
       error = result.error;
       if (attempt < 2) await new Promise(r => setTimeout(r, 800));
     }
-    if (error) { list.innerHTML = '<p style="color:var(--mist);">Impossible de charger.</p>'; return; }
+    if (error) { console.error("get_full_visitor_stats a échoué:", error); list.innerHTML = `<p style="color:var(--mist);">Impossible de charger.<br/><span style="font-size:11px;opacity:.7;">${error.message || error.code || "erreur inconnue"}</span></p>`; return; }
 
     const statsHtml = `
       <div class="amb-stat-grid" style="margin-bottom:16px;">
