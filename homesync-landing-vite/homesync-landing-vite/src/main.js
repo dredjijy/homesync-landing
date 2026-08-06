@@ -149,6 +149,10 @@ const TRANSLATIONS = {
     amb_activity_concurrent: "Connectés en ce moment",
     amb_activity_monthly_history_lbl: "Historique mensuel",
     amb_activity_no_history: "Pas encore d'historique — revenez dans quelques jours.",
+    amb_usage_analytics_lbl: "Actions les plus utilisées (7 derniers jours)",
+    amb_usage_analytics_hint: "Comptages agrégés uniquement — jamais lié à une personne, Cycle exclu.",
+    amb_usage_subscriber: "Abonnés",
+    amb_usage_free: "Non-abonnés",
     amb_activity_landing_7d: "Landing — 7 derniers jours",
     amb_activity_app_total: "Visiteurs uniques app",
     amb_activity_app_7d: "App — 7 derniers jours",
@@ -315,6 +319,8 @@ const TRANSLATIONS = {
     privacy_2_body: "Vous pouvez exporter ou supprimer l'ensemble de vos données à tout moment, directement depuis les paramètres de l'application.",
     privacy_3_title: "Partage des données",
     privacy_3_body: "Vos données ne sont jamais vendues. Elles sont uniquement partagées avec les prestataires techniques nécessaires au fonctionnement du service (hébergement, paiement).",
+    privacy_5_title: "Analyse d'usage",
+    privacy_5_body: "Pour améliorer l'application, nous comptons de façon agrégée quels onglets et fonctionnalités sont utilisés — jamais le contenu de vos données, jamais lié à votre identité. Le module Cycle est exclu de cette analyse, sans exception.",
     privacy_4_title: "Contact",
     privacy_4_body: "Pour toute question sur vos données, utilisez le bouton Contact en bas de page.",
     pm_title: "Sur quel appareil ?",
@@ -544,6 +550,10 @@ const TRANSLATIONS = {
     amb_activity_concurrent: "Connected right now",
     amb_activity_monthly_history_lbl: "Monthly history",
     amb_activity_no_history: "No history yet — check back in a few days.",
+    amb_usage_analytics_lbl: "Most used actions (last 7 days)",
+    amb_usage_analytics_hint: "Aggregate counts only — never tied to a person, Cycle excluded.",
+    amb_usage_subscriber: "Subscribers",
+    amb_usage_free: "Free",
     amb_activity_landing_7d: "Landing — last 7 days",
     amb_activity_app_total: "Unique app visitors",
     amb_activity_app_7d: "App — last 7 days",
@@ -710,6 +720,8 @@ const TRANSLATIONS = {
     privacy_2_body: "You can export or delete all your data at any time, directly from the app's settings.",
     privacy_3_title: "Data sharing",
     privacy_3_body: "Your data is never sold. It is only shared with the technical providers necessary for the service to work (hosting, payment).",
+    privacy_5_title: "Usage analytics",
+    privacy_5_body: "To improve the app, we count in aggregate which tabs and features are used — never the content of your data, never tied to your identity. The Cycle module is excluded from this analysis, without exception.",
     privacy_4_title: "Contact",
     privacy_4_body: "For any question about your data, use the Contact button at the bottom of the page.",
     pm_title: "Which device?",
@@ -2016,8 +2028,57 @@ updateScrollHintVisibility();
       </div>
       <div class="amb-leaderboard-lbl">${translate('amb_activity_monthly_history_lbl')}</div>
       <div id="ambMonthlyHistory"></div>
+      <div class="amb-leaderboard-lbl">${translate('amb_usage_analytics_lbl')}</div>
+      <p style="color:var(--mist); font-size:11px; margin:-4px 0 10px;">${translate('amb_usage_analytics_hint')}</p>
+      <div id="ambUsageAnalytics"></div>
       <div class="amb-leaderboard-lbl">${translate('amb_activity_households_lbl')}</div>
     `;
+
+    // Analyse d'usage — comptages agrégés des 7 derniers jours, jamais liés
+    // à une personne. Cycle est exclu par conception (jamais suivi).
+    const sevenDaysAgo = new Date(Date.now() - 7*24*60*60*1000).toISOString().slice(0,10);
+    const { data: usageRows } = await supabase.from('ui_interaction_daily').select('action_key, is_subscriber, count').gte('day', sevenDaysAgo);
+    const totals = {}; // { key: { sub: n, free: n } }
+    (usageRows || []).forEach(r => {
+      if (!totals[r.action_key]) totals[r.action_key] = { sub: 0, free: 0 };
+      totals[r.action_key][r.is_subscriber ? 'sub' : 'free'] += r.count;
+    });
+    const entries = Object.entries(totals);
+    const grandTotal = ([k]) => totals[k].sub + totals[k].free;
+    const sorted = entries.sort((a,b) => grandTotal(b) - grandTotal(a));
+
+    // Le signal de conversion le plus précieux, mis en avant séparément
+    const checkoutEntry = sorted.find(([k]) => k === 'checkout_started');
+    const otherEntries = sorted.filter(([k]) => k !== 'checkout_started').slice(0, 12);
+
+    const barRow = (key, subCount, freeCount, highlight) => {
+      const max = Math.max(subCount, freeCount, 1);
+      const label = key.replace('tab_opened:', '📱 ').replace(/_/g, ' ');
+      return `
+        <div class="amb-usage-row" style="${highlight ? 'background:rgba(255,193,90,0.08); border-radius:10px; padding:8px; margin-bottom:8px;' : 'margin-bottom:10px;'}">
+          <div style="display:flex; justify-content:space-between; font-size:11.5px; color:var(--paper); margin-bottom:4px;">
+            <span>${highlight ? '🎯 ' : ''}${label}</span>
+            <span style="color:var(--mist);">${subCount + freeCount}</span>
+          </div>
+          <div style="display:flex; gap:2px; height:7px; border-radius:4px; overflow:hidden; background:rgba(255,255,255,0.05);">
+            <div style="width:${(subCount/max)*100}%; background:#4BE3C4;"></div>
+          </div>
+          <div style="display:flex; gap:2px; height:7px; border-radius:4px; overflow:hidden; background:rgba(255,255,255,0.05); margin-top:2px;">
+            <div style="width:${(freeCount/max)*100}%; background:#FF7A45;"></div>
+          </div>
+        </div>`;
+    };
+
+    const legendHtml = `
+      <div style="display:flex; gap:16px; font-size:10.5px; color:var(--mist); margin-bottom:12px;">
+        <span><span style="display:inline-block; width:8px; height:8px; border-radius:2px; background:#4BE3C4; margin-right:4px;"></span>${translate('amb_usage_subscriber')}</span>
+        <span><span style="display:inline-block; width:8px; height:8px; border-radius:2px; background:#FF7A45; margin-right:4px;"></span>${translate('amb_usage_free')}</span>
+      </div>`;
+
+    const usageHtml = sorted.length ? legendHtml
+      + (checkoutEntry ? barRow(checkoutEntry[0], checkoutEntry[1].sub, checkoutEntry[1].free, true) : '')
+      + otherEntries.map(([key, v]) => barRow(key, v.sub, v.free, false)).join('')
+      : `<p class="amb-empty">${translate('amb_activity_no_history')}</p>`;
 
     // Historique mensuel — comparaison mois après mois
     const { data: monthly } = await supabase.from('monthly_stats_history').select('*').order('month_key', { ascending: false }).limit(6);
@@ -2051,6 +2112,8 @@ updateScrollHintVisibility();
     list.innerHTML = statsHtml + householdsHtml;
     const monthlyEl = document.getElementById('ambMonthlyHistory');
     if (monthlyEl) monthlyEl.innerHTML = monthlyHtml;
+    const usageEl = document.getElementById('ambUsageAnalytics');
+    if (usageEl) usageEl.innerHTML = usageHtml;
   }
 
   async function loadPayouts() {
