@@ -11,6 +11,12 @@ const TRANSLATIONS = {
     cta: "Essayer gratuitement",
     hero_title: "Votre famille, enfin synchronisée.",
     hero_subtitle: "Plus de listes de courses oubliées. Plus de « qu'est-ce qu'on mange ce soir ? ». Plus de tâches qui reposent toujours sur la même personne.",
+    hero_notif1_t: "Léa a coché « Lait »",
+    hero_notif1_s: "Liste de courses · à l'instant",
+    hero_notif2_t: "Budget : 38 % utilisé",
+    hero_notif2_s: "1 762 € restants ce mois-ci",
+    hero_notif3_t: "Rdv médecin — demain",
+    hero_notif3_s: "Rappel envoyé à toute la famille",
     problem1: "Vous oubliez toujours quelque chose en faisant les courses ?",
     problem2: "Vous cherchez chaque soir quoi cuisiner ?",
     problem3: "Les tâches reposent toujours sur la même personne ?",
@@ -289,9 +295,6 @@ const TRANSLATIONS = {
     promo_field_start: "Date de début",
     promo_field_end: "Date de fin",
     promo_create_btn: "+ Créer cette période gratuite",
-    landing_amb_code_link: "🤝 Vous avez un code ambassadeur ?",
-    landing_amb_code_ph: "PRENOM1234",
-    landing_amb_code_saved: "✓ Code enregistré — il sera utilisé lors de votre abonnement.",
     cgu_1_title: "Le service",
     cgu_1_body: "HomeSync est une application de gestion du foyer (courses, stock, budget, recettes, agenda) éditée par Minzri, accessible par abonnement.",
     cgu_2_title: "Abonnement et essai gratuit",
@@ -403,6 +406,12 @@ const TRANSLATIONS = {
     cta: "Try it free",
     hero_title: "Your family, finally in sync.",
     hero_subtitle: "No more forgotten grocery lists. No more \"what's for dinner tonight?\". No more chores that always fall on the same person.",
+    hero_notif1_t: "Lea checked off \"Milk\"",
+    hero_notif1_s: "Shopping list · just now",
+    hero_notif2_t: "Budget: 38% used",
+    hero_notif2_s: "$1,762 left this month",
+    hero_notif3_t: "Doctor's appointment — tomorrow",
+    hero_notif3_s: "Reminder sent to the whole family",
     problem1: "Do you always forget something when shopping?",
     problem2: "Do you scramble every night to figure out what to cook?",
     problem3: "Do chores always fall on the same person?",
@@ -681,9 +690,6 @@ const TRANSLATIONS = {
     promo_field_start: "Start date",
     promo_field_end: "End date",
     promo_create_btn: "+ Create this free period",
-    landing_amb_code_link: "🤝 Have an ambassador code?",
-    landing_amb_code_ph: "FIRSTNAME1234",
-    landing_amb_code_saved: "✓ Code saved — it will be used with your subscription.",
     cgu_1_title: "The service",
     cgu_1_body: "HomeSync is a household management app (shopping, stock, budget, recipes, calendar) published by Minzri, available by subscription.",
     cgu_2_title: "Subscription and free trial",
@@ -879,10 +885,6 @@ const APP_URL = "https://home-sync-beta.vercel.app";
   } catch {}
 })();
 
-// ── Champ "code ambassadeur" sur la landing (près du héros) — capte le code
-// le plus tôt possible dans le parcours, pour ceux qui connaissent un code de
-// vive voix sans avoir cliqué de lien (ex: installation directe depuis un store).
-// Ce bloc HTML existait déjà mais n'avait jamais été branché — corrigé ici. ──
 // ── Suivi de visite anonyme — juste pour compter les visiteurs uniques,
 // jamais lié à une identité réelle, un seul enregistrement par jour. ──
 (function trackLandingVisit() {
@@ -1075,10 +1077,10 @@ if (gsapReady && !reduced) {
     await wait(300);
     document.getElementById('introPhone').classList.add('show');
     await wait(400);
-    document.querySelectorAll('.sync-ic').forEach((el,i)=>{
-      gsap.delayedCall(i*0.14, ()=> el.classList.add('show'));
+    document.querySelectorAll('.sync-notif').forEach((el,i)=>{
+      gsap.delayedCall(i*0.35, ()=> el.classList.add('show'));
     });
-    await wait(400 + 5*140 + 200);
+    await wait(400 + 3*350 + 200);
     document.getElementById('scrollHint').classList.add('show');
   }
   runIntroSequence();
@@ -1158,7 +1160,7 @@ if (gsapReady && !reduced) {
   document.getElementById('heroTitle').classList.add('show');
   document.getElementById('heroSubtitle').classList.add('show');
   document.getElementById('introPhone').classList.add('show');
-  document.querySelectorAll('.sync-ic').forEach(el=> el.classList.add('show'));
+  document.querySelectorAll('.sync-notif').forEach(el=> el.classList.add('show'));
   document.getElementById('introCta').classList.add('show');
   document.querySelector('.intro-trust').classList.add('show');
   document.getElementById('nav').classList.add('show');
