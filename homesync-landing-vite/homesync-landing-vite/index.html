@@ -1027,6 +1027,42 @@ body::after{
     <p class="problem-answer" data-i18n="problem_answer">HomeSync est là pour simplifier tout ça.</p>
   </section>
 
+<section class="reviews rv" id="reviewsSection">
+    <h2 class="reviews-title" data-i18n="reviews_title">Ils utilisent HomeSync</h2>
+    <div class="reviews-grid">
+
+      <figure class="review-card">
+        <div class="review-stars" aria-label="5 étoiles">★★★★★</div>
+        <blockquote class="review-text" data-i18n="review_1">Merci pour l'appli, à faire connaître. L'évolution est visible, bravo.</blockquote>
+        <figcaption class="review-author" data-i18n="review_1_who">Rodrigue</figcaption>
+      </figure>
+
+      <figure class="review-card">
+        <div class="review-stars" aria-label="5 étoiles">★★★★★</div>
+        <blockquote class="review-text" data-i18n="review_2">C'est complet et très intéressant pour la famille, surtout le côté synchronisé.</blockquote>
+        <figcaption class="review-author" data-i18n="review_2_who">Famille M.</figcaption>
+      </figure>
+
+      <figure class="review-card">
+        <div class="review-stars" aria-label="5 étoiles">★★★★★</div>
+        <blockquote class="review-text" data-i18n="review_3">J'avais des doutes, j'ai essayé : je ne la quitte plus. Félicitations au jeune homme qui travaille dessus !</blockquote>
+        <figcaption class="review-author" data-i18n="review_3_who">Anonymous47</figcaption>
+      </figure>
+
+    </div>
+  </section>
+
+  <!-- ══════ ACTION APRÈS LA PREUVE ══════ -->
+  <section class="midcta rv">
+    <div class="midcta-inner">
+      <p class="midcta-line" data-i18n="midcta_line">Tout ça, dans une seule application.</p>
+      <a href="#" class="btn btn-primary midcta-btn" id="ctaProof" role="button" data-i18n="cta">Commencer — 7 jours gratuits</a>
+      <p class="midcta-note" data-i18n="midcta_note">Sans carte bancaire. Annulable en 1 clic.</p>
+    </div>
+  </section>
+
+
+
   <!-- ══════ COMMENT ÇA FONCTIONNE — 3 étapes, simple et rassurant ══════ -->
   
 
@@ -1037,7 +1073,47 @@ body::after{
   
 
   <!-- ══════ FEATURES — téléphone sticky, contenu alterné ══════ -->
-  <section class="feature-scroll" id="features">
+  <section class="gallery rv" id="gallerySection">
+    <h2 class="gallery-title" data-i18n="gallery_title">HomeSync, en vrai</h2>
+    <p class="gallery-sub" data-i18n="gallery_sub">Un aperçu réel de l'application, telle qu'elle est aujourd'hui.</p>
+    <div class="gallery-frame">
+      <button class="gallery-arrow gallery-prev" id="galleryPrev" aria-label="Précédent">‹</button>
+      <div class="gallery-track" id="galleryTrack">
+        <div class="gallery-slide" data-slide="2">
+          <img src="/shot-shopping.png" alt="Liste de courses HomeSync" loading="lazy"/>
+          <div class="gallery-caption">
+            <div class="gc-title" data-i18n="gallery_shopping_title">Les courses, partagées en temps réel</div>
+            <div class="gc-text" data-i18n="gallery_shopping_text">Chacun coche ce qu'il a acheté, le prix se calcule automatiquement, tout le monde voit la même liste.</div>
+          </div>
+        </div>
+        <div class="gallery-slide" data-slide="3">
+          <img src="/shot-budget.png" alt="Budget HomeSync" loading="lazy"/>
+          <div class="gallery-caption">
+            <div class="gc-title" data-i18n="gallery_budget_title">Le budget, sans tableur</div>
+            <div class="gc-text" data-i18n="gallery_budget_text">Qui a dépensé quoi, combien il reste, les charges fixes du mois — clair en un coup d'œil.</div>
+          </div>
+        </div>
+        <div class="gallery-slide" data-slide="4">
+          <img src="/shot-recipes.png" alt="Recettes HomeSync" loading="lazy"/>
+          <div class="gallery-caption">
+            <div class="gc-title" data-i18n="gallery_recipes_title">Les repas de la semaine, planifiés</div>
+            <div class="gc-text" data-i18n="gallery_recipes_text">Un menu par jour, et la liste de courses se remplit automatiquement avec ce qui manque.</div>
+          </div>
+        </div>
+        <div class="gallery-slide" data-slide="5">
+          <img src="/shot-tasks.png" alt="Tâches HomeSync" loading="lazy"/>
+          <div class="gallery-caption">
+            <div class="gc-title" data-i18n="gallery_tasks_title">Les tâches, réparties équitablement</div>
+            <div class="gc-text" data-i18n="gallery_tasks_text">Qui sort les poubelles cette semaine ? Attribuez une tâche, et faites-la tourner automatiquement si besoin.</div>
+          </div>
+        </div>
+      </div>
+      <button class="gallery-arrow gallery-next" id="galleryNext" aria-label="Suivant">›</button>
+    </div>
+    <div class="gallery-dots" id="galleryDots"></div>
+  </section>
+
+<section class="feature-scroll" id="features">
     <div class="feature-phone-col">
       <div class="phone show" id="featPhone" style="position:relative;">
         <div class="phone-screen">
@@ -1095,45 +1171,7 @@ body::after{
   </section>
 
   <!-- ══════ GALERIE — captures d'écran de l'app ══════ -->
-  <section class="gallery rv" id="gallerySection">
-    <h2 class="gallery-title" data-i18n="gallery_title">HomeSync, en vrai</h2>
-    <p class="gallery-sub" data-i18n="gallery_sub">Un aperçu réel de l'application, telle qu'elle est aujourd'hui.</p>
-    <div class="gallery-frame">
-      <button class="gallery-arrow gallery-prev" id="galleryPrev" aria-label="Précédent">‹</button>
-      <div class="gallery-track" id="galleryTrack">
-        <div class="gallery-slide" data-slide="2">
-          <img src="/shot-shopping.png" alt="Liste de courses HomeSync" loading="lazy"/>
-          <div class="gallery-caption">
-            <div class="gc-title" data-i18n="gallery_shopping_title">Les courses, partagées en temps réel</div>
-            <div class="gc-text" data-i18n="gallery_shopping_text">Chacun coche ce qu'il a acheté, le prix se calcule automatiquement, tout le monde voit la même liste.</div>
-          </div>
-        </div>
-        <div class="gallery-slide" data-slide="3">
-          <img src="/shot-budget.png" alt="Budget HomeSync" loading="lazy"/>
-          <div class="gallery-caption">
-            <div class="gc-title" data-i18n="gallery_budget_title">Le budget, sans tableur</div>
-            <div class="gc-text" data-i18n="gallery_budget_text">Qui a dépensé quoi, combien il reste, les charges fixes du mois — clair en un coup d'œil.</div>
-          </div>
-        </div>
-        <div class="gallery-slide" data-slide="4">
-          <img src="/shot-recipes.png" alt="Recettes HomeSync" loading="lazy"/>
-          <div class="gallery-caption">
-            <div class="gc-title" data-i18n="gallery_recipes_title">Les repas de la semaine, planifiés</div>
-            <div class="gc-text" data-i18n="gallery_recipes_text">Un menu par jour, et la liste de courses se remplit automatiquement avec ce qui manque.</div>
-          </div>
-        </div>
-        <div class="gallery-slide" data-slide="5">
-          <img src="/shot-tasks.png" alt="Tâches HomeSync" loading="lazy"/>
-          <div class="gallery-caption">
-            <div class="gc-title" data-i18n="gallery_tasks_title">Les tâches, réparties équitablement</div>
-            <div class="gc-text" data-i18n="gallery_tasks_text">Qui sort les poubelles cette semaine ? Attribuez une tâche, et faites-la tourner automatiquement si besoin.</div>
-          </div>
-        </div>
-      </div>
-      <button class="gallery-arrow gallery-next" id="galleryNext" aria-label="Suivant">›</button>
-    </div>
-    <div class="gallery-dots" id="galleryDots"></div>
-  </section>
+  
 
   <!-- ══════ LIGHTBOX — zoom sur les captures d'écran ══════ -->
   <div class="lightbox" id="lightbox">
@@ -1632,30 +1670,7 @@ body::after{
 
 
   <!-- ══════ AVIS — preuve sociale ══════ -->
-  <section class="reviews rv" id="reviewsSection">
-    <h2 class="reviews-title" data-i18n="reviews_title">Ils utilisent HomeSync</h2>
-    <div class="reviews-grid">
-
-      <figure class="review-card">
-        <div class="review-stars" aria-label="5 étoiles">★★★★★</div>
-        <blockquote class="review-text" data-i18n="review_1">Merci pour l'appli, à faire connaître. L'évolution est visible, bravo.</blockquote>
-        <figcaption class="review-author" data-i18n="review_1_who">Rodrigue</figcaption>
-      </figure>
-
-      <figure class="review-card">
-        <div class="review-stars" aria-label="5 étoiles">★★★★★</div>
-        <blockquote class="review-text" data-i18n="review_2">C'est complet et très intéressant pour la famille, surtout le côté synchronisé.</blockquote>
-        <figcaption class="review-author" data-i18n="review_2_who">Famille M.</figcaption>
-      </figure>
-
-      <figure class="review-card">
-        <div class="review-stars" aria-label="5 étoiles">★★★★★</div>
-        <blockquote class="review-text" data-i18n="review_3">J'avais des doutes, j'ai essayé : je ne la quitte plus. Félicitations au jeune homme qui travaille dessus !</blockquote>
-        <figcaption class="review-author" data-i18n="review_3_who">Anonymous47</figcaption>
-      </figure>
-
-    </div>
-  </section>
+  
 
   <!-- ══════ FINAL — PRIX ══════ -->
   <!-- ══════ VOIX DU FONDATEUR — pourquoi HomeSync existe ══════ -->
