@@ -13,7 +13,7 @@ const TRANSLATIONS = {
     hero_subtitle: "Courses, repas, budget, tâches : tout le foyer voit la même chose, en temps réel. Fini la charge mentale qui repose sur une seule personne.",
     midcta_line: "Tout ça, dans une seule application.",
     midcta_note: "Sans carte bancaire. Annulable en 1 clic.",
-    reviews_title: "Ils utilisent HomeSync",
+    reviews_title: "Ils ont arrêté d'y penser",
     review_1: "Merci pour l'appli, à faire connaître. L'évolution est visible, bravo.",
     review_1_who: "Rodrigue",
     review_2: "C'est complet et très intéressant pour la famille, surtout le côté synchronisé.",
@@ -29,7 +29,7 @@ const TRANSLATIONS = {
     problem1: "Vous oubliez toujours quelque chose en faisant les courses ?",
     problem2: "Vous cherchez chaque soir quoi cuisiner ?",
     problem3: "Les tâches reposent toujours sur la même personne ?",
-    problem_answer: "HomeSync est là pour simplifier tout ça.",
+    problem_answer: "Tout est au même endroit, visible par tous, mis à jour en temps réel.",
     howit_title: "Trois étapes. C'est tout.",
     howit1_title: "Installez",
     howit1_text: "En quelques secondes, sur Android, iPhone ou directement dans votre navigateur.",
@@ -426,7 +426,7 @@ const TRANSLATIONS = {
     hero_subtitle: "Groceries, meals, budget, chores: the whole household sees the same thing, in real time. No more mental load on one person.",
     midcta_line: "All of it, in one app.",
     midcta_note: "No credit card. Cancel in one tap.",
-    reviews_title: "They use HomeSync",
+    reviews_title: "They stopped thinking about it",
     review_1: "Thanks for the app — worth spreading the word. The progress shows, well done.",
     review_1_who: "Rodrigue",
     review_2: "It's complete and really useful for a family, especially the way everything syncs.",
@@ -1044,7 +1044,7 @@ askForm.addEventListener('submit', (e) => {
   askForm.reset();
 });
 
-document.querySelectorAll('#ctaNav,#introCta,#ctaMid,#ctaFinal').forEach(el => {
+document.querySelectorAll('#ctaNav,#introCta,#ctaProof,#ctaMid,#ctaFinal').forEach(el => {
   el.addEventListener('click', (e) => {
     e.preventDefault();
     pmOpen();
