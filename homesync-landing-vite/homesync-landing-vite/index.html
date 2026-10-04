@@ -952,6 +952,22 @@ body::after{
   .midcta{ padding:40px 18px !important; }
   .gallery{ padding-top:40px !important; padding-bottom:40px !important; }
 }
+
+/* ── Écrans très étroits (iPhone SE, 320px) ──────────────────────────────
+   Le bouton principal, en nowrap, dépassait de quelques pixels et poussait
+   toute la page vers la droite. On réduit le rembourrage plutôt que le
+   texte, qui porte la promesse. */
+@media(max-width:360px){
+  .btn{ padding:14px 18px !important; font-size:14px !important; }
+  .intro-cta{ width:100%; box-sizing:border-box; }
+  .nav .btn{ padding:9px 13px !important; font-size:12px !important; }
+  .nav-ambassador{ font-size:11.5px !important; padding:8px 11px !important; }
+  .midcta-inner{ padding:26px 18px !important; }
+  .review-card{ padding:20px 17px !important; }
+}
+/* Filet de sécurité : rien ne doit pouvoir élargir la page */
+html, body{ max-width:100%; overflow-x:hidden; }
+img, svg, video{ max-width:100%; height:auto; }
 </style>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 </head>
