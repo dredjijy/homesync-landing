@@ -257,24 +257,22 @@ a:focus-visible, button:focus-visible, [role="button"]:focus-visible{ outline:2p
 .nav .btn{ padding:10px 20px; font-size:13px; white-space:nowrap; flex-shrink:0; }
 @media (max-width:400px){ .nav .btn{ padding:8px 13px; font-size:12px; } }
 
-/* Mobile — HomeSync centré en haut, Rejoindre / Devenir ambassadeur sur une
-   même ligne en dessous (un à gauche, un à droite), fond noir plein. */
+/* Mobile — nav sur UNE seule ligne : logo à gauche, actions à droite.
+   L'ancienne version sur 2 lignes faisait ~150px et recouvrait le titre. */
 @media (max-width:640px){
   .nav{
-    display:grid; grid-template-columns:1fr 1fr; grid-template-areas:"logo logo" "amb join";
-    align-items:center; justify-items:stretch;
-    background:#0A0A0F !important; backdrop-filter:none !important; -webkit-backdrop-filter:none !important;
-    gap:12px;
+    flex-wrap:nowrap; gap:8px;
+    padding:calc(10px + env(safe-area-inset-top,0px)) 14px 10px;
+    background:rgba(10,10,15,0.94) !important;
+    backdrop-filter:blur(12px) !important; -webkit-backdrop-filter:blur(12px) !important;
+    border-bottom:1px solid var(--line);
   }
-  .nav-logo{ grid-area:logo; justify-content:center; }
-  .lang-toggle{ display:none; }
-  .nav-ask{ display:none; }
-  .nav-ambassador{ grid-area:amb; justify-self:start; }
-  #ctaNav{ grid-area:join; justify-self:end; }
-}
-@media (max-width:360px){
+  .nav-logo{ font-size:17px; margin-right:auto; flex-shrink:0; }
+  .lang-toggle, .nav-ask{ display:none; }
   .nav-ambassador .amb-btn-text{ display:none; }
-  .nav-ambassador{ padding:8px 11px; }
+  #ctaPartners{ padding:9px 12px !important; font-size:15px !important; }
+  .partners-menu{ left:auto; right:0; }
+  #ctaNav{ padding:10px 15px !important; font-size:13px !important; }
 }
 
 /* ══════════════════════════════════════════
@@ -871,9 +869,6 @@ a:focus-visible, button:focus-visible, [role="button"]:focus-visible{ outline:2p
 /* Le titre gagne un dégradé subtil : le regard se pose dessus en premier
    sans que la lecture en souffre. */
 .hero-title{
-  background:linear-gradient(175deg, var(--paper) 30%, rgba(247,244,239,0.72) 100%);
-  -webkit-background-clip:text; background-clip:text;
-  -webkit-text-fill-color:transparent;
   text-shadow:0 2px 40px rgba(91,140,123,0.18);
 }
 
@@ -968,6 +963,54 @@ body::after{
 /* Filet de sécurité : rien ne doit pouvoir élargir la page */
 html, body{ max-width:100%; overflow-x:hidden; }
 img, svg, video{ max-width:100%; height:auto; }
+
+/* Vraie capture dans le cadre du téléphone du hero */
+.phone-shot{
+  display:block; width:100%; height:100%;
+  object-fit:cover; object-position:top center;
+  border-radius:inherit;
+}
+
+/* ══════════════════════════════════════════
+   HÉROS MOBILE — titre jamais caché, tout tient dans l'écran
+   ══════════════════════════════════════════ */
+:root{ --nav-h:64px; }
+html{ scroll-padding-top:calc(var(--nav-h) + env(safe-area-inset-top,0px)); }
+.hero-title, .hero-subtitle{ text-wrap:balance; }
+@media (max-width:640px){
+  .intro{
+    min-height:auto; justify-content:flex-start;
+    padding:calc(var(--nav-h) + env(safe-area-inset-top,0px) + 28px) 20px 40px !important;
+  }
+  .intro-glow{ width:520px; height:520px; top:-120px; }
+  .hero-title{
+    font-size:clamp(31px, 9.2vw, 42px); line-height:1.08; letter-spacing:-0.03em;
+    margin-bottom:14px; max-width:14ch;
+  }
+  .hero-subtitle{ font-size:15.5px; line-height:1.55; max-width:34ch; margin-bottom:4px; }
+  .intro-cta{ margin-top:22px; width:100%; max-width:340px; justify-content:center; padding:16px 20px; font-size:15.5px; }
+  .intro-trust{ font-size:11.5px; line-height:1.6; max-width:32ch; }
+  .phone-wrap{ margin-top:30px; }
+  .phone{ width:min(210px,58vw); }
+  .scroll-hint{ display:none !important; } /* chevauchait le téléphone */
+}
+@media (max-width:360px){
+  :root{ --nav-h:58px; }
+  .nav-logo{ font-size:15.5px; }
+  #ctaNav{ padding:9px 11px !important; font-size:12px !important; }
+  .hero-title{ font-size:29px; }
+}
+
+/* Sans faux téléphones : héros centré, features en une colonne de cartes */
+.intro{ min-height:auto; padding-bottom:70px; }
+.feature-scroll{ grid-template-columns:1fr !important; max-width:720px; }
+.feature-block{ min-height:auto !important; padding:28px 0 !important; text-align:center; align-items:center; }
+.fb-title{ max-width:24ch; } .fb-text{ max-width:40ch; }
+@media (max-width:640px){
+  .intro{ padding-bottom:44px !important; }
+  .feature-scroll{ padding:0 20px; }
+  .feature-block{ padding:22px 0 !important; }
+}
 </style>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 </head>
@@ -1001,36 +1044,6 @@ img, svg, video{ max-width:100%; height:auto; }
 
     <a href="#" class="btn btn-primary intro-cta" id="introCta" role="button" aria-label="Essayer gratuitement" data-i18n="cta">Essayer gratuitement</a>
     <p class="intro-trust" data-i18n="intro_trust">7 jours gratuits · Sans engagement · Synchronisation familiale · Android, iPhone et Web</p>
-
-    <div class="phone-wrap">
-      <div class="phone" id="introPhone">
-        <div class="phone-screen">
-          <div class="sync-icons" id="syncIcons">
-            <div class="sync-notif" data-i="0">
-              <span class="sync-notif-ic" aria-hidden="true">🛒</span>
-              <div class="sync-notif-text">
-                <span class="sync-notif-t" data-i18n="hero_notif1_t">Léa a coché « Lait »</span>
-                <span class="sync-notif-s" data-i18n="hero_notif1_s">Liste de courses · à l'instant</span>
-              </div>
-            </div>
-            <div class="sync-notif" data-i="1">
-              <span class="sync-notif-ic" aria-hidden="true">💰</span>
-              <div class="sync-notif-text">
-                <span class="sync-notif-t" data-i18n="hero_notif2_t">Budget : 38 % utilisé</span>
-                <span class="sync-notif-s" data-i18n="hero_notif2_s">1 762 € restants ce mois-ci</span>
-              </div>
-            </div>
-            <div class="sync-notif" data-i="2">
-              <span class="sync-notif-ic" aria-hidden="true">📅</span>
-              <div class="sync-notif-text">
-                <span class="sync-notif-t" data-i18n="hero_notif3_t">Rdv médecin — demain</span>
-                <span class="sync-notif-s" data-i18n="hero_notif3_s">Rappel envoyé à toute la famille</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
 
     <div class="scroll-hint" id="scrollHint"><span data-i18n="scroll_hint">CONTINUER</span><span class="chev" aria-hidden="true"></span></div>
   </section>
@@ -1130,29 +1143,6 @@ img, svg, video{ max-width:100%; height:auto; }
   </section>
 
 <section class="feature-scroll" id="features">
-    <div class="feature-phone-col">
-      <div class="phone show" id="featPhone" style="position:relative;">
-        <div class="phone-screen">
-          <div class="feat-screen active" id="featScreenStock">
-            <div class="m-row"><div class="ic" style="background:#EAF2FF;">🥛</div><div class="name">Lait</div><div class="val" id="stockVal">1 L</div></div>
-            <div class="m-row"><div class="ic" style="background:#FFF3D6;">🍞</div><div class="name">Pain</div><div class="val">½</div></div>
-            <div class="m-row"><div class="ic" style="background:#EAF9EE;">🥚</div><div class="name">Œufs</div><div class="val">4</div></div>
-          </div>
-          <div class="feat-screen" id="featScreenBudget">
-            <div class="m-row"><div class="ic" style="background:#EAF2FF;">🍅</div><div class="name">Tomates</div><div class="val">2,40€</div></div>
-            <div class="m-row"><div class="ic" style="background:#FFF3D6;">🧀</div><div class="name">Fromage</div><div class="val">4,90€</div></div>
-            <div style="margin-top:6px;padding-top:10px;border-top:1px dashed #D8D5CC;display:flex;justify-content:space-between;font-family:var(--font-body);font-size:12px;color:#33363f;">
-              <span>Total</span><span id="budgetTotal" style="font-weight:700;color:#33363f;">7,30€</span>
-            </div>
-          </div>
-          <div class="feat-screen" id="featScreenFamille">
-            <div class="m-row" id="famRow"><div class="ic" style="background:#EDE7FB;">📅</div><div class="name">Foot</div><div class="val">18h</div></div>
-            <div class="m-row"><div class="ic" style="background:#FFF3D6;">📅</div><div class="name">Rdv médecin</div><div class="val">Mer.</div></div>
-          </div>
-        </div>
-      </div>
-    </div>
-
     <div class="feature-content-col">
       <div class="feature-block" data-dir="right" id="fb1">
         <div class="fb-q" data-i18n="fb1_q">Le dernier biberon, c'était quand ?</div>
