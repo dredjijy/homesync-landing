@@ -1111,7 +1111,7 @@ if (gsapReady && !reduced) {
     await wait(250);
     document.querySelector('.intro-trust').classList.add('show');
     await wait(300);
-    document.getElementById('introPhone').classList.add('show');
+    document.getElementById('introPhone')?.classList.add('show');
     await wait(400);
     document.querySelectorAll('.sync-notif').forEach((el,i)=>{
       gsap.delayedCall(i*0.35, ()=> el.classList.add('show'));
@@ -1137,8 +1137,8 @@ if (gsapReady && !reduced) {
     fb3: document.getElementById('featScreenFamille'),
   };
   function activateFeatScreen(key) {
-    Object.values(featScreens).forEach(s => s.classList.remove('active'));
-    featScreens[key].classList.add('active');
+    Object.values(featScreens).forEach(s => s?.classList.remove('active'));
+    featScreens[key]?.classList.add('active');
   }
 
   ['fb1','fb2','fb3'].forEach((id) => {
@@ -1168,6 +1168,7 @@ if (gsapReady && !reduced) {
     trigger:'#fb2', start:'top 65%', once:true,
     onEnter:()=>{
       const el = document.getElementById('budgetTotal');
+      if (!el) return;
       const obj = { v:0 };
       gsap.to(obj, { v:7.30, duration:1.2, delay:0.3, ease:'power2.out',
         onUpdate:()=> el.textContent = obj.v.toFixed(2).replace('.',',')+'€' });
@@ -1180,6 +1181,7 @@ if (gsapReady && !reduced) {
     onEnter:()=>{
       gsap.delayedCall(0.6, ()=>{
         const row = document.getElementById('famRow');
+        if (!row) return;
         row.style.transition='background .5s ease';
         row.style.background='#EAF9EE';
         gsap.delayedCall(0.9, ()=> row.style.background='#fff');
@@ -1195,7 +1197,7 @@ if (gsapReady && !reduced) {
   /* GSAP indisponible ou reduced-motion : tout reste visible statiquement, rien de caché */
   document.getElementById('heroTitle').classList.add('show');
   document.getElementById('heroSubtitle').classList.add('show');
-  document.getElementById('introPhone').classList.add('show');
+  document.getElementById('introPhone')?.classList.add('show');
   document.querySelectorAll('.sync-notif').forEach(el=> el.classList.add('show'));
   document.getElementById('introCta').classList.add('show');
   document.querySelector('.intro-trust').classList.add('show');
