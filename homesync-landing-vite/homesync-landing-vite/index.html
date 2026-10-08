@@ -257,22 +257,24 @@ a:focus-visible, button:focus-visible, [role="button"]:focus-visible{ outline:2p
 .nav .btn{ padding:10px 20px; font-size:13px; white-space:nowrap; flex-shrink:0; }
 @media (max-width:400px){ .nav .btn{ padding:8px 13px; font-size:12px; } }
 
-/* Mobile — nav sur UNE seule ligne : logo à gauche, actions à droite.
-   L'ancienne version sur 2 lignes faisait ~150px et recouvrait le titre. */
+/* Mobile — HomeSync centré en haut, Rejoindre / Devenir ambassadeur sur une
+   même ligne en dessous (un à gauche, un à droite), fond noir plein. */
 @media (max-width:640px){
   .nav{
-    flex-wrap:nowrap; gap:8px;
-    padding:calc(10px + env(safe-area-inset-top,0px)) 14px 10px;
-    background:rgba(10,10,15,0.94) !important;
-    backdrop-filter:blur(12px) !important; -webkit-backdrop-filter:blur(12px) !important;
-    border-bottom:1px solid var(--line);
+    display:grid; grid-template-columns:1fr 1fr; grid-template-areas:"logo logo" "amb join";
+    align-items:center; justify-items:stretch;
+    background:#0A0A0F !important; backdrop-filter:none !important; -webkit-backdrop-filter:none !important;
+    gap:12px;
   }
-  .nav-logo{ font-size:17px; margin-right:auto; flex-shrink:0; }
-  .lang-toggle, .nav-ask{ display:none; }
+  .nav-logo{ grid-area:logo; justify-content:center; }
+  .lang-toggle{ display:none; }
+  .nav-ask{ display:none; }
+  .nav-ambassador{ grid-area:amb; justify-self:start; }
+  #ctaNav{ grid-area:join; justify-self:end; }
+}
+@media (max-width:360px){
   .nav-ambassador .amb-btn-text{ display:none; }
-  #ctaPartners{ padding:9px 12px !important; font-size:15px !important; }
-  .partners-menu{ left:auto; right:0; }
-  #ctaNav{ padding:10px 15px !important; font-size:13px !important; }
+  .nav-ambassador{ padding:8px 11px; }
 }
 
 /* ══════════════════════════════════════════
@@ -971,45 +973,60 @@ img, svg, video{ max-width:100%; height:auto; }
   border-radius:inherit;
 }
 
-/* ══════════════════════════════════════════
-   HÉROS MOBILE — titre jamais caché, tout tient dans l'écran
-   ══════════════════════════════════════════ */
-:root{ --nav-h:64px; }
-html{ scroll-padding-top:calc(var(--nav-h) + env(safe-area-inset-top,0px)); }
-.hero-title, .hero-subtitle{ text-wrap:balance; }
-@media (max-width:640px){
-  .intro{
-    min-height:auto; justify-content:flex-start;
-    padding:calc(var(--nav-h) + env(safe-area-inset-top,0px) + 28px) 20px 40px !important;
-  }
-  .intro-glow{ width:520px; height:520px; top:-120px; }
-  .hero-title{
-    font-size:clamp(31px, 9.2vw, 42px); line-height:1.08; letter-spacing:-0.03em;
-    margin-bottom:14px; max-width:14ch;
-  }
-  .hero-subtitle{ font-size:15.5px; line-height:1.55; max-width:34ch; margin-bottom:4px; }
-  .intro-cta{ margin-top:22px; width:100%; max-width:340px; justify-content:center; padding:16px 20px; font-size:15.5px; }
-  .intro-trust{ font-size:11.5px; line-height:1.6; max-width:32ch; }
-  .phone-wrap{ margin-top:30px; }
-  .phone{ width:min(210px,58vw); }
-  .scroll-hint{ display:none !important; } /* chevauchait le téléphone */
+/* ── Preuve en quatre points, juste avant le bouton ── */
+.hero-proof{
+  display:flex; flex-wrap:wrap; justify-content:center; gap:8px;
+  max-width:520px; margin:0 auto 22px;
 }
-@media (max-width:360px){
-  :root{ --nav-h:58px; }
-  .nav-logo{ font-size:15.5px; }
-  #ctaNav{ padding:9px 11px !important; font-size:12px !important; }
-  .hero-title{ font-size:29px; }
+.hero-proof-item{
+  display:inline-flex; align-items:center; gap:6px;
+  background:rgba(247,244,239,0.07); border:1px solid var(--line);
+  border-radius:99px; padding:8px 14px;
+  font-family:var(--font-body); font-size:12.5px; font-weight:600; color:var(--paper);
+  white-space:nowrap;
+}
+.hero-proof-item b{ font-size:13px; font-weight:400; }
+.hero-proof-free{
+  background:rgba(91,140,123,0.18); border-color:rgba(91,140,123,0.45);
+}
+@media(max-width:380px){
+  .hero-proof-item{ padding:7px 11px; font-size:11.5px; }
 }
 
-/* Sans faux téléphones : héros centré, features en une colonne de cartes */
-.intro{ min-height:auto; padding-bottom:70px; }
-.feature-scroll{ grid-template-columns:1fr !important; max-width:720px; }
-.feature-block{ min-height:auto !important; padding:28px 0 !important; text-align:center; align-items:center; }
-.fb-title{ max-width:24ch; } .fb-text{ max-width:40ch; }
-@media (max-width:640px){
-  .intro{ padding-bottom:44px !important; }
-  .feature-scroll{ padding:0 20px; }
-  .feature-block{ padding:22px 0 !important; }
+/* ── Les quatre piliers ── */
+.pillars{ padding:56px 22px 48px; }
+.pillars-title{
+  font-family:var(--font-display); font-weight:700; text-align:center;
+  font-size:clamp(24px,5.4vw,36px); letter-spacing:-0.03em; line-height:1.15;
+  color:var(--paper); margin:0 0 8px;
+}
+.pillars-sub{
+  text-align:center; color:var(--mist); font-family:var(--font-body);
+  font-size:13.5px; margin:0 auto 30px; max-width:420px; line-height:1.5;
+}
+.pillars-grid{
+  display:grid; gap:12px; max-width:860px; margin:0 auto;
+  grid-template-columns:1fr;
+}
+@media(min-width:620px){ .pillars-grid{ grid-template-columns:repeat(2,1fr); } }
+.pillar{
+  background:linear-gradient(165deg, rgba(247,244,239,0.055), rgba(247,244,239,0.02));
+  border:1px solid var(--line); border-radius:22px; padding:22px 20px;
+  transition:transform .28s cubic-bezier(.2,.8,.2,1), border-color .28s ease;
+}
+.pillar:hover{ transform:translateY(-3px); border-color:rgba(91,140,123,0.42); }
+.pillar-ic{ font-size:28px; line-height:1; display:block; margin-bottom:12px; }
+.pillar-h{
+  font-family:var(--font-display); font-weight:700; color:var(--paper);
+  font-size:18px; letter-spacing:-0.01em; margin:0 0 6px;
+}
+.pillar-p{
+  color:var(--mist); font-family:var(--font-body);
+  font-size:13.5px; line-height:1.55; margin:0;
+}
+.pillars-more{
+  text-align:center; color:var(--mist); font-family:var(--font-body);
+  font-size:12px; line-height:1.6; margin:26px auto 0; max-width:480px; opacity:0.75;
 }
 </style>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
@@ -1042,8 +1059,23 @@ html{ scroll-padding-top:calc(var(--nav-h) + env(safe-area-inset-top,0px)); }
     <h1 class="hero-title" id="heroTitle" data-i18n="hero_title">Votre famille, enfin synchronisée.</h1>
     <p class="hero-subtitle" id="heroSubtitle" data-i18n="hero_subtitle">Plus de listes de courses oubliées. Plus de "qu'est-ce qu'on mange ce soir ?". Plus de tâches qui reposent toujours sur la même personne.</p>
 
+    <div class="hero-proof">
+      <span class="hero-proof-item"><b>👨‍👩‍👧‍👦</b> <span data-i18n="proof_members">Jusqu'à 6 personnes</span></span>
+      <span class="hero-proof-item"><b>⚡</b> <span data-i18n="proof_sync">Synchronisation en temps réel</span></span>
+      <span class="hero-proof-item"><b>💶</b> <span data-i18n="proof_price">3,99 €/mois</span></span>
+      <span class="hero-proof-item hero-proof-free"><b>🎁</b> <span data-i18n="proof_trial">7 jours gratuits</span></span>
+    </div>
     <a href="#" class="btn btn-primary intro-cta" id="introCta" role="button" aria-label="Essayer gratuitement" data-i18n="cta">Essayer gratuitement</a>
-    <p class="intro-trust" data-i18n="intro_trust">7 jours gratuits · Sans engagement · Synchronisation familiale · Android, iPhone et Web</p>
+
+    <div class="phone-wrap">
+      <div class="phone" id="introPhone">
+        <div class="phone-screen">
+        <div class="phone-screen">
+          <img src="/shot-home.png" alt="Écran d'accueil HomeSync : budget, courses et péremptions"
+               loading="eager" class="phone-shot"/>
+        </div>
+      </div>
+    </div>
 
     <div class="scroll-hint" id="scrollHint"><span data-i18n="scroll_hint">CONTINUER</span><span class="chev" aria-hidden="true"></span></div>
   </section>
@@ -1055,6 +1087,40 @@ html{ scroll-padding-top:calc(var(--nav-h) + env(safe-area-inset-top,0px)); }
     <p class="problem-line" data-i18n="problem3">Les tâches reposent toujours sur la même personne ?</p>
     <p class="problem-answer" data-i18n="problem_answer">HomeSync est là pour simplifier tout ça.</p>
   </section>
+
+  <!-- ══════ LES 4 FONCTIONS PRINCIPALES ══════ -->
+  <section class="pillars rv" id="pillarsSection">
+    <h2 class="pillars-title" data-i18n="pillars_title">Quatre choses, au même endroit</h2>
+    <p class="pillars-sub" data-i18n="pillars_sub">Ce que votre foyer gère tous les jours — enfin réuni.</p>
+
+    <div class="pillars-grid">
+      <div class="pillar">
+        <span class="pillar-ic" aria-hidden="true">🛒</span>
+        <h3 class="pillar-h" data-i18n="pillar_shop_t">Courses</h3>
+        <p class="pillar-p" data-i18n="pillar_shop_d">Une liste que tout le monde coche en même temps. Plus d'oubli, plus de double achat.</p>
+      </div>
+      <div class="pillar">
+        <span class="pillar-ic" aria-hidden="true">💰</span>
+        <h3 class="pillar-h" data-i18n="pillar_budget_t">Budget</h3>
+        <p class="pillar-p" data-i18n="pillar_budget_d">Qui a dépensé quoi, combien il reste. Sans tableur, sans discussion pénible.</p>
+      </div>
+      <div class="pillar">
+        <span class="pillar-ic" aria-hidden="true">🍳</span>
+        <h3 class="pillar-h" data-i18n="pillar_meal_t">Repas</h3>
+        <p class="pillar-p" data-i18n="pillar_meal_d">La semaine planifiée, les recettes guidées pas à pas. Fini « on mange quoi ce soir ? ».</p>
+      </div>
+      <div class="pillar">
+        <span class="pillar-ic" aria-hidden="true">🏠</span>
+        <h3 class="pillar-h" data-i18n="pillar_task_t">Tâches</h3>
+        <p class="pillar-p" data-i18n="pillar_task_d">Réparties, visibles, à qui le tour. La charge cesse de reposer sur une seule personne.</p>
+      </div>
+    </div>
+
+    <p class="pillars-more">
+      <span data-i18n="pillars_more">Et aussi : agenda partagé, stock et péremptions, vacances, suivi bébé, véhicules.</span>
+    </p>
+  </section>
+
 
 <section class="reviews rv" id="reviewsSection">
     <h2 class="reviews-title" data-i18n="reviews_title">Ils utilisent HomeSync</h2>
@@ -1143,6 +1209,29 @@ html{ scroll-padding-top:calc(var(--nav-h) + env(safe-area-inset-top,0px)); }
   </section>
 
 <section class="feature-scroll" id="features">
+    <div class="feature-phone-col">
+      <div class="phone show" id="featPhone" style="position:relative;">
+        <div class="phone-screen">
+          <div class="feat-screen active" id="featScreenStock">
+            <div class="m-row"><div class="ic" style="background:#EAF2FF;">🥛</div><div class="name">Lait</div><div class="val" id="stockVal">1 L</div></div>
+            <div class="m-row"><div class="ic" style="background:#FFF3D6;">🍞</div><div class="name">Pain</div><div class="val">½</div></div>
+            <div class="m-row"><div class="ic" style="background:#EAF9EE;">🥚</div><div class="name">Œufs</div><div class="val">4</div></div>
+          </div>
+          <div class="feat-screen" id="featScreenBudget">
+            <div class="m-row"><div class="ic" style="background:#EAF2FF;">🍅</div><div class="name">Tomates</div><div class="val">2,40€</div></div>
+            <div class="m-row"><div class="ic" style="background:#FFF3D6;">🧀</div><div class="name">Fromage</div><div class="val">4,90€</div></div>
+            <div style="margin-top:6px;padding-top:10px;border-top:1px dashed #D8D5CC;display:flex;justify-content:space-between;font-family:var(--font-body);font-size:12px;color:#33363f;">
+              <span>Total</span><span id="budgetTotal" style="font-weight:700;color:#33363f;">7,30€</span>
+            </div>
+          </div>
+          <div class="feat-screen" id="featScreenFamille">
+            <div class="m-row" id="famRow"><div class="ic" style="background:#EDE7FB;">📅</div><div class="name">Foot</div><div class="val">18h</div></div>
+            <div class="m-row"><div class="ic" style="background:#FFF3D6;">📅</div><div class="name">Rdv médecin</div><div class="val">Mer.</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="feature-content-col">
       <div class="feature-block" data-dir="right" id="fb1">
         <div class="fb-q" data-i18n="fb1_q">Le dernier biberon, c'était quand ?</div>
