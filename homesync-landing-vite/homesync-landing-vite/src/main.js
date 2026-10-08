@@ -9,8 +9,23 @@ const ScrollTrigger = window.ScrollTrigger;
 const TRANSLATIONS = {
   fr: {
     cta: "Commencer — 7 jours gratuits",
-    hero_title: "La maison tourne. Sans que vous y pensiez.",
-    hero_subtitle: "Courses, repas, budget, tâches : tout le foyer voit la même chose, en temps réel. Fini la charge mentale qui repose sur une seule personne.",
+    hero_title: "Le centre de commande de votre foyer.",
+    hero_subtitle: "Votre famille mérite moins de charge mentale. Courses, repas, budget et tâches réunis au même endroit, synchronisés entre tous.",
+    proof_members: "Jusqu'à 6 personnes",
+    proof_sync: "Synchronisation en temps réel",
+    proof_price: "3,99 €/mois",
+    proof_trial: "7 jours gratuits",
+    pillars_title: "Quatre choses, au même endroit",
+    pillars_sub: "Ce que votre foyer gère tous les jours — enfin réuni.",
+    pillar_shop_t: "Courses",
+    pillar_shop_d: "Une liste que tout le monde coche en même temps. Plus d'oubli, plus de double achat.",
+    pillar_budget_t: "Budget",
+    pillar_budget_d: "Qui a dépensé quoi, combien il reste. Sans tableur, sans discussion pénible.",
+    pillar_meal_t: "Repas",
+    pillar_meal_d: "La semaine planifiée, les recettes guidées pas à pas. Fini « on mange quoi ce soir ? ».",
+    pillar_task_t: "Tâches",
+    pillar_task_d: "Réparties, visibles, à qui le tour. La charge cesse de reposer sur une seule personne.",
+    pillars_more: "Et aussi : agenda partagé, stock et péremptions, vacances, suivi bébé, véhicules.",
     midcta_line: "Tout ça, dans une seule application.",
     midcta_note: "Sans carte bancaire. Annulable en 1 clic.",
     reviews_title: "Ils ont arrêté d'y penser",
@@ -422,8 +437,23 @@ const TRANSLATIONS = {
   },
   en: {
     cta: "Start — 7 days free",
-    hero_title: "The household runs itself. Without you thinking about it.",
-    hero_subtitle: "Groceries, meals, budget, chores: the whole household sees the same thing, in real time. No more mental load on one person.",
+    hero_title: "Your household's command center.",
+    hero_subtitle: "Your family deserves less mental load. Groceries, meals, budget and chores in one place, synced for everyone.",
+    proof_members: "Up to 6 people",
+    proof_sync: "Real-time sync",
+    proof_price: "€3.99/month",
+    proof_trial: "7 days free",
+    pillars_title: "Four things, in one place",
+    pillars_sub: "What your household handles every day — finally together.",
+    pillar_shop_t: "Groceries",
+    pillar_shop_d: "One list everyone ticks at the same time. Nothing forgotten, nothing bought twice.",
+    pillar_budget_t: "Budget",
+    pillar_budget_d: "Who spent what, what's left. No spreadsheet, no awkward conversation.",
+    pillar_meal_t: "Meals",
+    pillar_meal_d: "The week planned, recipes guided step by step. No more \"what's for dinner?\".",
+    pillar_task_t: "Chores",
+    pillar_task_d: "Shared out, visible, whose turn it is. The load stops falling on one person.",
+    pillars_more: "Also included: shared calendar, stock and expiry dates, holidays, baby tracking, vehicles.",
     midcta_line: "All of it, in one app.",
     midcta_note: "No credit card. Cancel in one tap.",
     reviews_title: "They stopped thinking about it",
@@ -1111,7 +1141,7 @@ if (gsapReady && !reduced) {
     await wait(250);
     document.querySelector('.intro-trust').classList.add('show');
     await wait(300);
-    document.getElementById('introPhone')?.classList.add('show');
+    document.getElementById('introPhone').classList.add('show');
     await wait(400);
     document.querySelectorAll('.sync-notif').forEach((el,i)=>{
       gsap.delayedCall(i*0.35, ()=> el.classList.add('show'));
@@ -1137,8 +1167,8 @@ if (gsapReady && !reduced) {
     fb3: document.getElementById('featScreenFamille'),
   };
   function activateFeatScreen(key) {
-    Object.values(featScreens).forEach(s => s?.classList.remove('active'));
-    featScreens[key]?.classList.add('active');
+    Object.values(featScreens).forEach(s => s.classList.remove('active'));
+    featScreens[key].classList.add('active');
   }
 
   ['fb1','fb2','fb3'].forEach((id) => {
@@ -1168,7 +1198,6 @@ if (gsapReady && !reduced) {
     trigger:'#fb2', start:'top 65%', once:true,
     onEnter:()=>{
       const el = document.getElementById('budgetTotal');
-      if (!el) return;
       const obj = { v:0 };
       gsap.to(obj, { v:7.30, duration:1.2, delay:0.3, ease:'power2.out',
         onUpdate:()=> el.textContent = obj.v.toFixed(2).replace('.',',')+'€' });
@@ -1181,7 +1210,6 @@ if (gsapReady && !reduced) {
     onEnter:()=>{
       gsap.delayedCall(0.6, ()=>{
         const row = document.getElementById('famRow');
-        if (!row) return;
         row.style.transition='background .5s ease';
         row.style.background='#EAF9EE';
         gsap.delayedCall(0.9, ()=> row.style.background='#fff');
@@ -1197,7 +1225,7 @@ if (gsapReady && !reduced) {
   /* GSAP indisponible ou reduced-motion : tout reste visible statiquement, rien de caché */
   document.getElementById('heroTitle').classList.add('show');
   document.getElementById('heroSubtitle').classList.add('show');
-  document.getElementById('introPhone')?.classList.add('show');
+  document.getElementById('introPhone').classList.add('show');
   document.querySelectorAll('.sync-notif').forEach(el=> el.classList.add('show'));
   document.getElementById('introCta').classList.add('show');
   document.querySelector('.intro-trust').classList.add('show');
