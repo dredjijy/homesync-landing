@@ -945,6 +945,10 @@ body::after{
 /* ── Densité : moins de vide vertical entre les blocs ── */
 @media(max-width:760px){
   section{ padding-top:44px !important; padding-bottom:44px !important; }
+  /* Le héros doit laisser la place à la nav fixe (logo + 2 boutons sur 2 lignes,
+     ~110px). Sans ça, la règle "section" ci-dessus ramenait son padding à 44px
+     et le titre passait sous la barre. */
+  .intro{ padding-top:calc(130px + env(safe-area-inset-top,0px)) !important; }
   .reviews{ padding:44px 18px !important; }
   .midcta{ padding:40px 18px !important; }
   .gallery{ padding-top:40px !important; padding-bottom:40px !important; }
