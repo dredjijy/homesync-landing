@@ -1161,16 +1161,6 @@ if (gsapReady && !reduced) {
   });
 
   /* ── FEATURES : téléphone sticky, écran + texte synchronisés au scroll ── */
-  const featScreens = {
-    fb1: document.getElementById('featScreenStock'),
-    fb2: document.getElementById('featScreenBudget'),
-    fb3: document.getElementById('featScreenFamille'),
-  };
-  function activateFeatScreen(key) {
-    Object.values(featScreens).forEach(s => s.classList.remove('active'));
-    featScreens[key].classList.add('active');
-  }
-
   ['fb1','fb2','fb3'].forEach((id) => {
     const block = document.getElementById(id);
     const dir = block.dataset.dir === 'left' ? -60 : 60;
@@ -1181,40 +1171,14 @@ if (gsapReady && !reduced) {
     ScrollTrigger.create({
       trigger: block, start: 'top 65%', end: 'bottom 35%',
       onEnter: () => {
-        activateFeatScreen(id);
         gsap.to(title, { opacity:1, x:0, duration:0.6, ease:'power2.out' });
         gsap.to(text,  { opacity:1, x:0, duration:0.6, delay:0.1, ease:'power2.out' });
       },
       onEnterBack: () => {
-        activateFeatScreen(id);
         gsap.to(title, { opacity:1, x:0, duration:0.4 });
         gsap.to(text,  { opacity:1, x:0, duration:0.4 });
       },
     });
-  });
-
-  /* ── bloc budget : compteur du total ── */
-  ScrollTrigger.create({
-    trigger:'#fb2', start:'top 65%', once:true,
-    onEnter:()=>{
-      const el = document.getElementById('budgetTotal');
-      const obj = { v:0 };
-      gsap.to(obj, { v:7.30, duration:1.2, delay:0.3, ease:'power2.out',
-        onUpdate:()=> el.textContent = obj.v.toFixed(2).replace('.',',')+'€' });
-    }
-  });
-
-  /* ── bloc famille : flash de synchronisation ── */
-  ScrollTrigger.create({
-    trigger:'#fb3', start:'top 65%', once:true,
-    onEnter:()=>{
-      gsap.delayedCall(0.6, ()=>{
-        const row = document.getElementById('famRow');
-        row.style.transition='background .5s ease';
-        row.style.background='#EAF9EE';
-        gsap.delayedCall(0.9, ()=> row.style.background='#fff');
-      });
-    }
   });
 
   /* ── nav visible après l'intro, même sans scroll (déjà géré dans la timeline) ── */
