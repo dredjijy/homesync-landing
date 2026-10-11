@@ -1139,7 +1139,7 @@ if (gsapReady && !reduced) {
     await wait(300);
     document.getElementById('introCta').classList.add('show');
     await wait(250);
-    document.querySelector('.intro-trust').classList.add('show');
+    document.querySelector('.intro-trust')?.classList.add('show');
     await wait(300);
     document.getElementById('introPhone').classList.add('show');
     await wait(400);
@@ -1147,7 +1147,7 @@ if (gsapReady && !reduced) {
       gsap.delayedCall(i*0.35, ()=> el.classList.add('show'));
     });
     await wait(400 + 3*350 + 200);
-    document.getElementById('scrollHint').classList.add('show');
+    document.getElementById('scrollHint')?.classList.add('show');
   }
   runIntroSequence();
 
@@ -1192,7 +1192,7 @@ if (gsapReady && !reduced) {
   document.getElementById('introPhone').classList.add('show');
   document.querySelectorAll('.sync-notif').forEach(el=> el.classList.add('show'));
   document.getElementById('introCta').classList.add('show');
-  document.querySelector('.intro-trust').classList.add('show');
+  document.querySelector('.intro-trust')?.classList.add('show');
   document.getElementById('nav').classList.add('show');
   document.querySelectorAll('.rv').forEach(el=> el.classList.add('in'));
 }
