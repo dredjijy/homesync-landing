@@ -425,7 +425,7 @@ const TRANSLATIONS = {
     gallery_stock_text: "Fini le lait qui manque au petit-déjeuner — chaque produit est suivi, avec alerte avant la rupture.",
     gallery_shopping_title: "Toute la famille, synchronisée",
     gallery_shopping_text: "Chacun coche ce qu'il a acheté, le prix se calcule automatiquement, tout le monde voit la même liste.",
-    gallery_budget_title: "Le coût réel de vos trajets",
+    gallery_budget_title: "Le budget, sans tableur",
     gallery_budget_text: "Qui a dépensé quoi, combien il reste, les charges fixes du mois — clair en un coup d'œil.",
     gallery_recipes_title: "La semaine de repas, en un écran",
     gallery_recipes_text: "Un menu par jour, et la liste de courses se remplit automatiquement avec ce qui manque.",
@@ -853,7 +853,7 @@ const TRANSLATIONS = {
     gallery_stock_text: "No more running out of milk at breakfast — every product is tracked, with an alert before it runs out.",
     gallery_shopping_title: "The whole family, in sync",
     gallery_shopping_text: "Everyone checks off what they bought, the price adds up automatically, everyone sees the same list.",
-    gallery_budget_title: "What your commute really costs",
+    gallery_budget_title: "Your budget, no spreadsheet",
     gallery_budget_text: "Who spent what, how much is left, this month's fixed charges — clear at a glance.",
     gallery_recipes_title: "This week's meals, planned",
     gallery_recipes_text: "One meal per day, and the shopping list fills up automatically with what's missing.",
@@ -1309,49 +1309,19 @@ updateScrollHintVisibility();
   });
 })();
 
-// ── Galerie de captures d'écran — carrousel simple, sans dépendance ──
+// ── Galerie : zoom au clic sur une capture (lightbox plein écran) ──
 (function initGallery() {
-  const slides = Array.from(document.querySelectorAll('.gallery-slide'));
-  const dotsWrap = document.getElementById('galleryDots');
-  const prevBtn = document.getElementById('galleryPrev');
-  const nextBtn = document.getElementById('galleryNext');
-  if (!slides.length || !dotsWrap || !prevBtn || !nextBtn) return;
-
-  let current = 0;
-  slides.forEach((_, i) => {
-    const dot = document.createElement('button');
-    dot.className = 'gallery-dot' + (i === 0 ? ' active' : '');
-    dot.setAttribute('aria-label', `Slide ${i + 1}`);
-    dot.addEventListener('click', () => goTo(i));
-    dotsWrap.appendChild(dot);
-  });
-  const dots = Array.from(dotsWrap.children);
-
-  function goTo(i) {
-    current = (i + slides.length) % slides.length;
-    slides.forEach((s, idx) => s.classList.toggle('active', idx === current));
-    dots.forEach((d, idx) => d.classList.toggle('active', idx === current));
-  }
-  prevBtn.addEventListener('click', () => goTo(current - 1));
-  nextBtn.addEventListener('click', () => goTo(current + 1));
-
-  // Défilement automatique discret, en pause si l'utilisateur interagit
-  let autoTimer = setInterval(() => goTo(current + 1), 5000);
-  const pauseAuto = () => { clearInterval(autoTimer); autoTimer = null; };
-  [prevBtn, nextBtn, ...dots].forEach(el => el.addEventListener('click', pauseAuto));
-
-  // Zoom au clic sur une image — lightbox plein écran
   const lightbox = document.getElementById('lightbox');
   const lightboxImg = document.getElementById('lightboxImg');
   const lightboxClose = document.getElementById('lightboxClose');
+  if (!lightbox || !lightboxImg || !lightboxClose) return;
   const openLightbox = (src, alt) => {
     lightboxImg.src = src; lightboxImg.alt = alt;
     lightbox.classList.add('show');
   };
   const closeLightbox = () => lightbox.classList.remove('show');
-  slides.forEach(slide => {
-    const img = slide.querySelector('img');
-    if (img) img.addEventListener('click', () => { pauseAuto(); openLightbox(img.src, img.alt); });
+  document.querySelectorAll('.show-row img').forEach(img => {
+    img.addEventListener('click', () => openLightbox(img.src, img.alt));
   });
   lightboxClose.addEventListener('click', closeLightbox);
   lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
