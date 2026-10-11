@@ -305,7 +305,7 @@ a:focus-visible, button:focus-visible, [role="button"]:focus-visible{ outline:2p
 
 .phone-wrap{ position:relative; margin-top:14px; perspective:1000px; }
 .phone-wrap::before{
-  content:""; position:absolute; inset:-60px; z-index:-1;
+  content:""; position:absolute; inset:-60px; z-index:-1; pointer-events:none;
   background:radial-gradient(circle, rgba(91,140,123,0.22), transparent 65%);
   filter:blur(20px); opacity:0; transition:opacity 1.2s ease;
 }
@@ -873,7 +873,7 @@ a:focus-visible, button:focus-visible, [role="button"]:focus-visible{ outline:2p
 
 /* Halo derrière le bouton principal : il devient le point le plus lumineux
    de l'écran, donc le premier endroit où le pouce se dirige. */
-.intro-cta{ position:relative; }
+.intro-cta{ position:relative; z-index:3; }
 .intro-cta::after{
   content:""; position:absolute; inset:-14px -22px; z-index:-1;
   background:radial-gradient(ellipse at center, rgba(91,140,123,0.38), transparent 70%);
