@@ -303,7 +303,7 @@ a:focus-visible, button:focus-visible, [role="button"]:focus-visible{ outline:2p
 }
 @keyframes tiBlink{ 0%,100%{ opacity:1; } 50%{ opacity:0; } }
 
-.phone-wrap{ position:relative; margin-top:14px; perspective:1000px; }
+.phone-wrap{ position:relative; margin-top:48px; perspective:1000px; }
 .phone-wrap::before{
   content:""; position:absolute; inset:-60px; z-index:-1; pointer-events:none;
   background:radial-gradient(circle, rgba(91,140,123,0.22), transparent 65%);
@@ -368,6 +368,7 @@ a:focus-visible, button:focus-visible, [role="button"]:focus-visible{ outline:2p
   display:flex; flex-direction:column; align-items:center; gap:8px; z-index:5; pointer-events:none;
 }
 .scroll-hint.show{ opacity:0.8; }
+@media (max-width:760px){ .scroll-hint{ display:none; } }
 .scroll-hint .chev{ width:14px; height:14px; border-right:1.5px solid var(--mist); border-bottom:1.5px solid var(--mist); transform:rotate(45deg); animation:bob 1.8s ease-in-out infinite; }
 @keyframes bob{ 0%,100%{ transform:rotate(45deg) translate(0,0);} 50%{ transform:rotate(45deg) translate(3px,3px);} }
 
@@ -620,28 +621,6 @@ a:focus-visible, button:focus-visible, [role="button"]:focus-visible{ outline:2p
 .gallery-sub{
   color:var(--mist); font-family:var(--font-body); font-size:13px; margin:0 0 36px; max-width:36ch;
 }
-.gallery-frame{
-  display:flex; align-items:center; gap:12px; width:100%; max-width:920px;
-}
-.gallery-track{
-  flex:1; overflow:hidden; border-radius:20px; position:relative;
-  background:var(--surface-2); border:1.5px solid var(--line);
-  height:640px;
-}
-.gallery-slide{
-  display:none; flex-direction:column; align-items:center; justify-content:center;
-  padding:20px 20px 26px; animation:fadeIn .35s ease; height:100%; box-sizing:border-box;
-  overflow-y:auto;
-}
-.gallery-slide.active{ display:flex; }
-.gallery-slide img{
-  width:auto; height:auto; max-width:280px; max-height:100%; object-fit:contain;
-  border-radius:16px; border:1.5px solid var(--line);
-  box-shadow:0 12px 40px rgba(0,0,0,0.35); display:block; cursor:zoom-in; flex-shrink:0;
-  transition:transform .2s ease, border-color .2s ease;
-}
-.gallery-slide img:hover{ transform:translateY(-2px); border-color:rgba(91,140,123,0.4); }
-
 .lightbox{
   position:fixed; inset:0; background:rgba(6,7,12,0.92); z-index:10000;
   display:flex; align-items:center; justify-content:center; padding:30px;
@@ -657,31 +636,21 @@ a:focus-visible, button:focus-visible, [role="button"]:focus-visible{ outline:2p
   background:var(--surface-2); border:1.5px solid var(--line); color:var(--paper); font-size:20px;
   cursor:pointer; display:flex; align-items:center; justify-content:center;
 }
-.gallery-caption{ margin-top:20px; max-width:38ch; }
 .gc-title{
-  font-family:var(--font-display); font-weight:700; font-size:18px; color:var(--paper); margin-bottom:6px;
+  font-family:var(--font-display); font-weight:700; font-size:clamp(17px,4.6vw,24px); line-height:1.2; color:var(--paper); margin:0 0 8px;
 }
-.gc-text{ color:var(--mist); font-family:var(--font-body); font-size:12.5px; line-height:1.5; }
-.gallery-arrow{
-  flex-shrink:0; width:40px; height:40px; border-radius:99px; border:1.5px solid var(--line); background:var(--surface-2);
-  color:var(--paper); font-size:20px; cursor:pointer; display:flex; align-items:center; justify-content:center;
-  transition:border-color .2s ease, transform .2s ease;
-}
-.gallery-arrow:hover{ border-color:var(--mint); transform:translateY(-1px); }
-.gallery-dots{ display:flex; gap:8px; margin-top:20px; }
-.gallery-dot{
-  width:8px; height:8px; border-radius:99px; background:var(--line); border:none; cursor:pointer; padding:0;
-  transition:background .2s ease, width .2s ease;
-}
-.gallery-dot.active{ background:var(--mint); width:22px; }
+.gc-text{ color:var(--mist); font-family:var(--font-body); font-size:clamp(12.5px,3.4vw,15px); line-height:1.55; margin:0; }
+
+/* Chaque capture dans un cadre de téléphone (comme le héros), description à côté */
+.show-list{ display:flex; flex-direction:column; gap:clamp(36px,8vw,64px); width:100%; max-width:820px; }
+.show-row{ display:flex; align-items:center; gap:clamp(16px,5vw,56px); text-align:left; }
+.show-row:nth-child(even){ flex-direction:row-reverse; }
+.show-phone.phone{ width:clamp(128px,38vw,210px); flex:0 0 auto; animation:none !important; cursor:zoom-in; }
+.show-text{ flex:1; min-width:0; }
 .gallery-disclaimer{
   margin-top:22px; color:var(--mist); opacity:0.7; font-family:var(--font-body); font-size:11px; max-width:44ch;
 }
 @keyframes fadeIn{ from{opacity:0} to{opacity:1} }
-@media (max-width:520px){
-  .gallery-arrow{ width:34px; height:34px; font-size:17px; }
-  .gallery-slide img{ max-width:220px; }
-  .gallery-track{ min-height:560px; }
 }
 
 /* ══════════════════════════════════════════
@@ -1172,41 +1141,54 @@ img, svg, video{ max-width:100%; height:auto; }
   <section class="gallery rv" id="gallerySection">
     <h2 class="gallery-title" data-i18n="gallery_title">HomeSync, en vrai</h2>
     <p class="gallery-sub" data-i18n="gallery_sub">Un aperçu réel de l'application, telle qu'elle est aujourd'hui.</p>
-    <div class="gallery-frame">
-      <button class="gallery-arrow gallery-prev" id="galleryPrev" aria-label="Précédent">‹</button>
-      <div class="gallery-track" id="galleryTrack">
-        <div class="gallery-slide" data-slide="2">
-          <img src="/shot-stock.png" alt="Mon suivi HomeSync" loading="lazy"/>
-          <div class="gallery-caption">
-            <div class="gc-title" data-i18n="gallery_shopping_title">Les courses, partagées en temps réel</div>
-            <div class="gc-text" data-i18n="gallery_shopping_text">Chacun coche ce qu'il a acheté, le prix se calcule automatiquement, tout le monde voit la même liste.</div>
-          </div>
+    <div class="show-list">
+      <article class="show-row">
+        <div class="phone show show-phone"><div class="phone-screen">
+          <img src="/shot-stock.png" alt="Mon suivi HomeSync" loading="lazy" class="phone-shot"/>
+        </div></div>
+        <div class="show-text">
+          <h3 class="gc-title" data-i18n="gallery_stock_title"></h3>
+          <p class="gc-text" data-i18n="gallery_stock_text"></p>
         </div>
-        <div class="gallery-slide" data-slide="3">
-          <img src="/shot-budget.png" alt="Budget HomeSync" loading="lazy"/>
-          <div class="gallery-caption">
-            <div class="gc-title" data-i18n="gallery_budget_title">Le budget, sans tableur</div>
-            <div class="gc-text" data-i18n="gallery_budget_text">Qui a dépensé quoi, combien il reste, les charges fixes du mois — clair en un coup d'œil.</div>
-          </div>
+      </article>
+      <article class="show-row">
+        <div class="phone show show-phone"><div class="phone-screen">
+          <img src="/shot-shopping.png" alt="Courses partagées HomeSync" loading="lazy" class="phone-shot"/>
+        </div></div>
+        <div class="show-text">
+          <h3 class="gc-title" data-i18n="gallery_shopping_title"></h3>
+          <p class="gc-text" data-i18n="gallery_shopping_text"></p>
         </div>
-        <div class="gallery-slide" data-slide="4">
-          <img src="/shot-recipes.png" alt="Recettes HomeSync" loading="lazy"/>
-          <div class="gallery-caption">
-            <div class="gc-title" data-i18n="gallery_recipes_title">Les repas de la semaine, planifiés</div>
-            <div class="gc-text" data-i18n="gallery_recipes_text">Un menu par jour, et la liste de courses se remplit automatiquement avec ce qui manque.</div>
-          </div>
+      </article>
+      <article class="show-row">
+        <div class="phone show show-phone"><div class="phone-screen">
+          <img src="/shot-budget.png" alt="Budget HomeSync" loading="lazy" class="phone-shot"/>
+        </div></div>
+        <div class="show-text">
+          <h3 class="gc-title" data-i18n="gallery_budget_title"></h3>
+          <p class="gc-text" data-i18n="gallery_budget_text"></p>
         </div>
-        <div class="gallery-slide" data-slide="5">
-          <img src="/shot-tasks.png" alt="Tâches HomeSync" loading="lazy"/>
-          <div class="gallery-caption">
-            <div class="gc-title" data-i18n="gallery_tasks_title">Les tâches, réparties équitablement</div>
-            <div class="gc-text" data-i18n="gallery_tasks_text">Qui sort les poubelles cette semaine ? Attribuez une tâche, et faites-la tourner automatiquement si besoin.</div>
-          </div>
+      </article>
+      <article class="show-row">
+        <div class="phone show show-phone"><div class="phone-screen">
+          <img src="/shot-recipes.png" alt="Repas de la semaine HomeSync" loading="lazy" class="phone-shot"/>
+        </div></div>
+        <div class="show-text">
+          <h3 class="gc-title" data-i18n="gallery_recipes_title"></h3>
+          <p class="gc-text" data-i18n="gallery_recipes_text"></p>
         </div>
-      </div>
-      <button class="gallery-arrow gallery-next" id="galleryNext" aria-label="Suivant">›</button>
+      </article>
+      <article class="show-row">
+        <div class="phone show show-phone"><div class="phone-screen">
+          <img src="/shot-tasks.png" alt="Tâches HomeSync" loading="lazy" class="phone-shot"/>
+        </div></div>
+        <div class="show-text">
+          <h3 class="gc-title" data-i18n="gallery_tasks_title"></h3>
+          <p class="gc-text" data-i18n="gallery_tasks_text"></p>
+        </div>
+      </article>
     </div>
-    <div class="gallery-dots" id="galleryDots"></div>
+    <p class="gallery-disclaimer" data-i18n="gallery_disclaimer">Les captures d'écran peuvent différer de la version actuelle de l'application, qui évolue régulièrement.</p>
   </section>
 
 <section class="feature-scroll" id="features">
